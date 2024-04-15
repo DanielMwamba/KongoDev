@@ -15,6 +15,6 @@ export default withMT ({
       },
   },
  },
-  plugins: [require("daisyui"), require("@tailwindcss/forms")],
+  plugins: [require("daisyui")],
 });
 
