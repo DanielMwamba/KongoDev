@@ -1,12 +1,20 @@
 /** @type {import('tailwindcss').Config} */
-export default {
+const defaultTheme = require("tailwindcss/defaultTheme");
+const withMT = require("@material-tailwind/react/utils/withMT");
+export default withMT ({
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ["Inter var", ...defaultTheme.fontFamily.sans],
+        outfit: ["Outfit"],
+        poppins: ["Poppins"]
+      },
   },
-  plugins: [],
-}
+ },
+  plugins: [require("daisyui"), require("@tailwindcss/forms")],
+});
 
