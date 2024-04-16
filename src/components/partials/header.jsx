@@ -122,7 +122,7 @@ const Header = () => {
                   className="hidden rounded-full lg:inline-block"
                   onClick={() => navigate("/login")}
                 >
-                  Login
+                  Connexion
                 </Button>
                 <Button
                   variant="gradient"
@@ -130,7 +130,7 @@ const Header = () => {
                   className="hidden rounded-full lg:inline-block"
                   onClick={() => navigate("/register")}
                 >
-                  GET STARTED
+                  Commencer
                 </Button>
 
                 <IconButton
@@ -183,7 +183,7 @@ const Header = () => {
                 className="mb-2"
                 onClick={() => navigate("/login")}
               >
-                Login
+                Connexion
               </Button>
 
               <Button
@@ -193,7 +193,7 @@ const Header = () => {
                 className="mb-2"
                 onClick={() => navigate("/register")}
               >
-                Get Started
+                Commencer
               </Button>
             </Collapse>
 

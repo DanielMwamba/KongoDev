@@ -10,7 +10,7 @@ export default function Home() {
         <span
           className="text-black text-3xl font-bold font-poppins"
         >
-          Explore Categories
+          Explorer les Catégories
         </span>
       </div>
 
@@ -20,7 +20,7 @@ export default function Home() {
           className="text-black text-3xl font-bold"
           style={{ fontFamily: "poppins" }}
         >
-          Explore Articles
+          Explorer les Articles
         </span>
       </div>
         </>
