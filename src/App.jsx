@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 // Partials
 
 // import Header from "./components/partials/header";
-// import Footer from "./components/partials/footer";
+import Home from "./pages/home";
 import Wrapper from "./components/partials/wrapper";
 
 //Wrappers 
@@ -14,7 +14,7 @@ export default function App() {
         <>
          <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Wrapper> </Wrapper>}/>
+                <Route path="/" element={<Wrapper> <Home/> </Wrapper>}/>
             </Routes>
          </BrowserRouter>
         </>
