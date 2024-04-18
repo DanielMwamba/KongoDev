@@ -1,0 +1,32 @@
+[
+    {
+      "id": 1,
+      "name": "JavaScript",
+      "imageURL": "https://res.cloudinary.com/dqbduuqel/image/upload/v1713283252/hgbhulvq1hjhnn4lsluf.png"
+    },
+    {
+      "id": 2,
+      "name": "Python",
+      "imageURL": ""
+    },
+    {
+      "id": 3,
+      "name": "Java",
+      "imageURL": "https://res.cloudinary.com/dqbduuqel/image/upload/v1713283320/e7r2ueh2dxocfqybusen.jpg"
+    },
+    {
+      "id": 4,
+      "name": "C++",
+      "imageURL": ""
+    },
+    {
+      "id": 5,
+      "name": "C#",
+      "imageURL": ""
+    },
+    {
+      "id": 6,
+      "name": "PHP",
+      "imageURL": ""
+    } 
+]
