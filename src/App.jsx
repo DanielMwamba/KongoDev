@@ -2,11 +2,12 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 // Partials
 
-// import Header from "./components/partials/header";
+//Pages
 import Home from "./pages/home";
-import Wrapper from "./components/partials/wrapper";
+import Categories from "./pages/categories";
 
 //Wrappers 
+import Wrapper from "./components/partials/wrapper";
 
 export default function App() {
 
@@ -15,6 +16,7 @@ export default function App() {
          <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Wrapper><Home/></Wrapper>}/>
+                <Route path="/categories" element={<Wrapper><Categories/></Wrapper>}/>
             </Routes>
          </BrowserRouter>
         </>
