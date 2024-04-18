@@ -119,15 +119,15 @@ const Header = () => {
             <Button
                   variant="text"
                   size="md"
-                  className="hidden rounded-full lg:inline-block"
+                  className="hidden rounded-full lg:inline-block text-blue-500  hover:bg-blue-50"
                   onClick={() => navigate("/login")}
                 >
                   Connexion
                 </Button>
                 <Button
-                  variant="gradient"
+                  variant=""
                   size="md"
-                  className="hidden rounded-full lg:inline-block"
+                  className="hidden rounded-full lg:inline-block bg-blue-500 "
                   onClick={() => navigate("/register")}
                 >
                   Commencer
