@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/home";
 import Categories from "./pages/categories";
 import Login from "./pages/auth/login";
+import Register from "./pages/auth/register";
 
 //Wrappers 
 import Wrapper from "./components/partials/wrapper";
@@ -21,6 +22,7 @@ export default function App() {
 
                 //AUTH
                 <Route path="/login" element={<Login/>}/>
+                <Route path="/register" element={<Register/>}/>
 
                 
             </Routes>
