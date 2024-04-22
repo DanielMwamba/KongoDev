@@ -2,9 +2,10 @@ import React from "react";
 import { Card, Input, Button, Typography } from "@material-tailwind/react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import {yupResolver} from "@hookform/resolvers/yup";
 
 //Validations
-
+import { LoginSchema } from "../../validations/auth/login.validation";
 
 
 //Api
@@ -20,7 +21,9 @@ export default function Login() {
         register,
         handleSubmit,
         formState: {errors},
-    } = useForm();
+    } = useForm({
+      resolver: yupResolver(LoginSchema())
+    });
 
     function onSubmit(data) {
         
