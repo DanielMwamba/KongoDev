@@ -162,3 +162,13 @@ export async function refreshToken(req, res) {
         res.status(500).json({msg: "Server error", error: error.message})
     }
 }
+
+module.exports = {
+    getAllUsers,
+    getUserByUsername,
+    register,
+    login,
+    refreshToken,
+    updateUser
+}
+
