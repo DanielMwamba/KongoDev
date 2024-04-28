@@ -97,8 +97,60 @@ async function register(req, res) {
     } catch (error) {
       return res.status(500).json({ status: 0, msg: error.message });
     }
+  };
+
+
+  async function User(req, res) {
+    try {
+      const userData = await user.findUnique({
+        where: { id: req.user_id },
+      });
+      if (!userData) {
+        return res.status(404).json({ status: 0, msg: "User Not Found." });
+      }
+      const { password, ...users } = userData;
+      return res.status(200).json({ status: 1, msg: "User Found.", users });
+    } catch (error) {
+      return res.status(500).json({ status: 0, msg: `Server Error : ${error.message}` });
+    }
   }
   
+  async function getAllUsers(req, res) {
+    try {
+      const users = await user.findMany();
+      return res.status(200).json({ users });
+    } catch (error) {
+      return res.status(500).json({ msg: error.message });
+    }
+  }
+  
+  async function updateUser(req, res) {
+    try {
+      const userId = req.user_id;
+      const userData = req.body;
+      const { username } = req.body;
+  
+      //Username Validation
+      const usernameExist = await user.findFirst({
+        where: { userName: username, NOT: { id: userId } },
+      });
+      if (usernameExist) {
+        return res.status(400).json({ status: 0, msg: `Username is already taken.` });
+      }
+  
+      const updatedUser = await user.update({
+        where: { id: userId },
+        data: userData,
+      });
+  
+      return res.status(200).json({ status: 1, msg: 'User updated successfully' });
+    } catch (error) {
+      console.error('Error updating user:', error);
+      return res.status(500).json({ error: 'Unable to update user' });
+    }
+  }
+
+
   async function refreshToken(req, res) {
     try {
       const { refreshToken } = req.body;
@@ -126,6 +178,9 @@ async function register(req, res) {
   module.exports = {
     login,
     register,
+    User,
+    getAllUsers,
+    updateUser,
     refreshToken,
     getUserByUsername,
     
