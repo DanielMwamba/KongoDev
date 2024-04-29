@@ -70,6 +70,7 @@ async function register(req, res) {
   
  async function login(req, res) {
     try {
+      
       const { email, password } = req.body;
   
       // Recherche de l'utilisateur par email
@@ -90,8 +91,8 @@ async function register(req, res) {
       }
   
       // Création et envoi du token d'authentification
-      const token = jwt.sign({ user_id: user.id }, process.env.SECRET_KEY, { expiresIn: '24h' });
-      const refreshToken = jwt.sign({ user_id: user.id }, process.env.SECRET_KEY, { expiresIn: '1y' });
+      const token = jwt.sign({ user_email: email }, process.env.SECRET_KEY, { expiresIn: '24h' });
+      const refreshToken = jwt.sign({ user_email: email }, process.env.SECRET_KEY, { expiresIn: '1y' });
   
       return res.status(200).json({ status: 1, msg: 'Login successful.', token, refreshToken });
     } catch (error) {
@@ -102,14 +103,22 @@ async function register(req, res) {
 
   async function User(req, res) {
     try {
+      const userEmail = req.user_email;
       const userData = await user.findUnique({
-        where: { id: req.user_id },
+        where: { email: userEmail },
+        select:{
+            id: true,
+            userName: true,
+            email: true,
+            name: true,
+            posts: true
+        }
       });
       if (!userData) {
         return res.status(404).json({ status: 0, msg: "User Not Found." });
       }
-      const { password, ...users } = userData;
-      return res.status(200).json({ status: 1, msg: "User Found.", users });
+      
+      return res.status(200).json({ status: 1, msg: "User Found.", user: userData});
     } catch (error) {
       return res.status(500).json({ status: 0, msg: `Server Error : ${error.message}` });
     }
@@ -164,8 +173,8 @@ async function register(req, res) {
           return res.status(401).json({ error: 'Invalid refresh token' });
         }
   
-        const token = jwt.sign({ user_id: decoded.user_id }, process.env.SECRET_KEY, { expiresIn: '24h' });
-        const refreshToken = jwt.sign({ user_id: decoded.user_id }, process.env.SECRET_KEY, { expiresIn: '1y' });
+        const token = jwt.sign({ user_email: decoded.user_email }, process.env.SECRET_KEY, { expiresIn: '24h' });
+        const refreshToken = jwt.sign({ user_email: decoded.user_email }, process.env.SECRET_KEY, { expiresIn: '1y' });
   
         // Envoi du nouveau token d'accès au client
         res.json({ token, refreshToken });
