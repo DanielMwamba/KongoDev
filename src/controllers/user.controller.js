@@ -135,24 +135,24 @@ async function register(req, res) {
   
   async function updateUser(req, res) {
     try {
-      const userId = req.user_id;
+      const userEmail = req.user_email;
       const userData = req.body;
-      const { username } = req.body;
+      const { userName } = req.body;
   
       //Username Validation
       const usernameExist = await user.findFirst({
-        where: { userName: username, NOT: { id: userId } },
+        where: { userName: userName},
       });
       if (usernameExist) {
         return res.status(400).json({ status: 0, msg: `Username is already taken.` });
       }
   
       const updatedUser = await user.update({
-        where: { id: userId },
+        where: { email: userEmail },
         data: userData,
       });
   
-      return res.status(200).json({ status: 1, msg: 'User updated successfully' });
+      return res.status(200).json({ status: 1, msg: 'User updated successfully:', updatedUser });
     } catch (error) {
       console.error('Error updating user:', error);
       return res.status(500).json({ error: 'Unable to update user' });
