@@ -13,7 +13,7 @@ function verifyToken (req, res, next) {
             if (err) {
                 return res.status(401).json({ status: 0, msg: "Unauthorized"});
             }
-            req.user_email = data.user_email;
+            req.user_id = data.user_id;
             next();
         });
     } catch (error) {
