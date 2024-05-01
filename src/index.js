@@ -1,8 +1,7 @@
 const express = require("express");
 
 const userRouter = require("./routes/user.routes")
-
-
+const postRouter = require("./routes/post.routes")
 
 
 
@@ -29,6 +28,7 @@ app.use((req, res, next) => {
 /***  ROUTES ****/
 
 app.use("/api/user", userRouter);
+app.use("/api/post", postRouter)
 
 
 /***  RUN SERVER ****/

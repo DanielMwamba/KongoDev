@@ -1,4 +1,4 @@
-import slug, {sulg} from "slug";
+const slug = require("slug")
 
 function slugify(text) {
     const timestamp = Date.now();
@@ -8,7 +8,7 @@ function slugify(text) {
 };
 
 
-export function slugifyUpdate(newText, oldSlug) {
+function slugifyUpdate(newText, oldSlug) {
     const sluggedText = slug(newText, {lower: true});
     const oldParts = oldSlug.split("-");
     const lastPart = oldParts[oldParts.length - 1];
@@ -17,5 +17,8 @@ export function slugifyUpdate(newText, oldSlug) {
 
 }
 
-export default slugify;
+module.exports = {
+    slugify,
+    slugifyUpdate
+}
     
