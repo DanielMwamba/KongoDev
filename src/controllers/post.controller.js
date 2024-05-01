@@ -297,6 +297,8 @@ module.exports = {
     getUserAllPosts,
     getAllPosts,
     updatePost,
+    getPost,
+    getUserPost
 
 }
 
