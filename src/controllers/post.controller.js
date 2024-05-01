@@ -153,7 +153,7 @@ async function addPost(req, res) {
 async function updatePost(req, res) {
     try {
         const userId = req.user_id;
-        const postId = req.params.id;
+        const postId = parseInt(req.params.id);
 
         const {title, category, summary, description, imageURL} = req.body;
 
@@ -206,7 +206,7 @@ async function updatePost(req, res) {
       }
   
       // Génère un nouveau slug
-      const newSlug = slugifyUpdate(title, post.slug);
+      const newSlug = slugifyUpdate(title, posts.slug);
   
       const updatedPost = await post.update({
         where: {
