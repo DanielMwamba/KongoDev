@@ -1,9 +1,26 @@
+import React, {useEffect, useState} from "react";
 import Hero from "../components/hero";
 import CategoryCard from "../components/categoryCard";
+import BlogCard from "../components/blogCarg";
 import categories from  "../services/api/categories.json";
 import { Button } from "@material-tailwind/react";
 
+//Api
+import * as api from "../services/api/api";
+
+
 export default function Home() {
+
+  const [posts, setPosts] = useState(null);
+  const [visible, setVisible] =  useState(9);
+
+  function handleLoadMore() {
+    setVisible((prevValue) => prevValue + prevValue);
+  }
+
+  useEffect(() => {
+    api.getAllPosts().then((response) => setPosts(response.posts))
+  }, [posts]);
     
     return(
         <>
@@ -43,6 +60,40 @@ export default function Home() {
           Explorer les Articles
         </span>
       </div>
+
+      <section className="text-gray-600 body-font">
+        <div className="container max-w-6xl p-6 mx-auto space-y-6 sm:space-y-12">
+          <div className="flex flex-wrap -m-4">
+            {posts?.slice(0, visible).map((post) => (
+              <BlogCard
+                key={post.id}
+                title={post.title}
+                category={post.category}
+                summary={post.summary}
+                slug={post.slug}
+                imageURL={post.imageURL}
+                user={post.author.name}
+                username={post.author.userName}
+                date={post.date}
+              />
+            ))}
+          </div>
+          <div className="flex justify-center items-center">
+            {posts && visible >= posts.length ? ( 
+              <p> ok </p>
+            ) : (
+              <Button
+                size="lg"
+                color="white"
+                className="flex items-center gap-3"
+                onClick={handleLoadMore}
+              >
+                Load More
+              </Button>
+            )}
+          </div>
+        </div>
+      </section>
         </>
     )
 }
