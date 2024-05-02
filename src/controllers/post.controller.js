@@ -13,6 +13,7 @@ async function getAllPosts(req, res) {
                 title: true,
                 category: true,
                 summary: true,
+                slug: true,
                 date: true,
                 author: {
                     select: {
