@@ -88,7 +88,7 @@ export default function Home() {
                 className="flex items-center gap-3"
                 onClick={handleLoadMore}
               >
-                Load More
+                Voir Plus
               </Button>
             )}
           </div>

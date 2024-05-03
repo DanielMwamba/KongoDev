@@ -53,16 +53,18 @@ export default function Login() {
           const refreshToken = data.refreshToken;
           localStorage.setItem("token", token);
           localStorage.setItem("refreshToken", refreshToken);
+
+          //isLoggedIn => TRUE
+          login()
          })
+          .then(() => {
+            const userData = api.getUser();
+            setUser(userData);
+            navigate("/");
+          })
+          .catch((error) => error);
 
-     
-       //isLoggedIn => TRUE
-       login()
-
-      const userData = await api.getUser();
-      setUser(userData);
-
-      navigate("/");
+      
     } catch (error) {
       return error
     }
