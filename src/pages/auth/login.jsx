@@ -47,13 +47,17 @@ export default function Login() {
         }
       );
 
-      const token = response.token;
-      const refreshToken = response.refreshToken;
-      localStorage.setItem("token", token);
-      localStorage.setItem("refreshToken", refreshToken);
+      response
+         .then((data) => {
+          const token = data.token;
+          const refreshToken = data.refreshToken;
+          localStorage.setItem("token", token);
+          localStorage.setItem("refreshToken", refreshToken);
+         })
 
+     
        //isLoggedIn => TRUE
-      login()
+       login()
 
       const userData = await api.getUser();
       setUser(userData);
