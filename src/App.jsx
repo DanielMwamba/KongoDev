@@ -1,4 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { AuthProvider } from "./context/authContext";
+import { UserProvider } from "./context/userContext";
+import {Toaster} from "react-hot-toast"
 
 // Partials
 
@@ -16,7 +19,10 @@ export default function App() {
 
     return (
         <>
-         <BrowserRouter>
+        <Toaster />
+        <AuthProvider>
+        <UserProvider>
+        <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Wrapper><Home/></Wrapper>}/>
                 <Route path="/categories" element={<Wrapper><Categories/></Wrapper>}/>
@@ -29,6 +35,9 @@ export default function App() {
                 
             </Routes>
          </BrowserRouter>
+        </UserProvider>
+        </AuthProvider>
+         
         </>
     )
 }

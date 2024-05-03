@@ -2,35 +2,70 @@ import React from "react";
 import { Card, Input, Button, Typography } from "@material-tailwind/react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { yupResolver} from "@hookform/resolvers/yup"
+import { yupResolver } from "@hookform/resolvers/yup";
+import toast from "react-hot-toast";
+import { useAuth } from "../../context/authContext";
+import { useUser } from "../../context/userContext";
 
 //Validations
 import { LoginSchema } from "../../validations/auth/login.validation";
 
-
 //Api
-
-
+import * as AuthApi from "../../services/api/auth/api.auth";
+import * as api from "../../services/api/api";
 
 export default function Login() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const { login } = useAuth();
+  const { setUser } = useUser();
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(LoginSchema()),
+  });
 
+  async function onSubmit(data) {
+    try {
+      const response = AuthApi.loginUser(data);
+      toast.promise(
+        response,
+        {
+          loading: "Veillez patientez...",
+          success: (data) => data.msg,
+          error: (err) => err.msg,
+        },
+        {
+          success: {
+            duration: 2000,
+          },
+          error: {
+            duration: 1000,
+          },
+        }
+      );
 
-    const {
-        register,
-        handleSubmit,
-        formState: {errors},
-    } = useForm({
-      resolver: yupResolver(LoginSchema())
-    });
+      const token = response.token;
+      const refreshToken = response.refreshToken;
+      localStorage.setItem("token", token);
+      localStorage.setItem("refreshToken", refreshToken);
 
-    function onSubmit(data) {
-        
+       //isLoggedIn => TRUE
+      login()
+
+      const userData = await api.getUser();
+      setUser(userData);
+
+      navigate("/");
+    } catch (error) {
+      return error
     }
+  }
 
-    return (
-        <section
+  return (
+    <section
       className="flex flex-col gap-4 justify-center items-center h-screen"
       style={{
         backgroundImage: `url(hero-bg.jpg)`,
@@ -63,7 +98,7 @@ export default function Login() {
           Bienvenue
         </Typography>
         <Typography color="gray" className="mt-1 font-normal">
-            Entrez vos coordonnées pour vous connecter.
+          Entrez vos coordonnées pour vous connecter.
         </Typography>
         <form
           className="mt-5 mb-2 w-80 max-w-screen-lg sm:w-96"
@@ -110,7 +145,6 @@ export default function Login() {
             >
               CONNEXION
             </Button>
-          
           </div>
           <Typography color="gray" className="mt-4 text-center font-normal">
             Vous n'avez pas un compte?{" "}
@@ -125,8 +159,4 @@ export default function Login() {
       </Card>
     </section>
   );
-    
-    
 }
-
-
