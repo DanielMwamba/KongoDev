@@ -4,8 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import toast from "react-hot-toast";
-import { useAuth } from "../../context/authContext";
-import { useUser } from "../../context/userContext";
+import {useDispatch} from "react-redux";
+import {authActions} from "../../redux/slices/authSlice";
+import { userActions } from "../../redux/slices/userSlice";
+
 
 //Validations
 import { LoginSchema } from "../../validations/auth/login.validation";
@@ -16,8 +18,7 @@ import * as api from "../../services/api/api";
 
 export default function Login() {
   const navigate = useNavigate();
-  const { login } = useAuth();
-  const { setUser } = useUser();
+  const dispatch = useDispatch()
 
   const {
     register,
@@ -55,12 +56,16 @@ export default function Login() {
           localStorage.setItem("refreshToken", refreshToken);
 
           //isLoggedIn => TRUE
-          login()
+          dispatch(authActions.login());
          })
           .then(() => {
-            const userData = api.getUser();
-            setUser(userData);
-            navigate("/");
+            api.getUser()
+               .then((data) => {
+                //USER DATA SET IN USER SLICE
+                dispatch(userActions.setUser(data));
+
+                navigate("/");
+               })
           })
           .catch((error) => error);
 
