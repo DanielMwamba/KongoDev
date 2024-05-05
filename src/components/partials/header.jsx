@@ -8,7 +8,7 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 import SearchBar from "../searchBar";
 
 const ScrollToTop = () => {
@@ -35,9 +35,8 @@ const NavLink = ({ to, children }) => {
         as="li"
         variant="small"
         color="blue-gray"
-        className={`${
-          isActive && "bg-gray-900 text-white"
-        } p-1 w-full font-normal rounded-md px-3 py-2 cursor-pointer hover:bg-gray-800 hover:text-white transition-all duration-200`}
+        className={`${isActive && "bg-gray-900 text-white"
+          } p-1 w-full font-normal rounded-md px-3 py-2 cursor-pointer hover:bg-gray-800 hover:text-white transition-all duration-200`}
       >
         {children}
       </Typography>
@@ -47,7 +46,7 @@ const NavLink = ({ to, children }) => {
 
 const Header = () => {
   const navigate = useNavigate();
-  const isLoggedIn = useSelector((state)=> state.auth.isLoggedIn);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
   const [openNav, setOpenNav] = useState(false);
 
@@ -98,7 +97,7 @@ const Header = () => {
   return (
     <>
       <ScrollToTop />
-      <SearchBar show={searchBar} onClose={()=> setSearchBar(false)}/>
+      <SearchBar show={searchBar} onClose={() => setSearchBar(false)} />
       <Navbar className="sticky inset-0 z-10 h-max max-w-full rounded-none py-2 px-4 lg:px-8 lg:py-4">
         <div className="flex items-center justify-between text-blue-gray-900">
           <Typography
@@ -115,38 +114,39 @@ const Header = () => {
               <MagnifyingGlassIcon
                 className="h-5 w-5 text-gray-900 cursor-pointer"
                 aria-hidden="true"
-                onClick={()=>{setSearchBar(true)}}
+                onClick={() => { setSearchBar(true) }}
               />
             </div>
             <div className="mr-4 hidden lg:block">{navList}</div>
 
             {isLoggedIn ? (
               <Button
-              variant="text"
-              size="md"
-              className="hidden rounded-full lg:inline-block text-blue-500  hover:bg-blue-50"
-              onClick={() => navigate("/authorpanel/dashboard")}
-            > TABLEAU DE BORD </Button>
+                variant="text"
+                size="md"
+                className="hidden rounded-full lg:inline-block text-blue-500  hover:bg-blue-50"
+                onClick={() => navigate("/authorpanel/dashboard")}
+              > TABLEAU DE BORD </Button>
             ) : (
-              <Button
-              variant="text"
-              size="md"
-              className="hidden rounded-full lg:inline-block text-blue-500  hover:bg-blue-50"
-              onClick={() => navigate("/login")}
-            >
-              Connexion
-            </Button>
-            )}
+              <>
+                <Button
+                  variant="text"
+                  size="md"
+                  className="hidden rounded-full lg:inline-block text-blue-500  hover:bg-blue-50"
+                  onClick={() => navigate("/login")}
+                >
+                  Connexion
+                </Button>
+                <Button
+                  variant=""
+                  size="md"
+                  className="hidden rounded-full lg:inline-block bg-blue-500 "
+                  onClick={() => navigate("/register")}
+                >
+                  Commencer
+                </Button>
 
-            
-            <Button
-              variant=""
-              size="md"
-              className="hidden rounded-full lg:inline-block bg-blue-500 "
-              onClick={() => navigate("/register")}
-            >
-              Commencer
-            </Button>
+              </>
+            )}
 
             <IconButton
               variant="text"
@@ -184,6 +184,7 @@ const Header = () => {
                   />
                 </svg>
               )}
+
             </IconButton>
           </div>
         </div>
@@ -191,31 +192,38 @@ const Header = () => {
         <Collapse open={openNav}>
           {navList}
           {isLoggedIn ? (
-              <Button
+            <Button
               variant="text"
               size="md"
               className="hidden rounded-full lg:inline-block text-blue-500  hover:bg-blue-50"
               onClick={() => navigate("/authorpanel/dashboard")}
             > TABLEAU DE BORD </Button>
-            ) : (
-              <Button
-              variant="text"
-              size="md"
-              className="hidden rounded-full lg:inline-block text-blue-500  hover:bg-blue-50"
-              onClick={() => navigate("/login")}
-            >
-              Connexion
-            </Button>
-            )}
+          ) : (
 
-            <Button
-              variant=""
-              size="md"
-              className="hidden rounded-full lg:inline-block bg-blue-500 "
-              onClick={() => navigate("/register")}
-            >
-              Commencer
-            </Button>
+            <>
+              <Button
+                variant="text"
+                size="md"
+                className="hidden rounded-full lg:inline-block text-blue-500  hover:bg-blue-50"
+                onClick={() => navigate("/login")}
+              >
+                Connexion
+              </Button>
+
+              <Button
+                variant=""
+                size="md"
+                className="hidden rounded-full lg:inline-block bg-blue-500 "
+                onClick={() => navigate("/register")}
+              >
+                Commencer
+              </Button>
+
+            </>
+
+          )}
+
+
         </Collapse>
       </Navbar>
     </>
