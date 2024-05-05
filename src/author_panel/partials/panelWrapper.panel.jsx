@@ -9,6 +9,9 @@ import {
 } from "@heroicons/react/24/outline";
 import { Typography } from "@material-tailwind/react";
 import { Link , useLocation, useNavigate} from "react-router-dom";
+import { useSelector,useDispatch } from "react-redux";
+import { authActions } from "../../redux/slices/authSlice";
+
 
 
 const navigation = [
@@ -35,8 +38,9 @@ const isCurrentPathname = (pathname, currentPathname) => {
 
 export default function PanelWrapper({ children }) {
 
- 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const user = useSelector(state=>state.user)
 
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -49,11 +53,12 @@ export default function PanelWrapper({ children }) {
     };
   });
   
-//   function handleLogout(){
-//     localStorage.removeItem('token');
-//     localStorage.removeItem('refreshToken');
+  function handleLogout(){
+    localStorage.removeItem('token');
+    localStorage.removeItem('refreshToken');
+    dispatch(authActions.logout());
     
-//   }
+  }
 
   const userNavigation = [
     { name: "Your Profile", href: "/authorpanel/profile" },
