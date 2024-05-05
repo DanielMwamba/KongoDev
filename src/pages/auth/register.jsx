@@ -3,14 +3,24 @@ import { Card, Input, Button, Typography } from "@material-tailwind/react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
+import toast from "react-hot-toast";
+import {useDispatch} from "react-redux";
+import {authActions} from "../../redux/slices/authSlice";
+import { userActions } from "../../redux/slices/userSlice";
+
 
 //Validation
 import { RegisterSchema } from "../../validations/auth/register.validation";
 
 //Api
+import * as AuthApi from "../../services/api/auth/api.auth";
+import * as api from "../../services/api/api";
+
 
 export default function Register() {
   const navigate = useNavigate();
+  const dispatch = useDispatch()
+
 
   const {
     register,
@@ -20,7 +30,52 @@ export default function Register() {
     resolver: yupResolver(RegisterSchema())
   });
 
-  function onSubmit(data) {}
+  function onSubmit(data) {
+    try {
+      const response = AuthApi.registerUser(data);
+      toast.promise(
+        response,
+        {
+          loading: "Veillez patientez...",
+          success: (data) => data.msg,
+          error: (err) => err.msg,
+        },
+        {
+          success: {
+            duration: 2000,
+          },
+          error: {
+            duration: 1000,
+          },
+        }
+      );
+
+      response
+         .then((data) => {
+          const token = data.token;
+          const refreshToken = data.refreshToken;
+          localStorage.setItem("token", token);
+          localStorage.setItem("refreshToken", refreshToken);
+
+          //isLoggedIn => TRUE
+          dispatch(authActions.login());
+         })
+          .then(() => {
+            api.getUser()
+               .then((data) => {
+                //USER DATA SET IN USER SLICE
+                dispatch(userActions.setUser(data));
+
+                navigate("/authorpanel/dashboard");
+               })
+          })
+          .catch((error) => error);
+
+      
+    } catch (error) {
+      return error
+    }
+  }
 
   return (
     <>

@@ -64,7 +64,7 @@ export default function Login() {
                 //USER DATA SET IN USER SLICE
                 dispatch(userActions.setUser(data));
 
-                navigate("/");
+                navigate("/authorpanel/dashboard");
                })
           })
           .catch((error) => error);
