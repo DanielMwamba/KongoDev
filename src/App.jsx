@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import {Toaster} from "react-hot-toast";
+import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import { authActions } from "./redux/slices/authSlice";
 
@@ -67,9 +68,7 @@ export default function App() {
     return (
         <>
         <Toaster />
-        <AuthProvider>
-        <UserProvider>
-        <BrowserRouter>
+          <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Wrapper><Home/></Wrapper>}/>
                 <Route path="/categories" element={<Wrapper><Categories/></Wrapper>}/>
@@ -81,9 +80,7 @@ export default function App() {
 
                 
             </Routes>
-         </BrowserRouter>
-        </UserProvider>
-        </AuthProvider>
+           </BrowserRouter>
          
         </>
     )
