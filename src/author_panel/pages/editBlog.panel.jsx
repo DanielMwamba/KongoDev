@@ -48,7 +48,7 @@ const EditBlog = () => {
   }, []);
 
   const getPostData = async () => {
-    let response = await api.getUserPost(id);
+    let response = await api.getUserPosts(id);
 
     reset(response);
     setDescriptionValue({ description: response.description });
