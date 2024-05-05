@@ -158,7 +158,7 @@ export default function AddBlog() {
                     />
                   </button>
                   <h1 className="text-2xl font-semibold text-gray-900">
-                    Nouveau post
+                    Nouvel article de blog
                   </h1>
                 </div>
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
@@ -195,7 +195,7 @@ export default function AddBlog() {
                               htmlFor="cover-photo"
                               className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                             >
-                              Image de couverture
+                              Photo de couverture
                             </label>
 
                             <div className="mt-1 sm:col-span-2 sm:mt-0">
@@ -225,7 +225,7 @@ export default function AddBlog() {
                               htmlFor="title"
                               className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                             >
-                              Title
+                              Titre
                             </label>
                             <div className="mt-1 sm:col-span-2 sm:mt-0">
                               <input
@@ -256,7 +256,7 @@ export default function AddBlog() {
                               htmlFor="summary"
                               className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                             >
-                              Sommaire
+                              Résumé
                             </label>
                             <div className="mt-1 sm:col-span-2 sm:mt-0">
                               <textarea
@@ -280,7 +280,7 @@ export default function AddBlog() {
                                 ) : (
                                   <p className="mt-2 text-sm text-gray-500">
                                     
-                                    Écrivez quelques phrases sur votre post.
+                                    Écrivez quelques phrases sur votre blog.
                                   </p>
                                 )}
                                 <span
@@ -360,7 +360,7 @@ export default function AddBlog() {
                                     " link lists media codesample quickbars",
                                   toolbar:
                                     "undo redo | styles | bold italic underline forecolor backcolor codesample | alignleft aligncenter alignright | bullist numlist | link media quickimage",
-                                  placeholder: "Write your blog post here...",
+                                  placeholder: "Ecrivez votre article de blog ici...",
                                 }}
                                 onEditorChange={(content) => {
                                   setValue("description", content);

@@ -115,7 +115,7 @@ const EditBlog = () => {
     toast.promise(
       response,
       {
-        loading: "Please wait...",
+        loading: "Veillez patientez...",
         success: (data) => data.msg,
         error: (err) => console.log(err.msg),
       },
@@ -193,7 +193,7 @@ const EditBlog = () => {
                               htmlFor="cover-photo"
                               className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                             >
-                              image de couverture
+                              Photo de couverture
                             </label>
 
                             <div className="mt-1 sm:col-span-2 sm:mt-0">
@@ -223,7 +223,7 @@ const EditBlog = () => {
                               htmlFor="title"
                               className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                             >
-                              Title
+                              Titre
                             </label>
                             <div className="mt-1 sm:col-span-2 sm:mt-0">
                               <input
@@ -254,7 +254,7 @@ const EditBlog = () => {
                               htmlFor="summary"
                               className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                             >
-                              Sommaire
+                              Résumé
                             </label>
                             <div className="mt-1 sm:col-span-2 sm:mt-0">
                               <textarea
@@ -277,7 +277,7 @@ const EditBlog = () => {
                                   </p>
                                 ) : (
                                   <p className="mt-2 text-sm text-gray-500">
-                                    Écrivez quelques phrases sur votre article.
+                                    Écrivez quelques phrases sur votre blog.
                                   </p>
                                 )}
                                 <span
@@ -341,7 +341,7 @@ const EditBlog = () => {
                               htmlFor="cover-photo"
                               className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                             >
-                              Déscription
+                              Description
                             </label>
                             <div className="mt-1 sm:col-span-2 sm:mt-0">
                               <Editor
@@ -355,7 +355,7 @@ const EditBlog = () => {
                                     " link lists media codesample quickbars",
                                   toolbar:
                                     "undo redo | styles | bold italic underline forecolor backcolor codesample | alignleft aligncenter alignright | bullist numlist | link media quickimage",
-                                  placeholder: "Write your blog post here...",
+                                  placeholder: "Ecrivez votre article de blog ici...",
                                 }}
                                 onEditorChange={(content) => {
                                   setValue("description", content);
