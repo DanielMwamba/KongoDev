@@ -15,6 +15,30 @@ export async function getUser() {
   }
 }
 
+export async function getUserByUsername(username) {
+  try {
+    const response = await axios.get(`https://kongodevapi.onrender.com/api/user/username/${username}`);
+    return response.data;
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export async function updateUser(data) {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await axios.put(`https://kongodevapi.onrender.com/api/user`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return Promise.resolve(response.data);
+  } catch (error) {
+    const errorMsg = error.response ? error.response.data.msg : error.message;
+    return Promise.reject({ msg: errorMsg });
+  }
+}
+
 export async function refreshToken(refreshToken) {
   try {
     const response = await axios.post(`https://kongodevapi.onrender.com/api/user/refreshToken`,{refreshToken});
@@ -33,9 +57,7 @@ export async function getAllPosts() {
       const response = await axios.get(`https://kongodevapi.onrender.com/api/post`);
       return response.data;
     } catch (err) {
-      console.log(
-        `Error while Fetching Particular User Data using GET API Method : ${err}`
-      );
+      console.log(err);
     }
   }
 
