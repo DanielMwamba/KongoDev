@@ -27,10 +27,6 @@ import DashboardPanel from "./author_panel/pages/dashboard.panel";
 import ProtectedRoutes from "./middlewares/protectedRoutes";
 import AuthRoutes from "./middlewares/authRoutes";
 
-//Api
-import { refreshToken } from "./services/api/api";
-
-
 
 const TokenRefreshInterval = 60 * 60 * 1000; 
 
