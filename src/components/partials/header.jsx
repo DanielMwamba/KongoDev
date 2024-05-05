@@ -8,6 +8,7 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import {useSelector} from "react-redux";
 import SearchBar from "../searchBar";
 
 const ScrollToTop = () => {
@@ -46,6 +47,7 @@ const NavLink = ({ to, children }) => {
 
 const Header = () => {
   const navigate = useNavigate();
+  const isLoggedIn = useSelector((state)=> state.auth.isLoggedIn);
 
   const [openNav, setOpenNav] = useState(false);
 
@@ -118,7 +120,15 @@ const Header = () => {
             </div>
             <div className="mr-4 hidden lg:block">{navList}</div>
 
-            <Button
+            {isLoggedIn ? (
+              <Button
+              variant="text"
+              size="md"
+              className="hidden rounded-full lg:inline-block text-blue-500  hover:bg-blue-50"
+              onClick={() => navigate("/authorpanel/dashboard")}
+            > TABLEAU DE BORD </Button>
+            ) : (
+              <Button
               variant="text"
               size="md"
               className="hidden rounded-full lg:inline-block text-blue-500  hover:bg-blue-50"
@@ -126,6 +136,9 @@ const Header = () => {
             >
               Connexion
             </Button>
+            )}
+
+            
             <Button
               variant=""
               size="md"
@@ -177,25 +190,32 @@ const Header = () => {
 
         <Collapse open={openNav}>
           {navList}
-          <Button
-            variant="text"
-            size="sm"
-            fullWidth
-            className="mb-2"
-            onClick={() => navigate("/login")}
-          >
-            Connexion
-          </Button>
+          {isLoggedIn ? (
+              <Button
+              variant="text"
+              size="md"
+              className="hidden rounded-full lg:inline-block text-blue-500  hover:bg-blue-50"
+              onClick={() => navigate("/authorpanel/dashboard")}
+            > TABLEAU DE BORD </Button>
+            ) : (
+              <Button
+              variant="text"
+              size="md"
+              className="hidden rounded-full lg:inline-block text-blue-500  hover:bg-blue-50"
+              onClick={() => navigate("/login")}
+            >
+              Connexion
+            </Button>
+            )}
 
-          <Button
-            variant="gradient"
-            size="sm"
-            fullWidth
-            className="mb-2"
-            onClick={() => navigate("/register")}
-          >
-            Commencer
-          </Button>
+            <Button
+              variant=""
+              size="md"
+              className="hidden rounded-full lg:inline-block bg-blue-500 "
+              onClick={() => navigate("/register")}
+            >
+              Commencer
+            </Button>
         </Collapse>
       </Navbar>
     </>
