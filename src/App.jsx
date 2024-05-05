@@ -20,6 +20,18 @@ import { refreshToken } from "./services/api/api"
 //Wrappers 
 import Wrapper from "./components/partials/wrapper";
 
+//Pages -Author Panel
+import DashboardPanel from "./author_panel/pages/dashboard.panel";
+
+//Middlewares
+import ProtectedRoutes from "./middlewares/protectedRoutes";
+import AuthRoutes from "./middlewares/authRoutes";
+
+//Api
+import { refreshToken } from "./services/api/api";
+
+
+
 const TokenRefreshInterval = 60 * 60 * 1000; 
 
 
@@ -74,10 +86,16 @@ export default function App() {
                 <Route path="/categories" element={<Wrapper><Categories/></Wrapper>}/>
                 <Route path="/about" element={<Wrapper><About/></Wrapper>}/>
 
-                //AUTH
+            //AUTH
+            <Route element={<AuthRoutes/>}>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/register" element={<Register/>}/>
+            </Route>
 
+            //Author Panel
+            <Route element={<ProtectedRoutes/>}>
+                <Route path="/authorpanel/dashboard" element={<DashboardPanel/>}/>
+            </Route>
                 
             </Routes>
            </BrowserRouter>
