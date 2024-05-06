@@ -4,7 +4,7 @@ import {Link,useNavigate} from "react-router-dom"
 import toast from "react-hot-toast";
 
 //Components
-import DeleteConfirmationModal from "./DeleteConfirmationModal.panel";
+import DeleteConfirmationModal from "./deleteConfirmationModal.panel";
 
 //helper
 import formatDate from "../../helpers/formatDate.helper";
