@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Editor } from "@tinymce/tinymce-react";
 import { PencilIcon, ChevronLeftIcon } from "@heroicons/react/24/outline";
-import DefaultCoverImg from "../components/DefaultCoverImg.panel";
+import DefaultCoverImg from "../components/defaultCoverImg";
 import ImageCropDialog from "../components/imageCropDialog";
 import toast from "react-hot-toast";
 import categories from "../../services/api/categories.json";

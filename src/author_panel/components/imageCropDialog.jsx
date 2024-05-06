@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Cropper from "react-easy-crop";
 import getCroppedImg from "./cropImage"; // Fonction pour recadrer et faire pivoter une image
-import './css/ImageCropDialog.css'; // Importer les styles pour le composant
+import './css/imageCropedDialog.css'; // Importer les styles pour le composant
 
 export default function ImageCropDialog({
   imageURL, // URL de l'image à recadrer
