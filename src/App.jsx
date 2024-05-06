@@ -14,6 +14,7 @@ import Register from "./pages/auth/register";
 import About from "./pages/about";
 
 
+
 //Api
 import { refreshToken } from "./services/api/api"
 
@@ -22,6 +23,11 @@ import Wrapper from "./components/partials/wrapper";
 
 //Pages -Author Panel
 import DashboardPanel from "./author_panel/pages/dashboard.panel";
+import Blogs from "./author_panel/pages/blogs.panel";
+import AddBlog from "./author_panel/pages/AddBlog.panel";
+import EditBlog from "./author_panel/pages/editBlog.panel";
+
+
 
 //Middlewares
 import ProtectedRoutes from "./middlewares/protectedRoutes";
@@ -91,6 +97,9 @@ export default function App() {
             //Author Panel
             <Route element={<ProtectedRoutes/>}>
                 <Route path="/authorpanel/dashboard" element={<DashboardPanel/>}/>
+                <Route path="/authorpanel/blogs" element={<Blogs/>}/>
+                <Route path="/authorpanel/blogs/new" element={<AddBlog/>}/>
+                <Route path="/authorpanel/blogs/edit/:id" element={<EditBlog/>}/>
             </Route>
                 
             </Routes>
