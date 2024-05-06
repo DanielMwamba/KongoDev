@@ -194,8 +194,9 @@ const Header = () => {
           {isLoggedIn ? (
             <Button
               variant="text"
-              size="md"
-              className="hidden rounded-full lg:inline-block text-blue-500  hover:bg-blue-50"
+              size="sm"
+              fullWidth
+              className="mb-2 rounded-full lg:inline-block text-blue-500  hover:bg-blue-50"
               onClick={() => navigate("/authorpanel/dashboard")}
             > TABLEAU DE BORD </Button>
           ) : (
@@ -203,17 +204,18 @@ const Header = () => {
             <>
               <Button
                 variant="text"
-                size="md"
-                className="hidden rounded-full lg:inline-block text-blue-500  hover:bg-blue-50"
+                size="sm"
+                fullWidth
+                className="mb-2 rounded-full lg:inline-block text-blue-500  hover:bg-blue-50"
                 onClick={() => navigate("/login")}
               >
                 Connexion
               </Button>
 
               <Button
-                variant=""
-                size="md"
-                className="hidden rounded-full lg:inline-block bg-blue-500 "
+                variant="text"
+                size="sm"
+                className="mb-2 rounded-full lg:inline-block bg-blue-500 "
                 onClick={() => navigate("/register")}
               >
                 Commencer
