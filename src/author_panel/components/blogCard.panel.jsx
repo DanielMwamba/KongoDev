@@ -12,7 +12,7 @@ import formatDate from "../../helpers/formatDate.helper";
 //Api
 // import * as api from "../../services/api/api";
 
-const BlogCard = (onPostDelete, image, title, date) => {
+const BlogCard = (onPostDelete, image, title, date, user_name, category) => {
 
   const navigate = useNavigate();
 
@@ -66,7 +66,7 @@ const BlogCard = (onPostDelete, image, title, date) => {
           <div className="bg-gray-100 rounded-b-lg">
             <div className="pt-6 px-6">
             <h2 className="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">
-              {props.category.toUpperCase()}
+              {category.toUpperCase()}
             </h2>
             <h1 className="title-font text-lg font-medium text-gray-900 mb-1">
             {title}
@@ -80,7 +80,7 @@ const BlogCard = (onPostDelete, image, title, date) => {
                   className="text-gray-600 hover:text-gray-600 dark:text-gray-400 hover:dark:text-gray-400 text-xs no-underline"
                   href="#"
                 >
-                  {props.user_name}
+                  {user_name}
                 </a>
                 <span className="w-[4px] h-[4px] rounded-full bg-gray-600 dark:bg-gray-500" />
                 <span className="text-gray-600 hover:text-gray-600 dark:text-gray-400 hover:dark:text-gray-400 text-xs leading-6 no-underline">
