@@ -61,8 +61,8 @@ export default function PanelWrapper({ children }) {
   }
 
   const userNavigation = [
-    { name: "Your Profile", href: "/authorpanel/profile" },
-    { name: "Log out", href: "/" },
+    { name: "Voter Profile", href: "/authorpanel/profile" },
+    { name: "Se déconnecter", href: "/", onClick: handleLogout},
   ];
 
   return (
