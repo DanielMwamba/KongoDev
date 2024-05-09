@@ -80,7 +80,7 @@ export default function Blogs() {
                                 title={post.title}
                                 image={post.imageURL}
                                 category={post.category}
-                                user_name={post.user.name}
+                                user_name={post.author.name}
                                 date={post.date}
                                 onPostDelete={onPostDelete}
                               />
