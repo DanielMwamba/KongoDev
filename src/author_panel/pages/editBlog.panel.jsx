@@ -320,7 +320,7 @@ const EditBlog = () => {
                                     key={category.id}
                                     value={category.name}
                                   >
-                                    {CFA(category.name)}
+                                    {category.name}
                                   </option>
                                 ))}
                               </select>
