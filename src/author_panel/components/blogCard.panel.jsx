@@ -12,7 +12,7 @@ import formatDate from "../../helpers/formatDate.helper";
 //Api
 // import * as api from "../../services/api/api";
 
-const BlogCard = (onPostDelete, image, title, date, user_name, category, id) => {
+const BlogCard = ({onPostDelete, image, title, date, user_name, category, id}) => {
 
   const navigate = useNavigate();
 

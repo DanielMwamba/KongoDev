@@ -75,8 +75,8 @@ export default function Blogs() {
                           {posts?.map((post) => {
                             return (
                               <BlogCard
-                                key={post._id}
-                                id={post._id}
+                                key={post.id}
+                                id={post.id}
                                 title={post.title}
                                 image={post.imageURL}
                                 category={post.category}
