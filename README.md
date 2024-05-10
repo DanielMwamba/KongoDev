@@ -2,97 +2,80 @@
 
 ![Kongo Dev]()
 
-Kongo Dev is a full-stack web application built using the PERN stack (Postgresql, Express, React, Node.js).
+Kongo Dev est une application web full-stack construite en utilisant la pile PERN (Postgresql, Express, React, Node.js).
 
-## Table of Contents
+C'est une plateforme qui vise à rassembler et valoriser les talents des développeurs congolais. Avec Kongo Dev, nous souhaitons créer un espace d'échange et de collaboration où chacun pourra partager ses connaissances, ses projets et ses idées pour contribuer ensemble à l'émergence d'un avenir numérique prometteur en République Démocratique du Congo.
 
-- [Key Features](#key-features)
+## Table des matières
+
+- [Fonctionnalités principales](#fonctionnalités-principales)
 - [Tech Stack](#tech-stack)
-- [Demo](#demo)
-- [Getting Started](#getting-started)
+- [Démo](#démo)
+- [Pour commencer](#pour-commencer)
   - [Installation](#installation)
-  - [Environment Variables](#environment-variables)
-    - [Frontend](#frontend)
-    - [Backend](#backend)
+  - [Variables d'environnement](#variables-d'environnement)
+    
 - [Contact](#contact)
 
-## Key Features
+## Fonctionnalités principales
 
-- Blog post creation, editing, and deletion
-- Rich text editor for creating posts
-- Image upload for posts
-- User authentication
+- Création, édition et suppression d'articles de blog
+- Éditeur de texte enrichi pour la création d'articles
+- Téléchargement d'images pour les articles
+- Authentification des utilisateurs
+
 
 ## Tech Stack
 
-**Frontend:** React, Redux Toolkit, TailwindCSS
+   - React
+   - Redux Toolkit
+   -  TailwindCSS
+   -  Material tailwind
 
-**Backend:** Node, Express, Postgresql, JWT
 
-## Demo
 
-Experience the live demo of the application: [https://kongodev.netlify.app](https:kongodev.netlify.app)
+## Démo 
 
-## Getting Started
+Découvre la démo live de l'application : [https://kongodev.netlify.app](https:kongodev.netlify.app)
+
+## Pour commencer 
 
 ### Installation
 
-Follow these steps to set up the application:
+Suivez ses étapes pour configurer l'application :
 
 ```bash
-# Clone the repository
+# Clonez le dépôt
 
-# Frontend 
 git clone https://github.com/kadea-academy-learners/capstone-c2-DanielMwamba.git
 
-# Backend
-git clone https://github.com/kadea-academy-learners/capstone2-c2-DanielMwamba.git
+# Installez les dépendances
 
-# Frontend - Install dependencies
 npm install
 
-# Backend - Install dependencies
-npm install
 ```
 
-### Environment Variables
+### Variables d'environnement 
 
-Before you run the application, make sure to create a `.env` file in both for the `frontend` and `backend` directories.
+Avant d'exécuter l'application, assurez-vous de créer un fichier `.env` dans le répertoire de votre projet.
 
-#### Frontend
-
-In `.env` (frontend folder):
+Dans `.env` :
 
 ```dotenv
 VITE_TINYMCE_API_KEY=<Get your API key from [TinyMCE](https://www.tiny.cloud/)>
 ```
 
-#### Backend
+### Démarrer l'Application
 
-In `.env` (Backend folder):
-
-```dotenv
-CLOUDINARY_API_KEY=<Get your API Key from [Cloudinary](https://cloudinary.com/) after creating an account>
-CLOUDINARY_CLOUD_NAME=<Get your Cloud Name from [Cloudinary](https://cloudinary.com/) after creating an account>
-SECRET_KEY=<Your secret key for JWT (Random Text)>
-DATABASE_URI=<Get your Postgres URI>
-PORT=<Port for the server, default is 3000>
-```
-
-### Start the Application
-
-After setting up the environment variables, you can now start the application:
+ Après avoir configuré les variables d'environnement, vous pouvez maintenant démarrer l'application :
 
 ```bash
-# Start the server
+# Démarrer l'application 
 npm run dev
 
-# Start the frontend
-npm run dev
 ```
 
-The app should now be up and running at http://localhost:5173
+ L'application devrait maintenant être accessible à l'adresse http://localhost:5173
 
 ## Contact
-
-For any questions or issues, feel free to reach out to me at danmuamba81@gmail.com. We would love to hear from you!
+Pour toute question ou problème, n'hésitez pas à me contacter à danmuamba81@gmail.com. Je serait ravis de vous entendre !
