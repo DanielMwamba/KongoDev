@@ -278,7 +278,7 @@ async function getPost(req, res) {
       },
     });
 
-    if (!post) {
+    if (!posts) {
       return res.status(404).json({ msg: "Post not found" });
     }
 
