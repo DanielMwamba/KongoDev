@@ -17,6 +17,7 @@ postRouter.get("/", postController.getAllPosts);
 postRouter.get("/user-all", verifyToken, postController.getUserAllPosts)
 postRouter.post("/", verifyToken, postController.addPost);
 postRouter.put("/:id", verifyToken, postController.updatePost);
+postRouter.delete("/:id", verifyToken, postController.deletePost)
 
 
 module.exports = postRouter
