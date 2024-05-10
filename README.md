@@ -16,7 +16,7 @@ Cette API est conçue pour gérer les utilisateurs et les publications d'un blog
 4. Créez un fichier `.env` à la racine du projet et configurez les variables d'environnement nécessaires (voir ci-dessous).
 5. Démarrez le serveur en exécutant la commande suivante :
    ```
-   npm start
+   npm run dev
    ```
 
 ## Variables d'environnement
@@ -35,8 +35,16 @@ Avant d'exécuter l'API, assurez-vous d'avoir installé les prérequis système 
 
 - Node.js
 - npm
-- Base de données PostgreSQL 
-- Compte Cloudinary (pour le stockage des images)
+- Base de données PostgreSQL
+- **@prisma/client**: ^5.13.0 - ORM (Object-Relational Mapping) pour Node.js, permettant d'interagir avec la base de données de manière simple et intuitive.
+- **bcrypt**: ^5.1.1 - Bibliothèque de hachage de mots de passe sécurisée pour Node.js, utilisée pour le hachage des mots de passe des utilisateurs.
+- **cloudinary**: ^2.2.0 - Service de gestion des ressources numériques basé sur le cloud, utilisé pour le stockage et la gestion des images téléchargées.
+- **cors**: ^2.8.5 - Middleware Express pour gérer les requêtes CORS (Cross-Origin Resource Sharing) dans votre API.
+- **dotenv**: ^16.4.5 - Module Node.js permettant de charger des variables d'environnement à partir d'un fichier `.env`.
+- **express**: ^4.19.2 - Cadre de développement Web pour Node.js, utilisé pour créer des API Web et des applications Web.
+- **jsonwebtoken**: ^9.0.2 - Implémentation de JSON Web Tokens (JWT) pour Node.js, utilisée pour l'authentification et l'autorisation des utilisateurs.
+- **slug**: ^9.0.0 - Bibliothèque pour la création de slugs conviviaux pour les moteurs de recherche à partir de chaînes de caractères. 
+
 
 ## Scripts de configuration
 
@@ -308,4 +316,8 @@ Avant d'exécuter l'API, assurez-vous d'avoir installé les prérequis système 
       }
     }
     ```
+
+## Authentification et autorisation
+
+Cette API utilise JSON Web Tokens (JWT) pour l'authentification et l'autorisation. Pour accéder aux endpoints protégés, incluez le jeton d'authentification dans l'en-tête `Authorization` de la requête HTTP.
 
