@@ -136,14 +136,14 @@ async function getAllUsers(req, res) {
 
 async function updateUser(req, res) {
   try {
-    const userId = req.user_id;
+    const userId = parseInt(req.user_id);
     const userData = req.body;
-    const { userName } = req.body;
+    const { username } = req.body;
 
     //Username Validation
     const usernameExist = await user.findFirst({
       where: {
-        userName: userName,
+        userName: username,
         NOT: { id: userId }
       },
     });
@@ -155,6 +155,10 @@ async function updateUser(req, res) {
       where: { id: userId },
       data: userData,
     });
+
+    if (!updateUser) {
+      return res.status(404).json({error: 'User not found'})
+    }
 
     return res.status(200).json({ status: 1, msg: 'User updated successfully:', updatedUser });
   } catch (error) {
