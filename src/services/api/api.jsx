@@ -122,3 +122,14 @@ export async function getAllPosts() {
       return Promise.reject({ msg: errorMsg });
     }
   }
+
+  export async function getPost(slug) {
+    try {
+      const response = await axios.get(`https://kongodevapi.onrender.com/api/post/slug/${slug}`);
+
+      return Promise.resolve(response.data);
+    } catch (error) {
+      const errorMsg = error.response ? error.response.data.msg : error.message;
+      return Promise.reject({ msg: errorMsg });
+    }
+  }

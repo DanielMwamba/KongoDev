@@ -12,6 +12,7 @@ import Categories from "./pages/categories";
 import Login from "./pages/auth/login";
 import Register from "./pages/auth/register";
 import About from "./pages/about";
+import Blog from "./pages/blog";
 
 
 
@@ -87,6 +88,7 @@ export default function App() {
                 <Route path="/" element={<Wrapper><Home/></Wrapper>}/>
                 <Route path="/categories" element={<Wrapper><Categories/></Wrapper>}/>
                 <Route path="/about" element={<Wrapper><About/></Wrapper>}/>
+                <Route path="/blog/:slug" element={<Wrapper><Blog/></Wrapper>}/>
 
             //AUTH
             <Route element={<AuthRoutes/>}>
