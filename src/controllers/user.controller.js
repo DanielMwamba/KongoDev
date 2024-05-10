@@ -2,9 +2,7 @@ const { PrismaClient } = require("@prisma/client");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-
-const { user } = new PrismaClient
-
+const { user } = new PrismaClient();
 
 async function getUserByUsername(req, res) {
   try {
@@ -12,20 +10,26 @@ async function getUserByUsername(req, res) {
     const users = await user.findUnique({
       where: {
         userName: username,
-      }, include: {
-        posts: true
-      }
+      },
+      include: {
+        posts: true,
+      },
     });
     if (!users) {
-      return res.status(404).json({ status: 0, msg: 'User Not Found.' });
+      return res
+        .status(404)
+        .json({ status: 0, msg: "Utilisateur non trouvé." });
     }
 
     const { password, ...userData } = users;
 
-    return res.status(200).json({ status: 1, msg: 'User Found.', user: userData });
-
+    return res
+      .status(200)
+      .json({ status: 1, msg: "Utilisateur trouvé.", user: userData });
   } catch (error) {
-    return res.status(500).json({ status: 0, msg: `Server Error: ${error.message}` });
+    return res
+      .status(500)
+      .json({ status: 0, msg: `Erreur du serveur : ${error.message}` });
   }
 }
 
@@ -41,7 +45,12 @@ async function register(req, res) {
     });
 
     if (existingUser) {
-      return res.status(400).json({ status: 0, msg: 'Email or username is already in use.' });
+      return res
+        .status(400)
+        .json({
+          status: 0,
+          msg: "L'email ou le nom d'utilisateur est déjà utilisé.",
+        });
     }
 
     // Hash du mot de passe
@@ -54,24 +63,36 @@ async function register(req, res) {
         email: email,
         userName: username,
         password: hashedPassword,
-        profileImageURL: "data:image/jpeg"
+        profileImageURL: "data:image/jpeg",
       },
     });
 
     // Création et envoi du token d'authentification
-    const token = jwt.sign({ user_id: newUser.id }, process.env.SECRET_KEY, { expiresIn: '24h' });
-    const refreshToken = jwt.sign({ user_id: newUser.id }, process.env.SECRET_KEY, { expiresIn: '1y' });
+    const token = jwt.sign({ user_id: newUser.id }, process.env.SECRET_KEY, {
+      expiresIn: "24h",
+    });
+    const refreshToken = jwt.sign(
+      { user_id: newUser.id },
+      process.env.SECRET_KEY,
+      { expiresIn: "1y" }
+    );
 
-    return res.status(201).json({ status: 1, msg: 'Registered successfully.', token, refreshToken });
+    return res
+      .status(201)
+      .json({ status: 1, msg: "Enregistrement réussi.", token, refreshToken });
   } catch (error) {
-    return res.status(500).json({ status: 0, msg: 'Failed while registering user', error: error.message });
+    return res
+      .status(500)
+      .json({
+        status: 0,
+        msg: "Échec lors de l'enregistrement de l'utilisateur",
+        error: error.message,
+      });
   }
 }
 
-
 async function login(req, res) {
   try {
-
     const { email, password } = req.body;
 
     // Recherche de l'utilisateur par email
@@ -82,25 +103,32 @@ async function login(req, res) {
     });
 
     if (!users) {
-      return res.status(404).json({ status: 0, msg: 'User not found' });
+      return res.status(404).json({ status: 0, msg: "Utilisateur non trouvé" });
     }
 
     // Vérification du mot de passe
     const passwordMatched = await bcrypt.compare(password, users.password);
     if (!passwordMatched) {
-      return res.status(401).json({ status: 0, msg: 'Invalid password' });
+      return res.status(401).json({ status: 0, msg: "Mot de passe incorrect" });
     }
 
     // Création et envoi du token d'authentification
-    const token = jwt.sign({ user_id: users.id }, process.env.SECRET_KEY, { expiresIn: '24h' });
-    const refreshToken = jwt.sign({ user_id: users.id }, process.env.SECRET_KEY, { expiresIn: '1y' });
+    const token = jwt.sign({ user_id: users.id }, process.env.SECRET_KEY, {
+      expiresIn: "24h",
+    });
+    const refreshToken = jwt.sign(
+      { user_id: users.id },
+      process.env.SECRET_KEY,
+      { expiresIn: "1y" }
+    );
 
-    return res.status(200).json({ status: 1, msg: 'Login successful.', token, refreshToken });
+    return res
+      .status(200)
+      .json({ status: 1, msg: "Connexion réussie.", token, refreshToken });
   } catch (error) {
     return res.status(500).json({ status: 0, msg: error.message });
   }
-};
-
+}
 
 async function User(req, res) {
   try {
@@ -112,16 +140,22 @@ async function User(req, res) {
         userName: true,
         email: true,
         name: true,
-        posts: true
-      }
+        posts: true,
+      },
     });
     if (!userData) {
-      return res.status(404).json({ status: 0, msg: "User Not Found." });
+      return res
+        .status(404)
+        .json({ status: 0, msg: "Utilisateur non trouvé." });
     }
 
-    return res.status(200).json({ status: 1, msg: "User Found.", user: userData });
+    return res
+      .status(200)
+      .json({ status: 1, msg: "Utilisateur trouvé.", user: userData });
   } catch (error) {
-    return res.status(500).json({ status: 0, msg: `Server Error : ${error.message}` });
+    return res
+      .status(500)
+      .json({ status: 0, msg: `Erreur du serveur : ${error.message}` });
   }
 }
 
@@ -140,15 +174,17 @@ async function updateUser(req, res) {
     const userData = req.body;
     const { username } = req.body;
 
-    //Username Validation
+    // Validation du nom d'utilisateur
     const usernameExist = await user.findFirst({
       where: {
         userName: username,
-        NOT: { id: userId }
+        NOT: { id: userId },
       },
     });
     if (usernameExist) {
-      return res.status(400).json({ status: 0, msg: `Username is already taken.` });
+      return res
+        .status(400)
+        .json({ status: 0, msg: `Le nom d'utilisateur est déjà pris.` });
     }
 
     const updatedUser = await user.update({
@@ -156,41 +192,60 @@ async function updateUser(req, res) {
       data: userData,
     });
 
-    if (!updateUser) {
-      return res.status(404).json({error: 'User not found'})
+    if (!updatedUser) {
+      return res.status(404).json({ error: "Utilisateur non trouvé" });
     }
 
-    return res.status(200).json({ status: 1, msg: 'User updated successfully:', updatedUser });
+    return res
+      .status(200)
+      .json({
+        status: 1,
+        msg: "Utilisateur mis à jour avec succès:",
+        updatedUser,
+      });
   } catch (error) {
-    console.error('Error updating user:', error);
-    return res.status(500).json({ error: 'Unable to update user' });
+    console.error("Erreur lors de la mise à jour de l'utilisateur :", error);
+    return res
+      .status(500)
+      .json({ error: "Impossible de mettre à jour l'utilisateur" });
   }
 }
-
 
 async function refreshToken(req, res) {
   try {
     const { refreshToken } = req.body;
 
     if (!refreshToken) {
-      return res.status(401).json({ error: 'Refresh token not provided' });
+      return res
+        .status(401)
+        .json({ error: "Le jeton de rafraîchissement n'a pas été fourni" });
     }
 
     jwt.verify(refreshToken, process.env.SECRET_KEY, (err, decoded) => {
       if (err) {
-        return res.status(401).json({ error: 'Invalid refresh token' });
+        return res
+          .status(401)
+          .json({ error: "Jeton de rafraîchissement invalide" });
       }
 
-      const token = jwt.sign({ user_id: decoded.user_id }, process.env.SECRET_KEY, { expiresIn: '24h' });
-      const refreshToken = jwt.sign({ user_id: decoded.user_id }, process.env.SECRET_KEY, { expiresIn: '1y' });
+      const token = jwt.sign(
+        { user_id: decoded.user_id },
+        process.env.SECRET_KEY,
+        { expiresIn: "24h" }
+      );
+      const refreshToken = jwt.sign(
+        { user_id: decoded.user_id },
+        process.env.SECRET_KEY,
+        { expiresIn: "1y" }
+      );
 
       // Envoi du nouveau token d'accès au client
       res.json({ token, refreshToken });
     });
   } catch (error) {
-    res.status(500).json({ msg: 'Server error', error: error.message });
+    res.status(500).json({ msg: "Erreur du serveur", error: error.message });
   }
-};
+}
 
 module.exports = {
   login,
@@ -200,5 +255,4 @@ module.exports = {
   updateUser,
   refreshToken,
   getUserByUsername,
-
-}
+};
