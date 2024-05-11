@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import Loader from "../components/loader";
+import "../pages/css/blogStyle.css"
 
 //helper
 import formatDate from "../helpers/formatDate.helper";
