@@ -10,7 +10,7 @@ import DeleteConfirmationModal from "./deleteConfirmationModal.panel";
 import formatDate from "../../helpers/formatDate.helper";
 
 //Api
-// import * as api from "../../services/api/api";
+import * as api from "../../services/api/api";
 
 const BlogCard = ({onPostDelete, image, title, date, user_name, category, id}) => {
 
@@ -26,30 +26,30 @@ const BlogCard = ({onPostDelete, image, title, date, user_name, category, id}) =
     setDeleteId(null)
   }
 
-//   function onDelete(post_id){
-//     setDeleteId(null)
+  function onDelete(post_id){
+    setDeleteId(null)
 
-//     // const response = api.deletePost(post_id);
+    const response = api.deletePost(post_id);
 
-//     toast.promise(response, {
-//       loading: "Veillez pentientez...",
-//       success: (data)=>data.msg,
-//       error: (err)=>err.msg
-//     },
-//     {
-//       success:{
-//         duration:2000
-//       },
-//       error:{
-//         duration:1000
-//       }
-//     });
+    toast.promise(response, { 
+      loading: "Veillez pentientez...",
+      success: (data)=>data.msg,
+      error: (err)=>err.msg
+    },
+    {
+      success:{
+        duration:2000
+      },
+      error:{
+        duration:1000
+      }
+    });
 
-//     response.then(()=>{
-//       onPostDelete()
-//     })
+    response.then(()=>{
+      onPostDelete()
+    })
 
-//   }
+  }
 
 
   return (
@@ -123,7 +123,7 @@ const BlogCard = ({onPostDelete, image, title, date, user_name, category, id}) =
         </div>
       </div>
     </>
-  );
+  )
 };
 
 export default BlogCard;

@@ -92,6 +92,22 @@ export async function getAllPosts() {
     }
   }
 
+  export async function deletePost(post_id) {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.delete(`https://kongodevapi.onrender.com/api/post/${post_id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return Promise.resolve(response.data);
+    } catch (error) {
+      const errorMsg = error.response ? error.response.data.msg : error.message;
+      return Promise.reject({ msg: errorMsg });
+    }
+  }
+
+
   export async function getUserPosts() {
     try {
       const token = localStorage.getItem("token");
@@ -100,6 +116,17 @@ export async function getAllPosts() {
           Authorization: `Bearer ${token}`,
         },
       });
+      return Promise.resolve(response.data);
+    } catch (error) {
+      const errorMsg = error.response ? error.response.data.msg : error.message;
+      return Promise.reject({ msg: errorMsg });
+    }
+  }
+
+  export async function getPost(slug) {
+    try {
+      const response = await axios.get(`https://kongodevapi.onrender.com/api/post/slug/${slug}`);
+
       return Promise.resolve(response.data);
     } catch (error) {
       const errorMsg = error.response ? error.response.data.msg : error.message;
