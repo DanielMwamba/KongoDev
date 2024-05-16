@@ -13,6 +13,7 @@ import Login from "./pages/auth/login";
 import Register from "./pages/auth/register";
 import About from "./pages/about";
 import Blog from "./pages/blog";
+import Author from "./pages/author";
 
 
 
@@ -89,8 +90,11 @@ export default function App() {
                 <Route path="/categories" element={<Wrapper><Categories/></Wrapper>}/>
                 <Route path="/about" element={<Wrapper><About/></Wrapper>}/>
                 <Route path="/blog/:slug" element={<Wrapper><Blog/></Wrapper>}/>
+                <Route path="/blog/author/:username" element={<Wrapper><Author/></Wrapper>}/>
 
-            //AUTH
+
+            //AUTH 
+
             <Route element={<AuthRoutes/>}>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/register" element={<Register/>}/>
