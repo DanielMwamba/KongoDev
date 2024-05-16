@@ -327,6 +327,45 @@ async function deletePost(req, res) {
   }
 }
 
+async function getPostsByCategory(req, res) {
+  try {
+    const { category } = req.params;
+
+    const posts = await post.findMany({
+      where: {
+        category: category,
+      },
+      select: {
+        id: true,
+        title: true,
+        category: true,
+        summary: true,
+        slug: true,
+        imageURL: true,
+        date: true,
+        author: {
+          select: {
+            name: true,
+            userName: true,
+          },
+        },
+      },
+    });
+
+    if (posts.length === 0) {
+      return res
+        .status(200)
+        .json({ status: 0, msg: "Articles non trouvé.", posts });
+    }
+
+    return res.status(200).json({ status: 1, msg: "Articles trouvé", posts });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ status: 0, msg: `Server Error: ${error.message}` });
+  }
+}
+
 module.exports = {
   addPost,
   getUserAllPosts,
@@ -335,4 +374,5 @@ module.exports = {
   getPost,
   getUserPost,
   deletePost,
+  getPostsByCategory
 };

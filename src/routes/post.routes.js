@@ -11,6 +11,7 @@ const postRouter = express.Router()
 //Public
 postRouter.get("/", postController.getAllPosts);
 postRouter.get("/slug/:slug",postController.getPost);
+postRouter.get("/category/:category",postController.getPostsByCategory);
 
 
 //Protected
