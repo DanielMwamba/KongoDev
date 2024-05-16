@@ -63,7 +63,7 @@ async function register(req, res) {
         email: email,
         userName: username,
         password: hashedPassword,
-        profileImageURL: "data:image/jpeg",
+        profileImageURL: "https://res.cloudinary.com/dqbduuqel/image/upload/v1715241630/profile-icon-design-free-vector_sghprc.jpg",
       },
     });
 
