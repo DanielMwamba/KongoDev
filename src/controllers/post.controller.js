@@ -225,7 +225,7 @@ async function updatePost(req, res) {
 
     return res
       .status(200)
-      .json({ msg: "Post updated successfully", data: updatedPost });
+      .json({ msg: "Article mise à jour avec succès", data: updatedPost });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ msg: error.message });
@@ -247,7 +247,7 @@ async function getUserPost(req, res) {
     });
 
     if (!posts) {
-      return res.status(404).json({ msg: "Post not found" });
+      return res.status(404).json({ msg: "Article non trouvée" });
     }
 
     if (posts.authorId !== userId) {
@@ -279,7 +279,7 @@ async function getPost(req, res) {
     });
 
     if (!posts) {
-      return res.status(404).json({ msg: "Post not found" });
+      return res.status(404).json({ msg: "Article non trouvée" });
     }
 
     return res.status(200).json({ posts });
@@ -308,11 +308,11 @@ async function deletePost(req, res) {
     });
 
     if (!posts) {
-      return res.status(400).json({ msg: "Publication non trouvée" });
+      return res.status(400).json({ msg: "Article non trouvée" });
     }
 
     if (posts.author.id !== jwtUserId) {
-      return res.status(401).json({ msg: "Non autorisé" });
+      return res.status(401).json({ msg: "Unauthorized" });
     }
 
     await post.delete({
@@ -321,7 +321,7 @@ async function deletePost(req, res) {
       },
     });
 
-    return res.status(200).json({ msg: "Publication supprimée avec succès" });
+    return res.status(200).json({ msg: "Article supprimée avec succès" });
   } catch (error) {
     return res.status(500).json({ msg: error.message });
   }
