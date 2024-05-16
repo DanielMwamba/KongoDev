@@ -82,7 +82,7 @@ export default function Register() {
       <section
         className="flex justify-center items-center flex-col h-screen gap-4"
         style={{
-          backgroundImage: `url(hero-bg.jpg)`,
+          backgroundImage: `url(cover.png)`,
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",

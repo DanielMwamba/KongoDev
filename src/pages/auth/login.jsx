@@ -79,7 +79,7 @@ export default function Login() {
     <section
       className="flex flex-col gap-4 justify-center items-center h-screen"
       style={{
-        backgroundImage: `url(hero-bg.jpg)`,
+        backgroundImage: `url(cover.png)`,
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",

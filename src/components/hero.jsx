@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Hero = () => {
   const gradient = "linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5))";
-  const imageUrl = "hero-bg.jpg";
+  const imageUrl = "cover.png";
 
   return (
     <div
