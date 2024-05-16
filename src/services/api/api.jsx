@@ -133,3 +133,14 @@ export async function getAllPosts() {
       return Promise.reject({ msg: errorMsg });
     }
   }
+
+  export async function getPostsByCategory(category) {
+    try {
+      const response = await axios.get(`https://kongodevapi.onrender.com/api/post/category/${category}`)
+
+      return Promise.resolve(response.data);
+    } catch (error) {
+      const errorMsg = error.response ? error.response.data.msg : error.message;
+      return Promise.reject({ msg: errorMsg });
+    }
+  }
