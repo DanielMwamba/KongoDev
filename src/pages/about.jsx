@@ -67,7 +67,7 @@ const About = () => {
         <div>
           <img
             className="object-cover w-full h-56 rounded shadow-lg sm:h-96"
-            src="https://images.unsplash.com/photo-1534972195531-d756b9bfa9f2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80"
+            src="cover.png"
             alt=""
           />
         </div>
