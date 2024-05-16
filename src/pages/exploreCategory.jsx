@@ -7,7 +7,7 @@ import Loader from "../components/loader";
 //Api
 import * as api from "../services/api/api";
 
-export default function Explore() {
+export default function ExploreCategory() {
     const {category} = useParams();
 
     const [posts, setPosts] = useState(null);

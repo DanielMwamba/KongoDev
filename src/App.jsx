@@ -14,7 +14,8 @@ import Register from "./pages/auth/register";
 import About from "./pages/about";
 import Blog from "./pages/blog";
 import Author from "./pages/author";
-import Explore from "./pages/exploreCategory";
+import ExploreCategory from "./pages/exploreCategory";
+import Explore from "./pages/explore";
 
 
 
@@ -89,7 +90,8 @@ export default function App() {
             <Routes>
                 <Route path="/" element={<Wrapper><Home/></Wrapper>}/>
                 <Route path="/categories" element={<Wrapper><Categories/></Wrapper>}/>
-                <Route path="/categories/:category" element={<Wrapper><Explore/></Wrapper>}/>
+                <Route path="/categories/:category" element={<Wrapper><ExploreCategory/></Wrapper>}/>
+                <Route path="/explore/" element={<Wrapper><Explore/></Wrapper>}/>
                 <Route path="/about" element={<Wrapper><About/></Wrapper>}/>
                 <Route path="/blog/:slug" element={<Wrapper><Blog/></Wrapper>}/>
                 <Route path="/blog/author/:username" element={<Wrapper><Author/></Wrapper>}/>
