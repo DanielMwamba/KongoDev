@@ -11,12 +11,12 @@ import compressImage from "../../helpers/compressedImage.helper";
 import toast from "react-hot-toast";
 import cloudinaryUrlToBase64 from "../../helpers/cloudinaryUrlToBase64.helper";
 import categories from "../../services/api/categories.json";
-import Loader from "../../components/loader"
+import Loader from "../../components/loader";
 
-//Validation
+// Validation
 import { BlogSchema } from "../validations/Blog.validation";
 
-//Api
+// API
 import * as api from "../../services/api/api";
 
 const EditBlog = () => {
@@ -24,9 +24,11 @@ const EditBlog = () => {
   const editorRef = useRef();
   const { id } = useParams();
 
+  // Gestion de l'état
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [loading, setLoading] = useState(true);
 
+  // Gestion du formulaire avec react-hook-form et validation Yup
   const {
     register,
     handleSubmit,
@@ -43,22 +45,37 @@ const EditBlog = () => {
 
   const [descriptionValue, setDescriptionValue] = useState({});
 
+  // useEffect pour récupérer les données du post lors du montage du composant
   useEffect(() => {
     getPostData();
   }, []);
 
+  // Fonction pour récupérer les données du post et initialiser les valeurs du formulaire
   const getPostData = async () => {
     let response = await api.getUserPosts(id);
 
-    reset(response);
-    setDescriptionValue({ description: response.description });
-
-    cloudinaryUrlToBase64(response.imageURL).then((result) => {
-      setSelectedImage((prevValue) => {
-        return { ...prevValue, croppedImage: result };
-      });
+    if (response && response.posts && response.posts.length > 0) {
+      const post = response.posts[0];
+      reset(post);
+      setDescriptionValue({ description: post.description });
+      if (post.imageURL) {
+        cloudinaryUrlToBase64(post.imageURL).then((result) => {
+          if (result) {
+            setSelectedImage((prevValue) => ({
+              ...prevValue,
+              croppedImage: result,
+            }));
+          }
+          setLoading(false);
+        });
+      } else {
+        console.error("Image URL is missing in the response post:", post);
+        setLoading(false);
+      }
+    } else {
+      console.error("Invalid response:", response);
       setLoading(false);
-    });
+    }
   };
 
   const fileInputRef = useRef(null);
@@ -68,10 +85,12 @@ const EditBlog = () => {
   };
   const [selectedImage, setSelectedImage] = useState(initData);
 
+  // Fonction pour gérer le clic sur le bouton de fichier
   const handleFileButtonClick = () => {
     fileInputRef.current.click();
   };
 
+  // Fonction pour gérer le changement de fichier et convertir l'image en base64
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     event.target.value = null;
@@ -82,16 +101,21 @@ const EditBlog = () => {
         });
       })
       .catch((error) => {
-        console.error("Error converting image to base64:", error);
+        console.error(
+          "Erreur lors de la conversion de l'image en base64:",
+          error
+        );
       });
   };
 
+  // Fonction pour annuler la sélection de l'image
   const onCancel = () => {
     setSelectedImage((prevValue) => {
       return { ...prevValue, originalImage: null };
     });
   };
 
+  // Fonction pour générer l'image recadrée et la compresser
   const genCroppedImg = (croppedImageURL) => {
     compressImage(croppedImageURL, 500, 500, 100)
       .then((compressedImage) => {
@@ -99,13 +123,13 @@ const EditBlog = () => {
           originalImage: null,
           croppedImage: compressedImage,
         });
-        // Handle the compressed image here
       })
       .catch((error) => {
         console.error(error);
       });
   };
 
+  // Fonction pour gérer la soumission du formulaire
   const onSubmit = (data) => {
     setButtonDisabled(true);
 
@@ -115,7 +139,7 @@ const EditBlog = () => {
     toast.promise(
       response,
       {
-        loading: "Veillez patientez...",
+        loading: "Veuillez patienter...",
         success: (data) => data.msg,
         error: (err) => console.log(err.msg),
       },
@@ -158,7 +182,7 @@ const EditBlog = () => {
                     />
                   </button>
                   <h1 className="text-2xl font-semibold text-gray-900">
-                    Editer 
+                    Editer
                   </h1>
                 </div>
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
@@ -312,7 +336,7 @@ const EditBlog = () => {
                                 defaultValue=""
                               >
                                 <option value="" disabled>
-                                Choisir une catégorie
+                                  Choisir une catégorie
                                 </option>
 
                                 {categories.map((category) => (
@@ -355,7 +379,8 @@ const EditBlog = () => {
                                     " link lists media codesample quickbars",
                                   toolbar:
                                     "undo redo | styles | bold italic underline forecolor backcolor codesample | alignleft aligncenter alignright | bullist numlist | link media quickimage",
-                                  placeholder: "Ecrivez votre article de blog ici...",
+                                  placeholder:
+                                    "Ecrivez votre article de blog ici...",
                                 }}
                                 onEditorChange={(content) => {
                                   setValue("description", content);
