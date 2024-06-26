@@ -213,13 +213,14 @@ const Header = () => {
               </Button>
 
               <Button
-                variant="text"
-                size="sm"
-                className="mb-2 rounded-full lg:inline-block bg-blue-500 "
-                onClick={() => navigate("/register")}
-              >
-                Commencer
-              </Button>
+                  variant=""
+                  size="sm"
+                  fullWidth
+                  className="mb-2 rounded-full lg:inline-block bg-blue-500 "
+                  onClick={() => navigate("/register")}
+                >
+                  Commencer
+                </Button>
 
             </>
 
