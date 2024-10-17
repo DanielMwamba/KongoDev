@@ -8,7 +8,7 @@ const Hero = () => {
       <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
       <div className="absolute inset-0 bg-moving-gradient"></div>
       
-      <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+      <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full mt-16">
         <div className="text-center lg:text-left lg:w-1/2 mb-10 lg:mb-0">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-foreground mb-6 leading-tight animate-fade-in-up">
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70">

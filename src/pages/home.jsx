@@ -1,99 +1,86 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
+import { ArrowRight } from "lucide-react";
 import Hero from "../components/hero";
 import CategoryCard from "../components/categoryCard";
 import BlogCard from "../components/blogCarg";
-import categories from  "../services/api/categories.json";
-import { Button } from "@material-tailwind/react";
-
-//Api
+import categories from "../services/api/categories.json";
 import * as api from "../services/api/api";
-
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
-
   const [posts, setPosts] = useState(null);
-  const [visible, setVisible] =  useState(9);
-
-  function handleLoadMore() {
-    setVisible((prevValue) => prevValue + prevValue);
-  }
+  const [visible, setVisible] = useState(9);
 
   useEffect(() => {
-    api.getAllPosts().then((response) => setPosts(response.posts))
-  }, [posts]);
-    
-    return(
-        <>
-         <Hero/>
-         <div className="flex justify-center items-center pt-20 pb-10">
-        <span
-          className="text-black text-3xl font-bold font-poppins"
-        >
-          Explorer les Catégories
-        </span>
-      </div>
+    api.getAllPosts().then((response) => setPosts(response.posts));
+  }, []);
 
-      <section className="container max-w-6xl p-6 mx-auto space-y-6 sm:space-y-12">
-         <div className="grid grid-cols-2 grid-rows-2 gap-5 sm:grid-cols-3 sm:grid-rows-2">
-          {categories.slice(0,5).map(category=>{
-            return <CategoryCard
-            key= {category.id}
-            name={category.name}
-            image={category.imageURL}
-            link={`/categories/${category.name}`}
-          />
+  function handleLoadMore() {
+    setVisible((prevValue) => prevValue + 9);
+  }
 
-          })}
-          <CategoryCard
-                name="Tout explorer"
-                image="https://plus.unsplash.com/premium_photo-1670426501357-23bbaaab1e3c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80"
-                link="/categories/"
-              />
-         </div>
-      </section>
-
-      <div className="flex justify-center items-center pt-20 pb-10">
-        <span
-          className="text-black text-3xl font-bold"
-          style={{ fontFamily: "poppins" }}
-        >
-          Explorer les Articles
-        </span>
-      </div>
-
-      <section className="text-gray-600 body-font">
-        <div className="container max-w-6xl p-6 mx-auto space-y-6 sm:space-y-12">
-          <div className="flex flex-wrap -m-4">
-            {posts?.slice(0, visible).map((post) => (
-              <BlogCard
-                key={post.id}
-                title={post.title}
-                category={post.category}
-                summary={post.summary}
-                slug={post.slug}
-                imageURL={post.imageURL}
-                user={post.author.name}
-                username={post.author.userName}
-                date={post.date}
+  return (
+    <div className="min-h-screen bg-background">
+      <Hero />
+      
+      <section className="py-16 md:py-24">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+            Explorer les Catégories
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+            {categories.slice(0, 5).map((category) => (
+              <CategoryCard
+                key={category.id}
+                name={category.name}
+                image={category.imageURL}
+                link={`/categories/${category.name}`}
               />
             ))}
+            <CategoryCard
+              name="Tout explorer"
+              image="https://plus.unsplash.com/premium_photo-1670426501357-23bbaaab1e3c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80"
+              link="/categories/"
+            />
           </div>
-          <div className="flex justify-center items-center">
-            {posts && visible >= posts.length ? ( 
-              <p> ok </p>
-            ) : (
+        </div>
+      </section>
+
+      <section className="py-16 md:py-24 bg-secondary/30">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+            Explorer les Articles
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {posts?.slice(0, visible).map((post) => (
+              <div key={post.id} className="bg-background rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105">
+                <BlogCard
+                  title={post.title}
+                  category={post.category}
+                  summary={post.summary}
+                  slug={post.slug}
+                  imageURL={post.imageURL}
+                  user={post.author.name}
+                  username={post.author.userName}
+                  date={post.date}
+                />
+              </div>
+            ))}
+          </div>
+          <div className="mt-12 text-center">
+            {posts && visible < posts.length && (
               <Button
                 size="lg"
-                color="white"
-                className="flex items-center gap-3"
                 onClick={handleLoadMore}
+                className="group"
               >
                 Voir Plus
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Button>
             )}
           </div>
         </div>
       </section>
-        </>
-    )
+    </div>
+  );
 }

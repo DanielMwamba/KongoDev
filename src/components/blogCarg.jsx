@@ -1,54 +1,48 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Calendar, User } from "lucide-react";
 
-//helper
+// helper
 import formatDate from "../helpers/formatDate.helper";
 
-const BlogCard = ({slug, imageURL, category, title, summary, user, username, date}) => {
-  return ( 
-    <>
-      <div className="p-4 max-w-full md:w-1/3 font-outfit">
-        <div className="h-full border-opacity-60  overflow-hidden shadow-sm hover:shadow-2xl transition duration-300">
+const BlogCard = ({ slug, imageURL, category, title, summary, user, username, date }) => {
+  return (
+    <div className="flex flex-col h-full overflow-hidden rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl bg-card">
+      <Link to={`/blog/${slug}`} className="block overflow-hidden">
+        <img
+          className="w-full h-48 object-cover object-center transition-transform duration-300 hover:scale-105"
+          src={imageURL}
+          alt={title}
+        />
+      </Link>
+      <div className="flex flex-col flex-grow p-6">
+        <div className="flex items-center mb-2">
+          <span className="text-xs font-semibold text-primary uppercase tracking-wide">
+            {category}
+          </span>
+        </div>
+        <Link 
+          to={`/blog/${slug}`}
+          className="text-xl font-bold text-foreground mb-2 hover:text-primary transition-colors duration-200"
+        >
+          {title}
+        </Link>
+        <p className="text-muted-foreground text-sm mb-4 flex-grow">
+          {summary}
+        </p>
+        <div className="flex items-center text-sm text-muted-foreground mt-auto">
+          <User className="w-4 h-4 mr-1" />
           <Link
-            to={`/blog/${slug}`}
+            to={`/blog/author/${username}/`}
+            className="hover:text-primary transition-colors duration-200 mr-3"
           >
-          <img
-            className="lg:h-48 md:h-36 w-full object-cover object-center rounded-lg"
-            src={imageURL}
-            alt="blog"
-          />
+            {user}
           </Link>
-          <div className="p-6 bg-gray-100 rounded-b-lg">
-            <h2 className="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">
-              {category.toUpperCase()}
-            </h2>
-            <Link 
-              to={`/blog/${slug}`}
-            className="title-font text-lg font-medium text-gray-900 mb-3">
-              {title}
-            </Link>
-            <p className="leading-relaxed mb-3">
-              {summary}
-            </p>
-            <div className="flex items-center flex-wrap ">
-              <div className="flex items-center gap-2">
-                <Link
-                  itemProp="url"
-                  className="text-gray-600 hover:text-gray-600 dark:text-gray-400 hover:dark:text-gray-400 text-xs no-underline"
-                  to={`/blog/author/${username}/`}
-                >
-                  {user}
-                </Link>
-                <span className="w-[4px] h-[4px] rounded-full bg-gray-600 dark:bg-gray-500" />
-                <span className="text-gray-600 hover:text-gray-600 dark:text-gray-400 hover:dark:text-gray-400 text-xs leading-6 no-underline">
-                  {formatDate(date)}
-                </span>
-              </div>
-            </div>
-          </div>
+          <Calendar className="w-4 h-4 mr-1" />
+          <span>{formatDate(date)}</span>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
