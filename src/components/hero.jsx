@@ -1,67 +1,61 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { ArrowRight, Code, Book, Share2 } from "lucide-react";
 
 const Hero = () => {
-  const gradient = "linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5))";
-  const imageUrl = "cover.png";
-
+  const navigate = useNavigate()
   return (
-    <div
-      className="px-4 py-16  sm:max-w-full md:max-w-full lg:max-w-full md:px-24 lg:px-8 lg:py-20"
-      style={{
-        backgroundImage: `${gradient}, url(${imageUrl})`,
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-      }}
-    >
-      <div className="max-w-xl sm:mx-auto lg:max-w-2xl">
-        <div className="flex flex-col mb-16 sm:text-center sm:mb-0">
-          <Link href="/" className="mb-6 sm:mx-auto">
-            {/* <div  className="flex items-center text-black justify-center w-12 h-12 rounded-full bg-indigo-50">
-                            
-                        </div> */}
-          </Link>
-          <div className="max-w-xl mb-10 md:mx-auto sm:text-center lg:max-w-2xl md:mb-12">
-            <h2 className="max-w-lg  font-sans text-3xl font-bold leading-none tracking-tight text-white sm:text-4xl md:mx-auto">
-              <span className="relative inline-block">
-                <svg
-                  viewBox="0 0 52 24"
-                  fill="currentColor"
-                  className="absolute top-0 left-0 z-0 hidden w-32 -mt-8 -ml-20 text-blue-gray-100 lg:w-32 lg:-ml-28 lg:-mt-10 sm:block"
-                >
-                  <defs>
-                    <pattern
-                      id="e77df901-b9d7-4b9b-822e-16b2d410795b"
-                      x="0"
-                      y="0"
-                      width=".135"
-                      height=".30"
-                    >
-                      <circle cx="1" cy="1" r=".7" />
-                    </pattern>
-                  </defs>
-                  <rect
-                    fill="url(#e77df901-b9d7-4b9b-822e-16b2d410795b)"
-                    width="52"
-                    height="24"
-                  />
-                </svg>
-                <span className="relative">Apprenez</span>
-              </span>{" "}
-              Et Partagez.
-            </h2>
-          </div>
-          <div>
-            <Link
-              to="/register"
-              className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-black transition duration-200 rounded shadow-md bg-white focus:shadow-outline focus:outline-none"
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary/10 to-secondary/30">
+      <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
+      <div className="absolute inset-0 bg-moving-gradient"></div>
+
+      <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full mt-16">
+        <div className="text-center lg:text-left lg:w-1/2 mb-10 lg:mb-0">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-foreground mb-6 leading-tight animate-fade-in-up">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70">
+              Apprenez, Codez,
+            </span>
+            <br />
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary/70 to-primary">
+              Partagez
+            </span>
+          </h1>
+          <p className="mt-3 max-w-md mx-auto lg:mx-0 text-xl sm:text-2xl md:mt-5 text-muted-foreground animate-fade-in-up animation-delay-300">
+            Rejoignez une communauté passionnée de développeurs. Découvrez,
+            apprenez et partagez vos connaissances.
+          </p>
+          <div className="mt-10 flex flex-col sm:flex-row justify-center lg:justify-start space-y-4 sm:space-y-0 sm:space-x-4">
+            <button
+              className="btn-primary text-xl rounded-full flex items-center justify-center animate-bounce-subtle px-8 py-3"
+              onClick={() => navigate("/register")}
             >
-              Commencer
-            </Link>
+              Commencer <ArrowRight className="ml-2 h-5 w-5" />
+            </button>
+          </div>
+        </div>
+
+        <div className="lg:w-1/2 relative">
+          <div className="w-full h-[400px] sm:h-[500px] relative overflow-hidden rounded-lg shadow-2xl animate-float">
+            <img
+              src="./cover.png"
+              alt="Développeurs collaborant"
+              className="object-cover w-full h-full"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+          </div>
+          <div className="absolute top-4 left-4 bg-primary text-primary-foreground p-3 rounded-full animate-ping-slow">
+            <Code className="h-6 w-6" />
+          </div>
+          <div className="absolute bottom-4 right-4 bg-secondary text-secondary-foreground p-3 rounded-full animate-ping-slow animation-delay-2000">
+            <Book className="h-6 w-6" />
+          </div>
+          <div className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-accent text-accent-foreground p-3 rounded-full animate-ping-slow animation-delay-4000">
+            <Share2 className="h-6 w-6" />
           </div>
         </div>
       </div>
+
+      <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-background to-transparent"></div>
     </div>
   );
 };
