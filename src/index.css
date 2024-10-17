@@ -7,6 +7,13 @@
 /* Ajoutez ceci à la fin de votre fichier globals.css */
 
 @layer utilities {
+
+  .transition-all {
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+  }
+  
   .bg-grid-pattern {
     background-image: 
       linear-gradient(to right, rgba(var(--primary) / 0.1) 1px, transparent 1px),
