@@ -18,6 +18,14 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'auto'
+    }
+  }, [isOpen])
+
   const NavLink = ({ to, children }) => {
     const isActive = location.pathname === to || location.pathname.startsWith(`${to}/`)
     return (
@@ -33,11 +41,9 @@ export default function Header() {
   }
 
   return (
-    <header className={`sticky top-0 z-50 w-full transition-all duration-300 ${
-      isScrolled ? 'bg-background/95 backdrop-blur shadow-md' : 'bg-transparent'
-    }`}>
+    <header className={`sticky top-0 z-50 w-full transition-all duration-300 ${isScrolled ? 'bg-background/95 backdrop-blur shadow-md' : 'bg-transparent'}`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-16 mt-2">
           <div className="flex items-center">
             <Link to="/" className="flex-shrink-0">
               <span className="text-2xl font-bold text-foreground">
@@ -79,6 +85,8 @@ export default function Header() {
               </>
             )}
             <button
+              aria-expanded={isOpen ? 'true' : 'false'}
+              aria-label="Toggle Menu"
               className="md:hidden p-2 rounded-full hover:bg-secondary transition-colors"
               onClick={() => setIsOpen(!isOpen)}
             >
@@ -91,20 +99,21 @@ export default function Header() {
           </div>
         </div>
       </div>
+
       {/* Mobile menu */}
-      <div 
-        className={`md:hidden bg-background/95 backdrop-blur shadow-md overflow-hidden transition-all duration-300 ease-in-out ${
-          isOpen ? 'max-h-96' : 'max-h-0'
+      <div
+        className={`md:hidden mobile-menu transition-all duration-300 ease-in-out ${
+          isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
         }`}
       >
-        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        <div className="flex flex-col items-center px-2 pt-2 pb-3 space-y-4 sm:px-3 mt-5">
           <NavLink to="/">Accueil</NavLink>
           <NavLink to="/explore">Explorer</NavLink>
           <NavLink to="/categories">Catégories</NavLink>
           <NavLink to="/about">À Propos</NavLink>
           {isLoggedIn ? (
             <button
-              className="w-full text-left btn-primary mt-4"
+              className="w-full btn-primary mt-4"
               onClick={() => {
                 navigate("/authorpanel/dashboard")
                 setIsOpen(false)
@@ -115,7 +124,7 @@ export default function Header() {
           ) : (
             <>
               <button
-                className="w-full text-left btn-secondary mt-4"
+                className="w-full btn-secondary mt-4"
                 onClick={() => {
                   navigate("/login")
                   setIsOpen(false)
@@ -124,7 +133,7 @@ export default function Header() {
                 Connexion
               </button>
               <button
-                className="w-full text-left btn-primary mt-2"
+                className="w-full btn-primary mt-2"
                 onClick={() => {
                   navigate("/register")
                   setIsOpen(false)

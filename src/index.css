@@ -168,7 +168,7 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-primary text-primary-foreground hover:bg-primary/90 px-4 py-2 rounded-md transition-colors;
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 hover:border-primary/90 px-4 py-2 rounded-md transition-colors;
   }
   .btn-secondary {
     @apply bg-secondary text-secondary-foreground hover:bg-secondary/90 px-4 py-2 rounded-md transition-colors;
