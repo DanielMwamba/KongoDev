@@ -15,7 +15,6 @@ import Loader from "../../components/loader";
 import convertImageToBase64 from "../../helpers/convertImage.helper";
 import compressImage from "../../helpers/compressedImage.helper";
 
-
 //Validation
 import { BlogSchema } from "../validations/Blog.validation";
 
@@ -279,7 +278,6 @@ export default function AddBlog() {
                                   </p>
                                 ) : (
                                   <p className="mt-2 text-sm text-gray-500">
-                                    
                                     Écrivez quelques phrases sur votre blog.
                                   </p>
                                 )}
@@ -360,7 +358,8 @@ export default function AddBlog() {
                                     " link lists media codesample quickbars",
                                   toolbar:
                                     "undo redo | styles | bold italic underline forecolor backcolor codesample | alignleft aligncenter alignright | bullist numlist | link media quickimage",
-                                  placeholder: "Ecrivez votre article de blog ici...",
+                                  placeholder:
+                                    "Ecrivez votre article de blog ici...",
                                 }}
                                 onEditorChange={(content) => {
                                   setValue("description", content);

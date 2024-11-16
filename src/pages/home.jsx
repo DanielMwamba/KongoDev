@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Loader2 } from 'lucide-react';
 import Hero from "../components/hero";
 import CategoryCard from "../components/categoryCard";
 import BlogCard from "../components/blogCarg";
@@ -10,14 +10,26 @@ import { Button } from "@/components/ui/button";
 export default function Home() {
   const [posts, setPosts] = useState(null);
   const [visible, setVisible] = useState(9);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    api.getAllPosts().then((response) => setPosts(response.posts));
+    const fetchPosts = async () => {
+      try {
+        const response = await api.getAllPosts();
+        setPosts(response.posts);
+      } catch (error) {
+        console.error("Failed to fetch posts:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
   }, []);
 
-  function handleLoadMore() {
+  const handleLoadMore = () => {
     setVisible((prevValue) => prevValue + 9);
-  }
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -25,10 +37,10 @@ export default function Home() {
       
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-foreground">
             Explorer les Catégories
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
             {categories.slice(0, 5).map((category) => (
               <CategoryCard
                 key={category.id}
@@ -46,39 +58,47 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="py-16 md:py-24 bg-secondary/30">
+      <section className="py-16 md:py-24 bg-secondary/10">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-foreground">
             Explorer les Articles
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {posts?.slice(0, visible).map((post) => (
-              <div key={post.id} className="bg-background rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105">
-                <BlogCard
-                  title={post.title}
-                  category={post.category}
-                  summary={post.summary}
-                  slug={post.slug}
-                  imageURL={post.imageURL}
-                  user={post.author.name}
-                  username={post.author.userName}
-                  date={post.date}
-                />
+          {loading ? (
+            <div className="flex justify-center items-center h-64">
+              <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            </div>
+          ) : (
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {posts?.slice(0, visible).map((post) => (
+                  <div key={post.id} className="bg-card rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                    <BlogCard
+                      title={post.title}
+                      category={post.category}
+                      summary={post.summary}
+                      slug={post.slug}
+                      imageURL={post.imageURL}
+                      user={post.author.name}
+                      username={post.author.userName}
+                      date={post.date}
+                    />
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-          <div className="mt-12 text-center">
-            {posts && visible < posts.length && (
-              <Button
-                size="lg"
-                onClick={handleLoadMore}
-                className="group"
-              >
-                Voir Plus
-                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </Button>
-            )}
-          </div>
+              {posts && visible < posts.length && (
+                <div className="mt-12 text-center">
+                  <Button
+                    size="lg"
+                    onClick={handleLoadMore}
+                    className="group"
+                  >
+                    Voir Plus
+                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </Button>
+                </div>
+              )}
+            </>
+          )}
         </div>
       </section>
     </div>

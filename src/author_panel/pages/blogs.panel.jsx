@@ -9,7 +9,7 @@ import EmptyPostState from "../components/emptyPostState.panel";
 import BlogCard from "../components/blogCard.panel";
 
 // Api
-import * as api from "../../services/api/api.jsx";
+import * as api from "../../services/api/api";
 
 export default function Blogs() {
   const [emptyPostState, setEmptyPostState] = useState(true);

@@ -1,204 +1,108 @@
-import React from "react";
-import { Card, Input, Button, Typography } from "@material-tailwind/react";
-import { Link, useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import {yupResolver} from "@hookform/resolvers/yup";
-import toast from "react-hot-toast";
-import {useDispatch} from "react-redux";
-import {authActions} from "../../redux/slices/authSlice";
-import { userActions } from "../../redux/slices/userSlice";
+'use client'
 
+import React from "react"
+import { useForm } from "react-hook-form"
+import { yupResolver } from "@hookform/resolvers/yup"
+import { useNavigate, Link } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { toast } from "react-hot-toast"
+import { ArrowLeft } from 'lucide-react'
 
-//Validation
-import { RegisterSchema } from "../../validations/auth/register.validation";
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
 
-//Api
-import * as AuthApi from "../../services/api/auth/api.auth";
-import * as api from "../../services/api/api";
-
+import { RegisterSchema } from "../../validations/auth/register.validation"
+import { authActions } from "../../redux/slices/authSlice"
+import { userActions } from "../../redux/slices/userSlice"
+import * as AuthApi from "../../services/api/auth/api.auth"
+import * as api from "../../services/api/api"
 
 export default function Register() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const dispatch = useDispatch()
-
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm({
-    resolver: yupResolver(RegisterSchema())
-  });
+    resolver: yupResolver(RegisterSchema()),
+  })
 
-  function onSubmit(data) {
+  const onSubmit = async (data) => {
     try {
-      const response = AuthApi.registerUser(data);
-      toast.promise(
-        response,
-        {
-          loading: "Veillez patientez...",
-          success: (data) => data.msg,
-          error: (err) => err.msg,
-        },
-        {
-          success: {
-            duration: 2000,
-          },
-          error: {
-            duration: 1000,
-          },
-        }
-      );
+      console.log("Submitting registration data:", data);
+      const response = await AuthApi.registerUser(data)
+      console.log("Registration response:", response);
 
-      response
-         .then((data) => {
-          const token = data.token;
-          const refreshToken = data.refreshToken;
-          localStorage.setItem("token", token);
-          localStorage.setItem("refreshToken", refreshToken);
+      const { token, refreshToken } = response
+      localStorage.setItem("token", token)
+      localStorage.setItem("refreshToken", refreshToken)
 
-          //isLoggedIn => TRUE
-          dispatch(authActions.login());
-         })
-          .then(() => {
-            api.getUser()
-               .then((data) => {
-                //USER DATA SET IN USER SLICE
-                dispatch(userActions.setUser(data));
+      dispatch(authActions.login())
 
-                navigate("/authorpanel/dashboard");
-               })
-          })
-          .catch((error) => error);
+      console.log("Fetching user data...");
+      const userData = await api.getUser()
+      console.log("User data:", userData);
+      dispatch(userActions.setUser(userData))
 
-      
+      toast.success("Compte créé avec succès!")
+      navigate("/authorpanel/dashboard")
     } catch (error) {
-      return error
+      console.error("Registration error:", error);
+      toast.error(error.message || "Une erreur est survenue lors de l'inscription")
     }
   }
 
   return (
-    <>
-      <section
-        className="flex justify-center items-center flex-col h-screen gap-4"
-        style={{
-          backgroundImage: `url(cover.png)`,
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center",
-        }}
-      >
-
-        <Card color="white" shadow={false} className="p-5 shadow-2xl ">
-          <Typography variant="h4" color="blue-gray">
-            Créer un compte
-          </Typography>
-          <Typography color="gray" className="mt-1 font-normal">
-            Entrez vos coordonnées pour vous inscrire.
-          </Typography>
-          <form
-            className="mt-5 mb-2 w-80 max-w-screen-lg sm:w-96"
-            onSubmit={handleSubmit(onSubmit)}
-          >
-            <div className="mb-4 flex flex-col gap-4">
-              <div className="flex flex-col gap-2">
-                <Input
-                  size="lg"
-                  label="Nom"
-                  {...register("name")}
-                  error={errors.name ? true : false}
-                  autoComplete="off"
-                />
-                {errors.name && (
-                  <span className="text-red-500 px-1 text-sm">
-                    {errors.name.message}
-                  </span>
-                )}
-              </div>
-              <div className="flex flex-col gap-2">
-                <Input
-                  size="lg"
-                  label="Email"
-                  {...register("email")}
-                  error={errors.email ? true : false}
-                  autoComplete="off"
-                />
-                {errors.email && (
-                  <span className="text-red-500 px-1 text-sm">
-                    {errors.email.message}
-                  </span>
-                )}
-              </div>
-              <div className="flex flex-col gap-2">
-                <Input
-                  size="lg"
-                  label="Nom d'utilisateur"
-                  {...register("username")}
-                  error={errors.username ? true : false}
-                  autoComplete="off"
-                />
-                {errors.username && (
-                  <span className="text-red-500 px-1 text-sm">
-                    {errors.username.message}
-                  </span>
-                )}
-              </div>
-              <div className="flex flex-col gap-2">
-                <Input
-                  type="password"
-                  size="lg"
-                  label="Mot de passe"
-                  {...register("password")}
-                  error={errors.password ? true : false}
-                  autoComplete="off"
-                  className="outline-none"
-                />
-                {errors.password && (
-                  <span className="text-red-500 px-1 text-sm">
-                    {errors.password.message}
-                  </span>
-                )}
-              </div>
+    <div className="min-h-screen flex items-center justify-center bg-background bg-cover bg-center bg-no-repeat" style={{ backgroundImage: 'url(/cover.png)' }}>
+      <Card className="w-full max-w-md">
+        <CardHeader>
+          <CardTitle>Créer un compte</CardTitle>
+          <CardDescription>Entrez vos coordonnées pour vous inscrire.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="name">Nom</Label>
+              <Input id="name" {...register("name")} />
+              {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
             </div>
-            <div className="flex flex-col gap-3">
-              <Button
-                className="py-4 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
-                type="submit"
-                fullWidth
-              >
-                CREER UN COMPTE
-              </Button>
+            <div className="space-y-2">
+              <Label htmlFor="email">Email</Label>
+              <Input id="email" type="email" {...register("email")} />
+              {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
             </div>
-            <Typography color="gray" className="mt-4 text-center font-normal">
-              Vous avez déjà un compte?{" "}
-              <Link
-                to="/login"
-                className="font-medium text-blue-500 transition-colors hover:text-blue-700"
-              >
-                Se Connecter
-              </Link>
-            </Typography>
+            <div className="space-y-2">
+              <Label htmlFor="username">Nom d'utilisateur</Label>
+              <Input id="username" {...register("username")} />
+              {errors.username && <p className="text-red-500 text-sm">{errors.username.message}</p>}
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="password">Mot de passe</Label>
+              <Input id="password" type="password" {...register("password")} />
+              {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
+            </div>
+            <Button type="submit" className="w-full" disabled={isSubmitting}>
+              {isSubmitting ? "Création en cours..." : "Créer un compte"}
+            </Button>
           </form>
-          <div className="w-full px-8 flex text-center">
-          <Link className="!text-gray-500 no-underline" to="/">
-            <svg
-              fill="#9e9e9e"
-              width={15}
-              height={15}
-              viewBox="0 0 15 15"
-              xmlns="http://www.w3.org/2000/svg"
-              id="arrow"
-              xmlnsXlink="http://www.w3.org/1999/xlink"
-              transform="matrix(-1,1.2246467991473532e-16,-1.2246467991473532e-16,-1,0,0)"
-              className="inline-block mr-2"
-            >
-              <path d="M8.29289 2.29289C8.68342 1.90237 9.31658 1.90237 9.70711 2.29289L14.2071 6.79289C14.5976 7.18342 14.5976 7.81658 14.2071 8.20711L9.70711 12.7071C9.31658 13.0976 8.68342 13.0976 8.29289 12.7071C7.90237 12.3166 7.90237 11.6834 8.29289 11.2929L11 8.5H1.5C0.947715 8.5 0.5 8.05228 0.5 7.5C0.5 6.94772 0.947715 6.5 1.5 6.5H11L8.29289 3.70711C7.90237 3.31658 7.90237 2.68342 8.29289 2.29289Z" />
-            </svg>
+        </CardContent>
+        <CardFooter className="flex flex-col items-center space-y-4">
+          <p className="text-sm text-muted-foreground">
+            Vous avez déjà un compte?{" "}
+            <Link to="/login" className="text-primary hover:underline">
+              Se Connecter
+            </Link>
+          </p>
+          <Link to="/" className="text-sm text-muted-foreground hover:text-primary inline-flex items-center">
+            <ArrowLeft className="mr-2 h-4 w-4" />
             Retour à la page d'Accueil
           </Link>
-        </div>
-        </Card>
-      </section>
-    </>
-  );
+        </CardFooter>
+      </Card>
+    </div>
+  )
 }
