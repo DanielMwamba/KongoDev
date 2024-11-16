@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ArrowRight, Loader2 } from 'lucide-react';
+import { ArrowRight, Loader2 } from "lucide-react";
 import Hero from "../components/hero";
 import CategoryCard from "../components/categoryCard";
 import BlogCard from "../components/blogCarg";
@@ -34,7 +34,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background">
       <Hero />
-      
+
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-foreground">
@@ -71,7 +71,10 @@ export default function Home() {
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {posts?.slice(0, visible).map((post) => (
-                  <div key={post.id} className="bg-card rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                  <div
+                    key={post.id}
+                    className="bg-card rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+                  >
                     <BlogCard
                       title={post.title}
                       category={post.category}
@@ -89,11 +92,7 @@ export default function Home() {
               </div>
               {posts && visible < posts.length && (
                 <div className="mt-12 text-center">
-                  <Button
-                    size="lg"
-                    onClick={handleLoadMore}
-                    className="group"
-                  >
+                  <Button size="lg" onClick={handleLoadMore} className="group">
                     Voir Plus
                     <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </Button>
