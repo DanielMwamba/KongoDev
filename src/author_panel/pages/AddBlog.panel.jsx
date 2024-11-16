@@ -125,6 +125,7 @@ export default function AddBlog() {
         error: {
           duration: 1000,
         },
+        buttonDisabled: false
       }
     );
 

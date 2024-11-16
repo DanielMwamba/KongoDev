@@ -78,9 +78,11 @@ export default function Home() {
                       summary={post.summary}
                       slug={post.slug}
                       imageURL={post.imageURL}
+                      profileImage={post.author.profileImageURL}
                       user={post.author.name}
                       username={post.author.userName}
                       date={post.date}
+                      commentCount={post.comments.length}
                     />
                   </div>
                 ))}

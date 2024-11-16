@@ -181,3 +181,29 @@ export const getPostsByCategory = async (category) => {
     throw handleApiError(error, "Failed to get posts by category");
   }
 };
+
+
+// Comment APIs
+/**
+ * Get all comments
+ * @returns {Promise<Object>} All comments data
+ */
+export const getAllComments = async () => {
+  try {
+    const response = await api.get(`/comment`);
+    return response.data;
+  } catch (error) {
+    throw handleApiError(error, "Failed to get all comments");
+  }
+};
+
+///Add a new comment
+
+ export const addComment = async (slug, commentData) => {
+  try {
+    const response = await api.post(`/comment/${slug}`, commentData);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.msg || "Failed to add comment");
+  }
+};
