@@ -13,6 +13,7 @@ import Login from "./pages/auth/login";
 import Register from "./pages/auth/register";
 import About from "./pages/about";
 import Blog from "./pages/blog";
+import ProfileManagement from "./author_panel/pages/profile.panel";
 import Author from "./pages/author";
 import ExploreCategory from "./pages/exploreCategory";
 import Explore from "./pages/explore";
@@ -110,8 +111,8 @@ export default function App() {
                 <Route path="/authorpanel/blogs" element={<Blogs/>}/>
                 <Route path="/authorpanel/blogs/new" element={<AddBlog/>}/>
                 <Route path="/authorpanel/blogs/edit/:id" element={<EditBlog/>}/>
-            </Route>
-                
+                <Route path="/authorpanel/profile" element={<ProfileManagement/>}/>
+            </Route>    
             </Routes>
            </BrowserRouter>
          

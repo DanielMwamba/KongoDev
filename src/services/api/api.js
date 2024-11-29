@@ -71,6 +71,21 @@ export const updateUser = async (data) => {
 };
 
 /**
+ * Update profile picture
+ * @param {string} file - File to upload
+ * @returns {Promise<Object>} Updated user data
+ */
+export const updateProfilePicture = async (file) => {
+  try {
+    const response = await api.put(`/user/profileImage`, { file });
+    return response.data;
+  } catch (error) {
+    throw handleApiError(error, "Failed to update profile picture");
+  }
+};
+
+
+/**
  * Refresh user token
  * @param {string} refreshToken - Refresh token
  * @returns {Promise<Object>} New token data
