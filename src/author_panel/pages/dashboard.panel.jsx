@@ -16,11 +16,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+// import { Button } from "@/components/ui/button";
+// import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 // import { Progress } from "@/components/ui/progress"
-import { Textarea } from "@/components/ui/textarea";
-import { Input } from "@/components/ui/input";
+// import { Textarea } from "@/components/ui/textarea";
+// import { Input } from "@/components/ui/input";
 import { useState, useEffect } from "react";
 import * as api from "../../services/api/api";
 
@@ -33,9 +33,9 @@ export default function Dashboard() {
 
   async function getPosts() {
     try {
-      const response = await api.getAllPosts();
+      const response = await api.getUserPosts();
       setPosts(response.posts);
-      // console.log(response.posts);
+      console.log(response.posts);
     } catch (error) {
       console.error("Failed to fetch posts:", error);
     }
