@@ -1,104 +1,155 @@
-import React, { useEffect, useState } from "react";
-import PanelWrapper from "../partials/panelWrapper.panel";
-import { PlusIcon } from "@heroicons/react/24/outline";
-import { Link } from "react-router-dom";
-import Loader from "../../components/loader";
+import React, { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
+import { Plus, Search } from 'lucide-react'
+import { motion, AnimatePresence } from "framer-motion"
 
-// Components
-import EmptyPostState from "../components/emptyPostState.panel";
-import BlogCard from "../components/blogCard.panel";
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination"
 
-// Api
-import * as api from "../../services/api/api";
+import PanelWrapper from "../partials/panelWrapper.panel"
+import Loader from "../../components/loader"
+import EmptyPostState from "../components/emptyPostState.panel"
+import BlogCard from "../components/blogCard.panel"
+
+import * as api from "../../services/api/api"
 
 export default function Blogs() {
-  const [emptyPostState, setEmptyPostState] = useState(true);
-  const [posts, setPosts] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [posts, setPosts] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+  const [searchTerm, setSearchTerm] = useState("")
+  const [currentPage, setCurrentPage] = useState(1)
+  const postsPerPage = 5
 
   useEffect(() => {
-    getPosts();
-  }, []);
+    getPosts()
+  }, [])
 
   async function getPosts() {
-    await api.getUserPosts().then((data) => {
-      setPosts(data.posts);
-      if (data.posts.length === 0) {
-        setEmptyPostState(true);
-      } else {
-        setEmptyPostState(false);
-      }
-      setLoading(false);
-    });
+    try {
+      setLoading(true)
+      const data = await api.getUserPosts()
+      setPosts(data.posts)
+    } catch (err) {
+      setError("Failed to load posts. Please try again later.")
+    } finally {
+      setLoading(false)
+    }
   }
 
   function onPostDelete() {
-    getPosts();
+    getPosts()
+  }
+
+  const filteredPosts = posts.filter(post =>
+    post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    post.category.toLowerCase().includes(searchTerm.toLowerCase())
+  )
+
+  const indexOfLastPost = currentPage * postsPerPage
+  const indexOfFirstPost = indexOfLastPost - postsPerPage
+  const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost)
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber)
+
+  if (loading) return <Loader />
+
+  if (error) {
+    return (
+      <PanelWrapper>
+        <Card className="mx-auto max-w-2xl mt-8">
+          <CardContent className="pt-6">
+            <p className="text-center text-red-500">{error}</p>
+            <Button onClick={getPosts} className="mt-4 mx-auto block">
+              Réessayer
+            </Button>
+          </CardContent>
+        </Card>
+      </PanelWrapper>
+    )
   }
 
   return (
-    <>
-      {loading ? (
-        <Loader />
-      ) : (
-        <>
-          <PanelWrapper>
-            <main className="flex-1">
-              <div className="py-6">
-                <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8 flex items-end justify-between">
-                  <h1 className="text-2xl font-semibold text-gray-900">
-                    Articles de blog
-                  </h1>
-
-                  <div className="mt-3 sm:mt-0 sm:ml-4">
-                    <Link
-                      to="/authorpanel/blogs/new"
-                      className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+    <PanelWrapper>
+      <Card className="mx-auto max-w-7xl mt-8">
+        <CardHeader className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
+          <CardTitle className="text-3xl font-bold">Mes Articles</CardTitle>
+          <Link to="/authorpanel/blogs/new">
+            <Button>
+              <Plus className="mr-2 h-4 w-4" /> Nouveau post
+            </Button>
+          </Link>
+        </CardHeader>
+        <CardContent>
+          <div className="mb-6">
+            <Input
+              type="text"
+              placeholder="Rechercher des articles..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="max-w-sm"
+              icon={<Search className="mr-2 h-4 w-4" />}
+            />
+          </div>
+          {currentPosts.length === 0 ? (
+            <EmptyPostState />
+          ) : (
+            <>
+              <AnimatePresence>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {currentPosts.map((post) => (
+                    <motion.div
+                      key={post.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{ duration: 0.3 }}
                     >
-                      Nouveau poste
-                      <PlusIcon
-                        className="ml-2 -mr-1 h-5 w-5"
-                        aria-hidden="true"
+                      <BlogCard
+                        id={post.id}
+                        title={post.title}
+                        image={post.imageURL}
+                        category={post.category}
+                        user_name={post.author.name}
+                        date={post.date}
+                        onPostDelete={onPostDelete}
                       />
-                    </Link>
-                  </div>
+                    </motion.div>
+                  ))}
                 </div>
-                <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
-                  {/* Replace with your content */}
-
-                  {emptyPostState ? (
-                    <EmptyPostState />
-                  ) : (
-                    <>
-                      <div className="container max-w-6xl py-6 mx-auto space-y-6 sm:space-y-12">
-                        <div className="flex flex-wrap -m-4">
-                          {posts?.map((post) => {
-                            return (
-                              <BlogCard
-                                key={post.id}
-                                id={post.id}
-                                title={post.title}
-                                image={post.imageURL}
-                                category={post.category}
-                                user_name={post.author.name}
-                                date={post.date}
-                                onPostDelete={onPostDelete}
-                              />
-                            );
-                          })}
-                        </div>
-                      </div>
-                      
-                    </>
-                  )}
-
-                  {/* /End replace */}
-                </div>
-              </div>
-            </main>
-          </PanelWrapper>
-        </>
-      )}
-    </>
-  );
+              </AnimatePresence>
+              <Pagination className="mt-8">
+                <PaginationContent>
+                  <PaginationItem>
+                    <PaginationPrevious 
+                      onClick={() => paginate(currentPage - 1)}
+                      disabled={currentPage === 1}
+                    />
+                  </PaginationItem>
+                  {[...Array(Math.ceil(filteredPosts.length / postsPerPage))].map((_, index) => (
+                    <PaginationItem key={index}>
+                      <PaginationLink
+                        onClick={() => paginate(index + 1)}
+                        isActive={currentPage === index + 1}
+                      >
+                        {index + 1}
+                      </PaginationLink>
+                    </PaginationItem>
+                  ))}
+                  <PaginationItem>
+                    <PaginationNext 
+                      onClick={() => paginate(currentPage + 1)}
+                      disabled={currentPage === Math.ceil(filteredPosts.length / postsPerPage)}
+                    />
+                  </PaginationItem>
+                </PaginationContent>
+              </Pagination>
+            </>
+          )}
+        </CardContent>
+      </Card>
+    </PanelWrapper>
+  )
 }

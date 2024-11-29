@@ -56,7 +56,7 @@ const BlogCard = ({onPostDelete, image, title, date, user_name, category, id}) =
     <>
       {deleteId && <DeleteConfirmationModal id={deleteId} onDelete={onDelete} onCancel={onCancel} />}
       
-      <div className="w-full p-4 md:w-1/3">
+      <div className="w-full p-4">
         <div className="h-full border-opacity-60  overflow-hidden shadow-sm hover:shadow-2xl transition duration-300">
           <img
             className="lg:h-48 md:h-36 w-full object-cover object-center rounded-lg"
