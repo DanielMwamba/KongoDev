@@ -86,6 +86,22 @@ export const updateProfilePicture = async (file) => {
 
 
 /**
+ * Reset password
+ * @param {string}  currentPassword - Current user password
+ * @param {string} newPassword - New password
+ * @returns {Promise<Object>} New token data - Email of the user
+ */
+export const resetPassword = async (newPassword, currentPassword) => {
+  try {
+    const response = await api.put(`/user/password`, { newPassword, currentPassword });
+    return response.data;
+  } catch (error) {
+    throw handleApiError(error, "Failed to reset password");
+  }
+}; 
+
+
+/**
  * Refresh user token
  * @param {string} refreshToken - Refresh token
  * @returns {Promise<Object>} New token data
