@@ -35,7 +35,7 @@ export default function Dashboard() {
     try {
       const response = await api.getUserPosts();
       setPosts(response.posts);
-      console.log(response.posts);
+      // console.log(response.posts);
     } catch (error) {
       console.error("Failed to fetch posts:", error);
     }

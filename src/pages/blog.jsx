@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, MessageCircle, ThumbsUp } from "lucide-react";
+import { ArrowLeft, MessageCircle, ThumbsUp, Calendar, User } from 'lucide-react';
 import { toast } from "react-hot-toast";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -11,6 +11,7 @@ import Loader from "../components/loader";
 import formatDate from "../helpers/formatDate.helper";
 import * as api from "../services/api/api";
 import { useSelector } from "react-redux";
+// import './css/blogStyle.css';  // Import the CSS file
 
 export default function Blog() {
   const { slug } = useParams();
@@ -27,6 +28,7 @@ export default function Blog() {
       try {
         const response = await api.getPost(slug);
         setBlogData(response.posts);
+        console.table(response.posts.description)
         setComments(response.posts.comments || []);
         setLoading(false);
       } catch (error) {
@@ -72,20 +74,21 @@ export default function Blog() {
         <div className="space-y-6">
           <Badge variant="secondary">{blogData?.category}</Badge>
           <h1 className="text-4xl font-bold text-foreground">{blogData?.title}</h1>
-          <div className="flex items-center space-x-4">
-            <Avatar>
-              <AvatarImage src={blogData?.author.profileImageURL} alt={blogData?.author.name} />
-              <AvatarFallback>{blogData?.author.name.charAt(0)}</AvatarFallback>
-            </Avatar>
-            <div>
-              <Link to={`/blog/author/${blogData?.author.userName}/`} className="font-medium hover:underline">
-                {blogData?.author.name}
-              </Link>
-              <p className="text-sm text-muted-foreground">{formatDate(blogData?.date)}</p>
-            </div>
+          <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+            <Link to={`/blog/author/${blogData?.author.userName}/`} className="flex items-center hover:text-foreground">
+              <User className="mr-2 h-4 w-4" />
+              {blogData?.author.name}
+            </Link>
+            <span className="flex items-center">
+              <Calendar className="mr-2 h-4 w-4" />
+              {formatDate(blogData?.date)}
+            </span>
           </div>
         </div>
-        <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: blogData?.description }}></div>
+        <div 
+          className="blog-content"
+          dangerouslySetInnerHTML={{ __html: blogData?.description }}
+        ></div>
       </article>
 
       <div className="mt-12 space-y-8">
@@ -104,7 +107,7 @@ export default function Blog() {
                 disabled={!isAuthenticated}
               />
               <Button type="submit" disabled={!isAuthenticated}>
-                {isAuthenticated ? "Commenter" : "Veuillez vous connectez pour ajouter un commentaire"}
+                {isAuthenticated ? "Commenter" : "Veuillez vous connecter pour ajouter un commentaire"}
               </Button>
             </form>
           </CardContent>
@@ -115,10 +118,10 @@ export default function Blog() {
               <div className="flex items-center space-x-4">
                 <Avatar>
                   <AvatarImage src={comment.author.profileImageURL} alt={comment.author.name} />
-                  {/* <AvatarFallback>{comment.author.name.charAt(0)}</AvatarFallback> */}
+                  <AvatarFallback>{comment.author.name.charAt(0)}</AvatarFallback>
                 </Avatar>
                 <div>
-                  <p className="font-medium ">{comment.author.userName}</p>
+                  <p className="font-medium">{comment.author.userName}</p>
                   <p className="text-sm text-muted-foreground">{formatDate(comment.date)}</p>
                 </div>
               </div>
