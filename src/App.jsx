@@ -69,7 +69,8 @@ export default function App() {
             }
           } catch (error) {
             // En cas d'échec de rafraîchissement du token, gérer l'erreur, par exemple, déconnecter l'utilisateur ou afficher un message d'erreur
-            console.error('Échec du rafraîchissement du token :', error.message);
+            // console.error('Échec du rafraîchissement du token :', error.message);
+            dispatch(authActions.logout());
           }
         };
       

@@ -11,19 +11,19 @@ const handleApiError = (error, defaultMessage) => {
     return {
       message: error.response.data.msg || defaultMessage,
       status: error.response.status,
-      data: error.response.data
+      data: error.response.data,
     };
   } else if (error.request) {
     return {
       message: "No response received from server",
       status: 0,
-      data: null
+      data: null,
     };
   } else {
     return {
       message: "Error setting up the request",
       status: 0,
-      data: null
+      data: null,
     };
   }
 };
@@ -84,7 +84,6 @@ export const updateProfilePicture = async (file) => {
   }
 };
 
-
 /**
  * Reset password
  * @param {string}  currentPassword - Current user password
@@ -93,13 +92,15 @@ export const updateProfilePicture = async (file) => {
  */
 export const resetPassword = async (newPassword, currentPassword) => {
   try {
-    const response = await api.put(`/user/password`, { newPassword, currentPassword });
+    const response = await api.put(`/user/password`, {
+      newPassword,
+      currentPassword,
+    });
     return response.data;
   } catch (error) {
     throw handleApiError(error, "Failed to reset password");
   }
-}; 
-
+};
 
 /**
  * Refresh user token
@@ -213,7 +214,6 @@ export const getPostsByCategory = async (category) => {
   }
 };
 
-
 // Comment APIs
 /**
  * Get all comments
@@ -230,7 +230,7 @@ export const getAllComments = async () => {
 
 ///Add a new comment
 
- export const addComment = async (slug, commentData) => {
+export const addComment = async (slug, commentData) => {
   try {
     const response = await api.post(`/comment/${slug}`, commentData);
     return response.data;
