@@ -234,8 +234,8 @@ const EditBlog = () => {
                           variant="secondary"
                           className="z-10"
                         >
-                          <PencilIcon className="mr-2 h-4 w-4" />
-                          Changer l'image
+                          <PencilIcon className="mr-2 h-4 w-4 font-extrabold text-white" />
+                          <span className="font-extrabold text-white">Changer l'image</span>
                         </Button>
                       </div>
                       <input
@@ -274,10 +274,10 @@ const EditBlog = () => {
                       <span>Écrivez quelques phrases sur votre blog.</span>
                       <span
                         className={
-                          summaryValue.length > 94 ? "text-red-500" : ""
+                          summaryValue.length > 1000 ? "text-red-500" : ""
                         }
                       >
-                        {summaryValue.length}/94
+                        {summaryValue.length}/1000
                       </span>
                     </div>
                     {errors.summary && (

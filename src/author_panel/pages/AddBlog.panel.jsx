@@ -200,8 +200,8 @@ export default function AddBlog() {
                     variant="secondary"
                     className="z-10"
                   >
-                    <PencilIcon className="mr-2 h-4 w-4" />
-                    Changer l'image
+                    <PencilIcon className="mr-2 h-4 w-4 font-extrabold text-white" />
+                    <span className="font-extrabold text-white">Ajouter une image</span>
                   </Button>
                 </div>
                 <input
@@ -237,9 +237,9 @@ export default function AddBlog() {
               <div className="flex justify-between text-sm text-gray-500">
                 <span>Écrivez quelques phrases sur votre blog.</span>
                 <span
-                  className={summaryValue.length > 94 ? "text-red-500" : ""}
+                  className={summaryValue.length > 1000 ? "text-red-500" : ""}
                 >
-                  {summaryValue.length}/94
+                  {summaryValue.length}/1000
                 </span>
               </div>
               {errors.summary && (
