@@ -17,7 +17,7 @@ export default function Categories() {
         <Loader />
       ) : (
         <>
-          <section className="container max-w-6xl p-6 mx-auto space-y-6 sm:space-y-12">
+          <section className="container mt-16 max-w-6xl p-6 mx-auto space-y-6 sm:space-y-12">
             <div className="grid grid-cols-2 grid-rows-2 gap-5 sm:grid-cols-3 sm:grid-rows-3">
               {categories.map(category=>{
                 return <CategoryCard 
