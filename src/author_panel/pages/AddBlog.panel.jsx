@@ -237,9 +237,9 @@ export default function AddBlog() {
               <div className="flex justify-between text-sm text-gray-500">
                 <span>Écrivez quelques phrases sur votre blog.</span>
                 <span
-                  className={summaryValue.length > 1000 ? "text-red-500" : ""}
+                  className={summaryValue.length > 500 ? "text-red-500" : ""}
                 >
-                  {summaryValue.length}/1000
+                  {summaryValue.length}/500
                 </span>
               </div>
               {errors.summary && (
