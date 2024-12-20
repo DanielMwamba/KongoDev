@@ -25,6 +25,7 @@ import Loader from "../components/loader";
 import formatDate from "../helpers/formatDate.helper";
 import * as api from "../services/api/api";
 import { useSelector } from "react-redux";
+import { data } from "autoprefixer";
 
 export default function Blog() {
   const { slug } = useParams();
@@ -50,6 +51,7 @@ export default function Blog() {
       }
     };
     fetchData();
+    console.log(blogData);
   }, [slug]);
 
   const handleCommentSubmit = async (e) => {
@@ -76,7 +78,7 @@ export default function Blog() {
   if (loading) return <Loader />;
 
   return (
-    <div className="container max-w-4xl mx-auto px-4 py-8">
+    <div className="container max-w-4xl mx-auto px-4 py-8 relative overflow-hidden z-10">
       <Button variant="ghost" onClick={() => navigate(-1)} className="mb-6">
         <ArrowLeft className="mr-2 h-4 w-4" /> Retour
       </Button>
@@ -95,12 +97,12 @@ export default function Blog() {
             >
               {blogData?.category}
             </Badge>
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight">
-              {blogData?.title}
-            </h1>
           </div>
         </div>
         <div className="space-y-4">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-black leading-tight">
+            {blogData?.title}
+          </h1>
           <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
             <Link
               to={`/blog/author/${blogData?.author.userName}/`}

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Instagram, Linkedin, Github} from "lucide-react";
+import { Instagram, Linkedin, Github } from "lucide-react";
 // import Git
 
 export default function Footer() {
@@ -11,7 +11,6 @@ export default function Footer() {
       title: "Pages",
       items: [
         { name: "Accueil", href: "/" },
-        { name: "Explorer", href: "/explore" },
         { name: "Catégories", href: "/categories" },
         { name: "A Propos", href: "/about" },
       ],
@@ -41,12 +40,15 @@ export default function Footer() {
               Kongo <span className="text-primary">Dev</span>
             </Link>
             <p className="mt-4 text-muted-foreground">
-              Explorez, apprenez et partagez vos connaissances en développement.
+              Explorez, apprenez et partagez vos connaissances avec la
+              communauté Kongo Dev.
             </p>
           </div>
           {LINKS.map(({ title, items }) => (
             <div key={title}>
-              <h3 className="text-lg font-semibold text-foreground mb-4">{title}</h3>
+              <h3 className="text-lg font-semibold text-foreground mb-4">
+                {title}
+              </h3>
               <ul className="space-y-2">
                 {items.map((link) => (
                   <li key={link.name}>
@@ -67,15 +69,30 @@ export default function Footer() {
             &copy; {currentYear} Kongo Dev. Tous droits réservés.
           </p>
           <div className="flex space-x-4">
-            <a href="#" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
+            <a
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-primary transition-colors"
+            >
               <Instagram className="h-5 w-5" />
               <span className="sr-only">Instagram</span>
             </a>
-            <a href="#" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
+            <a
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-primary transition-colors"
+            >
               <Github className="h-5 w-5" />
               <span className="sr-only">GitHub</span>
             </a>
-            <a href="#" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
+            <a
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-primary transition-colors"
+            >
               <Linkedin className="h-5 w-5" />
               <span className="sr-only">LinkedIn</span>
             </a>

@@ -43,7 +43,7 @@ export default function Author() {
   if (error) return <div className="text-center text-red-500">{error}</div>;
 
   return (
-    <div className="container max-w-7xl mx-auto px-4 py-8">
+    <section className="mt-16 container max-w-7xl mx-auto px-4 py-8">
       <Card className="mb-8 overflow-hidden">
         <div className="h-32 bg-gradient-to-r from-primary to-secondary"></div>
         <CardContent className="relative pt-0">
@@ -108,7 +108,7 @@ export default function Author() {
       </Card>
 
       <Tabs defaultValue="posts" className="mb-8">
-        <TabsList>
+        <TabsList className="flex justify-start gap-4 mb-4">
           <TabsTrigger value="posts">Posts ({posts.length})</TabsTrigger>
           <TabsTrigger value="about">À Propos</TabsTrigger>
         </TabsList>
@@ -159,6 +159,6 @@ export default function Author() {
           </Card>
         </TabsContent>
       </Tabs>
-    </div>
+    </section>
   );
 }
