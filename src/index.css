@@ -190,7 +190,7 @@
   }
 
   .blog-content pre {
-    @apply bg-secondary dark:bg-secondary/30 rounded p-4 overflow-x-auto;
+    @apply bg-black dark:bg-secondary/30 rounded p-4 overflow-x-auto;
   }
 
   .blog-content pre code {
