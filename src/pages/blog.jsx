@@ -78,7 +78,7 @@ export default function Blog() {
   if (loading) return <Loader />;
 
   return (
-    <div className="container max-w-4xl mx-auto px-4 py-8 relative overflow-hidden z-10">
+    <div className="container mt-10 max-w-4xl mx-auto px-4 py-8 relative overflow-hidden">
       <Button variant="ghost" onClick={() => navigate(-1)} className="mb-6">
         <ArrowLeft className="mr-2 h-4 w-4" /> Retour
       </Button>
