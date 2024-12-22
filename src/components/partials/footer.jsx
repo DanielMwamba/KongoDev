@@ -37,7 +37,11 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <Link to="/" className="text-2xl font-bold text-foreground">
-              Kongo <span className="text-primary">Dev</span>
+            <span className="text-2xl font-bold text-foreground">
+                <span>{"< "}</span>Kongo
+                <span className="text-primary font-extrabold">Dev</span>{" "}
+                <span>{"/> "}</span>
+              </span>
             </Link>
             <p className="mt-4 text-muted-foreground">
               Explorez, apprenez et partagez vos connaissances avec la

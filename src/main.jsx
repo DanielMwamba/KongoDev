@@ -13,7 +13,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <Provider store={store}>
       <PersistGate persistor= {persistedStore}>
         <React.StrictMode>
-          <App />
+          <main className=''>
+          <App/>
+          </main>
+          
         </React.StrictMode>
       </PersistGate> 
     </Provider> 

@@ -17,8 +17,8 @@ const BlogCard = ({
   date,
   commentCount,
   profileImage,
-  readTime = "5 min read", // Added default read time
-  reactions = 0, // Added default reactions count
+  readTime, // Added default read time
+  reactions, // Added default reactions count
 }) => {
   return (
     <Card className="group flex flex-col h-full overflow-hidden border-b-2 border-transparent hover:border-primary hover:shadow-lg transition-all duration-300">

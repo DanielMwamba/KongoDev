@@ -53,39 +53,7 @@ export default function Dashboard() {
     totalLikes: 0,
   };
 
-  const recentPosts = [
-    {
-      id: 1,
-      title: "Introduction to React Hooks",
-      views: 1200,
-      likes: 89,
-      comments: 23,
-    },
-    {
-      id: 2,
-      title: "Advanced TypeScript Techniques",
-      views: 980,
-      likes: 76,
-      comments: 18,
-    },
-    {
-      id: 3,
-      title: "Building Scalable Node.js Applications",
-      views: 1500,
-      likes: 112,
-      comments: 31,
-    },
-  ];
-
-  const scheduledPosts = [
-    {
-      id: 1,
-      title: "GraphQL vs REST: A Comprehensive Comparison",
-      date: "2023-07-15",
-    },
-    { id: 2, title: "Mastering CSS Grid Layout", date: "2023-07-22" },
-  ];
-
+  
   return (
     <PanelWrapper>
       <main className="flex-1 p-6">

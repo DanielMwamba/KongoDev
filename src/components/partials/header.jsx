@@ -84,7 +84,9 @@ export default function Header() {
             </Button>
             <Link to="/" className="flex-shrink-0">
               <span className="text-2xl font-bold text-foreground">
-                Kongo <span className="text-primary font-extrabold">Dev</span>
+                <span>{"< "}</span>Kongo
+                <span className="text-primary font-extrabold">Dev</span>{" "}
+                <span>{"/> "}</span>
               </span>
             </Link>
           </div>

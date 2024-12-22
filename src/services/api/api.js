@@ -238,3 +238,17 @@ export const addComment = async (slug, commentData) => {
     throw new Error(error.response?.data?.msg || "Failed to add comment");
   }
 };
+
+/**
+ * Like a post.
+ * @param {string} postId - ID of the post to like.
+ * @returns {Promise<Object>} Confirmation of the like action.
+ */
+export const likePost = async (postId) => {
+  try {
+    const response = await api.post(`/post/like/${postId}`);
+    return response.data;
+  } catch (error) {
+    throw handleApiError(error, "Failed to like the post");
+  }
+};

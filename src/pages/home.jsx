@@ -7,6 +7,7 @@ import categories from "../services/api/categories.json"
 import * as api from "../services/api/api"
 import { Button } from "@/components/ui/button"
 
+
 export default function Home() {
   const [posts, setPosts] = useState(null)
   const [visible, setVisible] = useState(6)
@@ -83,6 +84,10 @@ export default function Home() {
                     username={post.author.userName}
                     date={post.date}
                     commentCount={post.comments.length}
+                    reactions={post.likes.length}
+                    readTime={`${Math.ceil(
+                      post.description?.split(" ").length / 300
+                    )} min de lecture`}
                   />
                 ))}
               </div>
