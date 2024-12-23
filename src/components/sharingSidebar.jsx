@@ -9,12 +9,12 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-export default function SharingSidebar({
+const SharingSidebar = ({
   isLiked,
   likesCount,
   handleLike,
   handleShare,
-}) {
+}) => {
   return (
     <div className="hidden lg:block lg:col-span-1">
       <div className="sticky top-24 flex flex-col gap-4">
@@ -66,3 +66,5 @@ export default function SharingSidebar({
     </div>
   );
 }
+
+export default SharingSidebar

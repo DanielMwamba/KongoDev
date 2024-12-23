@@ -4,12 +4,12 @@ import { toast } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import Loader from "../components/loader";
 import * as api from "../services/api/api";
-import BlogHeader from "../components/BlogHeader.jsx";
-import BlogContent from "../components/BlogContent.jsx";
-import CommentSection from "../components/CommentSection.jsx";
-import AuthorSidebar from "../components/AuthorSidebar.jsx";
-import SharingSidebar from "../components/SharingSidebar.jsx";
-import MobileBottomBar from "../components/MobileBottomBar.jsx";
+import BlogHeader from "../components/BlogHeader";
+import BlogContent from "../components/BlogContent";
+import CommentSection from "../components/CommentSection";
+import AuthorSidebar from "../components/AuthorSidebar";
+import SharingSidebar from "../components/SharingSidebar";
+import MobileBottomBar from "../components/MobileBottomBar";
 import { motion } from "framer-motion";
 
 export default function Blog() {
