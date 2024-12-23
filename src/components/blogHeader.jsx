@@ -2,8 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "../components/ui/badge";
-import { Button } from "../components/ui/button";
+import { Badge } from "./ui/badge";
+import { Button } from "./ui/button";
 import formatDate from "../helpers/formatDate.helper";
 
 export default function BlogHeader({ blogData, navigate }) {

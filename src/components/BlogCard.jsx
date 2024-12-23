@@ -1,13 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Calendar, MessageCircle, Heart, Bookmark, Clock } from 'lucide-react';
-import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar";
+import { Calendar, MessageCircle, Heart, Bookmark, Clock } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardFooter, CardHeader } from "../components/ui/card";
+import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
 import { Button } from "@/components/ui/button";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "./ui/tooltip";
 import formatDate from "@/helpers/formatDate.helper";
-
 
 const BlogCard = ({
   slug,
@@ -91,7 +95,11 @@ const BlogCard = ({
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button variant="ghost" size="sm" className="hover:text-primary transition-colors p-1">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="hover:text-primary transition-colors p-1"
+                >
                   <Heart className="w-4 h-4 mr-1" />
                   <span className="text-xs">{reactions}</span>
                 </Button>
@@ -104,7 +112,11 @@ const BlogCard = ({
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button variant="ghost" size="sm" className="hover:text-primary transition-colors p-1">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="hover:text-primary transition-colors p-1"
+                >
                   <MessageCircle className="w-4 h-4 mr-1" />
                   <span className="text-xs">{commentCount}</span>
                 </Button>
@@ -118,7 +130,11 @@ const BlogCard = ({
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="ghost" size="sm" className="hover:text-primary transition-colors p-1">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="hover:text-primary transition-colors p-1"
+              >
                 <Bookmark className="w-4 h-4" />
               </Button>
             </TooltipTrigger>

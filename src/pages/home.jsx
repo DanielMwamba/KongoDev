@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { ArrowRight, Loader2 } from 'lucide-react';
+import { ArrowRight, Loader2 } from "lucide-react";
 import Hero from "@/components/Hero";
 import CategoryCard from "../components/categoryCard";
-import BlogCard from "../components/blogCarg";
+import BlogCard from "../components/BlogCard";
 import categories from "../services/api/categories.json";
 import * as api from "../services/api/api";
 import { Button } from "../components/ui/button";
@@ -37,17 +37,17 @@ export default function Home() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1
-      }
-    }
+        staggerChildren: 0.1,
+      },
+    },
   };
 
   const itemVariants = {
     hidden: { y: 20, opacity: 0 },
     visible: {
       y: 0,
-      opacity: 1
-    }
+      opacity: 1,
+    },
   };
 
   return (
@@ -59,7 +59,7 @@ export default function Home() {
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-foreground">
             Explorer les Catégories
           </h2>
-          <motion.div 
+          <motion.div
             className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6"
             variants={containerVariants}
             initial="hidden"
@@ -96,7 +96,7 @@ export default function Home() {
             </div>
           ) : (
             <>
-              <motion.div 
+              <motion.div
                 className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
                 variants={containerVariants}
                 initial="hidden"
@@ -116,13 +116,15 @@ export default function Home() {
                       date={post.date}
                       commentCount={post.comments.length}
                       reactions={post.likes.length}
-                      readTime={`${Math.ceil(post.description?.split(" ").length / 300)} min de lecture`}
+                      readTime={`${Math.ceil(
+                        post.description?.split(" ").length / 300
+                      )} min de lecture`}
                     />
                   </motion.div>
                 ))}
               </motion.div>
               {posts && visible < posts.length && (
-                <motion.div 
+                <motion.div
                   className="mt-12 text-center"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}

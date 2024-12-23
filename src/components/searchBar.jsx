@@ -83,7 +83,7 @@ export default function SearchBar({ show, onClose }) {
                 <form className="relative shadow-sm" onSubmit={handleSubmit}>
                   
                   <input
-                    className="block text-black w-full border-transparent focus:border-transparent focus:ring-0 appearance-none bg-transparent py-4 pl-4 pr-12 text-base text-slate-900 placeholder:text-slate-600 focus:outline-none sm:text-sm sm:leading-6"
+                    className="block w-full border-transparent focus:border-transparent focus:ring-0 appearance-none bg-transparent py-4 pl-4 pr-12 text-base text-slate-900 placeholder:text-slate-600 focus:outline-none sm:text-sm sm:leading-6"
                     placeholder="Find anything..."
                     type="text"
                     value={key}

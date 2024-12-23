@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import BlogCard from "../components/blogCarg";
+import BlogCard from "../components/BlogCard";
 import { Button } from "@material-tailwind/react";
 import Loader from "../components/loader";
 

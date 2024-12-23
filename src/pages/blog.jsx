@@ -4,7 +4,7 @@ import { toast } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import Loader from "../components/loader";
 import * as api from "../services/api/api";
-import BlogHeader from "../components/blogHeader.jsx";
+import BlogHeader from "../components/BlogHeader.jsx";
 import BlogContent from "../components/BlogContent.jsx";
 import CommentSection from "../components/CommentSection.jsx";
 import AuthorSidebar from "../components/AuthorSidebar.jsx";
@@ -89,7 +89,9 @@ export default function Blog() {
         window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`);
         break;
       case "linkedin":
-        window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`);
+        window.open(
+          `https://www.linkedin.com/sharing/share-offsite/?url=${url}`
+        );
         break;
       case "copy":
         await navigator.clipboard.writeText(url);
@@ -104,7 +106,7 @@ export default function Blog() {
     <div className="min-h-screen bg-background pt-16 md:pt-24">
       <div className="container mx-auto px-4 py-8 max-w-7xl">
         <div className="flex flex-col lg:flex-row gap-8">
-          <motion.aside 
+          <motion.aside
             className="lg:w-16 hidden lg:block"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -117,7 +119,7 @@ export default function Blog() {
               handleShare={handleShare}
             />
           </motion.aside>
-          <motion.main 
+          <motion.main
             className="flex-grow overflow-hidden"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -136,7 +138,7 @@ export default function Blog() {
               handleCommentSubmit={handleCommentSubmit}
             />
           </motion.main>
-          <motion.aside 
+          <motion.aside
             className="lg:w-64"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}

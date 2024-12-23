@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Calendar, MapPin, LinkIcon, Twitter, Github } from "lucide-react";
-import BlogCard from "../components/blogCarg";
+import BlogCard from "../components/BlogCard";
 import Loader from "../components/loader";
 import * as api from "../services/api/api";
 import { toast } from "react-hot-toast";
