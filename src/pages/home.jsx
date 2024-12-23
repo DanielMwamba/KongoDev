@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ArrowRight, Loader2 } from "lucide-react";
-import Hero from "@/components/Hero";
+import Hero from "@/components/hero";
 import CategoryCard from "../components/categoryCard";
 import BlogCard from "../components/BlogCard";
 import categories from "../services/api/categories.json";
