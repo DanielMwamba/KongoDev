@@ -6,7 +6,7 @@ import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import formatDate from "../helpers/formatDate.helper";
 
-export default function BlogHeader({ blogData, navigate }) {
+const BlogHeader = ({ blogData, navigate }) => {
   return (
     <>
       <Button variant="ghost" onClick={() => navigate(-1)} className="mb-6">
@@ -56,3 +56,5 @@ export default function BlogHeader({ blogData, navigate }) {
     </>
   );
 }
+
+export default BlogHeader;

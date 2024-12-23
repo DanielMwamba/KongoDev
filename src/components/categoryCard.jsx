@@ -2,7 +2,7 @@ import React from "react"
 import { useNavigate } from "react-router-dom"
 import { Card, CardContent } from "@/components/ui/card"
 
-function CategoryCard({ image, link, name }) {
+const CategoryCard = ({ image, link, name }) => {
   const navigate = useNavigate()
 
   const handleClick = () => {

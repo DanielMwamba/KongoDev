@@ -2,7 +2,7 @@ import React from "react";
 import { ThumbsUp, MessageCircle } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 
-export default function BlogContent({ blogData, isLiked, handleLike, commentsCount }) {
+const  BlogContent = ({ blogData, isLiked, handleLike, commentsCount }) => {
   return (
     <article className="bg-white rounded-lg shadow-sm p-8 mt-8">
       <div
@@ -27,3 +27,5 @@ export default function BlogContent({ blogData, isLiked, handleLike, commentsCou
     </article>
   );
 }
+
+export default BlogContent;

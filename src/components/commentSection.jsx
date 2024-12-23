@@ -11,11 +11,11 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import formatDate from "@/helpers/formatDate.helper";
 
-export default function CommentSection({
+const CommentSection = ({
   comments,
   isAuthenticated,
   handleCommentSubmit,
-}) {
+}) => {
   const [newComment, setNewComment] = useState("");
 
   const onSubmit = (e) => {
@@ -101,3 +101,6 @@ export default function CommentSection({
     </div>
   );
 }
+
+export default CommentSection;
+
