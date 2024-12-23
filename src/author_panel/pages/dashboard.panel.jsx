@@ -46,11 +46,11 @@ export default function Dashboard() {
     0
   );
 
+  const totalLikes = posts.reduce((total, post) => total + post.likes.length, 0)
+
   // Mock data - replace with actual API calls
   const stats = {
-    totalPosts: 42,
     totalViews: 0,
-    totalLikes: 0,
   };
 
   
@@ -91,7 +91,7 @@ export default function Dashboard() {
                 <ThumbsUp className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{stats.totalLikes}</div>
+                <div className="text-2xl font-bold">{totalLikes}</div>
               </CardContent>
             </Card>
             <Card>

@@ -160,14 +160,14 @@ export default function Header() {
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
                     onClick={() => navigate("/authorpanel/profile")}
-                    className="py-2"
+                    className="py-2 cursor-pointer"
                   >
                     <User className="mr-2 h-4 w-4" />
                     <span>Profile</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     onClick={() => navigate("/authorpanel/dashboard")}
-                    className="py-2"
+                    className="py-2 cursor-pointer"
                   >
                     <LayoutDashboard className="mr-2 h-4 w-4" />
                     <span>Tableau de Bord</span>
@@ -175,7 +175,7 @@ export default function Header() {
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
                     onClick={handleLogout}
-                    className="text-destructive py-2"
+                    className="text-destructive py-2 cursor-pointer"
                   >
                     <LogOut className="mr-2 h-4 w-4" />
                     <span>Déconnexion</span>
@@ -183,7 +183,7 @@ export default function Header() {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <div className="hidden md:flex items-center space-x-4">
+              <div className="hidden md:flex items-center space-x-4 cursor-pointer">
                 <Button variant="ghost" onClick={() => navigate("/login")}>
                   Connexion
                 </Button>

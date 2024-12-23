@@ -4,12 +4,13 @@ import { toast } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import Loader from "../components/loader";
 import * as api from "../services/api/api";
-import BlogHeader from "../components/blogHeader";
-import BlogContent from "../components/blogContent";
-import CommentSection from "../components/commentSection";
-import AuthorSidebar from "../components/authorSidebar";
-import SharingSidebar from "../components/sharingSidebar";
-import MobileBottomBar from "../components/mobileBottomBar";
+import BlogHeader from "../components/BlogHeader";
+import BlogContent from "../components/BlogContent";
+import CommentSection from "../components/CommentSection";
+import AuthorSidebar from "../components/AuthorSidebar";
+import SharingSidebar from "../components/SharingSidebar";
+import MobileBottomBar from "../components/MobileBottomBar";
+import { motion } from "framer-motion";
 
 export default function Blog() {
   const { slug } = useParams();
@@ -88,9 +89,7 @@ export default function Blog() {
         window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`);
         break;
       case "linkedin":
-        window.open(
-          `https://www.linkedin.com/sharing/share-offsite/?url=${url}`
-        );
+        window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`);
         break;
       case "copy":
         await navigator.clipboard.writeText(url);
@@ -102,18 +101,28 @@ export default function Blog() {
   if (loading) return <Loader />;
 
   return (
-    <div className="mt-16 min-h-screen bg-gray-50/50">
+    <div className="min-h-screen bg-background pt-16 md:pt-24">
       <div className="container mx-auto px-4 py-8 max-w-7xl">
         <div className="flex flex-col lg:flex-row gap-8">
-          <aside className="lg:w-16">
+          <motion.aside 
+            className="lg:w-16 hidden lg:block"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2 }}
+          >
             <SharingSidebar
               isLiked={isLiked}
               likesCount={blogData?.likes?.length}
               handleLike={handleLike}
               handleShare={handleShare}
             />
-          </aside>
-          <main className="flex-grow overflow-hidden">
+          </motion.aside>
+          <motion.main 
+            className="flex-grow overflow-hidden"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+          >
             <BlogHeader blogData={blogData} navigate={navigate} />
             <BlogContent
               blogData={blogData}
@@ -126,10 +135,15 @@ export default function Blog() {
               isAuthenticated={isAuthenticated}
               handleCommentSubmit={handleCommentSubmit}
             />
-          </main>
-          <aside className="lg:w-64">
+          </motion.main>
+          <motion.aside 
+            className="lg:w-64"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3 }}
+          >
             <AuthorSidebar author={blogData?.author} />
-          </aside>
+          </motion.aside>
         </div>
       </div>
       <MobileBottomBar

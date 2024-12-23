@@ -1,36 +1,54 @@
-import React, { useEffect, useState } from "react"
-import { ArrowRight, Loader2 } from 'lucide-react'
-import Hero from "../components/hero.jsx"
-import CategoryCard from "../components/categoryCard.jsx"
-import BlogCard from "../components/blogCarg.jsx"
-import categories from "../services/api/categories.json"
-import * as api from "../services/api/api"
-import { Button } from "@/components/ui/button"
-
+import React, { useEffect, useState } from "react";
+import { ArrowRight, Loader2 } from 'lucide-react';
+import Hero from "@/components/Hero";
+import CategoryCard from "../components/categoryCard";
+import BlogCard from "../components/blogCarg";
+import categories from "../services/api/categories.json";
+import * as api from "../services/api/api";
+import { Button } from "../components/ui/button";
+import { motion } from "framer-motion";
 
 export default function Home() {
-  const [posts, setPosts] = useState(null)
-  const [visible, setVisible] = useState(6)
-  const [loading, setLoading] = useState(true)
+  const [posts, setPosts] = useState(null);
+  const [visible, setVisible] = useState(6);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await api.getAllPosts()
-        setPosts(response.posts)
+        const response = await api.getAllPosts();
+        setPosts(response.posts);
       } catch (error) {
-        console.error("Failed to fetch posts:", error)
+        console.error("Failed to fetch posts:", error);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
+    };
 
-    fetchPosts()
-  }, [])
+    fetchPosts();
+  }, []);
 
   const handleLoadMore = () => {
-    setVisible((prevValue) => prevValue + 6)
-  }
+    setVisible((prevValue) => prevValue + 6);
+  };
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -41,21 +59,29 @@ export default function Home() {
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-foreground">
             Explorer les Catégories
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+          <motion.div 
+            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
             {categories.slice(0, 5).map((category) => (
-              <CategoryCard
-                key={category.id}
-                name={category.name}
-                image={category.imageURL}
-                link={`/categories/${category.name}`}
-              />
+              <motion.div key={category.id} variants={itemVariants}>
+                <CategoryCard
+                  name={category.name}
+                  image={category.imageURL}
+                  link={`/categories/${category.name}`}
+                />
+              </motion.div>
             ))}
-            <CategoryCard
-              name="Tout explorer"
-              image="https://plus.unsplash.com/premium_photo-1670426501357-23bbaaab1e3c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80"
-              link="/categories/"
-            />
-          </div>
+            <motion.div variants={itemVariants}>
+              <CategoryCard
+                name="Tout explorer"
+                image="https://plus.unsplash.com/premium_photo-1670426501357-23bbaaab1e3c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80"
+                link="/categories/"
+              />
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
@@ -70,39 +96,48 @@ export default function Home() {
             </div>
           ) : (
             <>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <motion.div 
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+              >
                 {posts?.slice(0, visible).map((post) => (
-                  <BlogCard
-                    key={post.id}
-                    title={post.title}
-                    category={post.category}
-                    summary={post.summary}
-                    slug={post.slug}
-                    imageURL={post.imageURL}
-                    profileImage={post.author.profileImageURL}
-                    user={post.author.name}
-                    username={post.author.userName}
-                    date={post.date}
-                    commentCount={post.comments.length}
-                    reactions={post.likes.length}
-                    readTime={`${Math.ceil(
-                      post.description?.split(" ").length / 300
-                    )} min de lecture`}
-                  />
+                  <motion.div key={post.id} variants={itemVariants}>
+                    <BlogCard
+                      title={post.title}
+                      category={post.category}
+                      summary={post.summary}
+                      slug={post.slug}
+                      imageURL={post.imageURL}
+                      profileImage={post.author.profileImageURL}
+                      user={post.author.name}
+                      username={post.author.userName}
+                      date={post.date}
+                      commentCount={post.comments.length}
+                      reactions={post.likes.length}
+                      readTime={`${Math.ceil(post.description?.split(" ").length / 300)} min de lecture`}
+                    />
+                  </motion.div>
                 ))}
-              </div>
+              </motion.div>
               {posts && visible < posts.length && (
-                <div className="mt-12 text-center">
+                <motion.div 
+                  className="mt-12 text-center"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 }}
+                >
                   <Button size="lg" onClick={handleLoadMore} className="group">
                     Voir Plus
                     <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </Button>
-                </div>
+                </motion.div>
               )}
             </>
           )}
         </div>
       </section>
     </div>
-  )
+  );
 }

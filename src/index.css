@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -13,8 +13,8 @@
   
   .bg-grid-pattern {
     background-image: 
-      linear-gradient(to right, rgba(var(--primary) / 0.05) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(var(--primary) / 0.05) 1px, transparent 1px);
+      linear-gradient(to right, rgba(255, 165, 0, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 165, 0, 0.05) 1px, transparent 1px);
     background-size: 24px 24px;
   }
 
@@ -31,10 +31,10 @@
   }
 
   .bg-moving-gradient {
-    background: linear-gradient(270deg, var(--primary), var(--secondary), var(--accent));
+    background: linear-gradient(270deg, #FFA500, #4CAF50, #1E1E1E);
     background-size: 200% 200%;
     animation: gradientFlow 15s ease infinite;
-    opacity: 0.05;
+    opacity: 0.1;
   }
 
   @keyframes fadeInUp {
@@ -68,65 +68,65 @@
 
 @layer base {
   :root {
-    --background: 210 40% 98%;
-    --foreground: 210 40% 10%;
+    --background: 30 20% 95%;
+    --foreground: 30 10% 10%;
 
     --card: 0 0% 100%;
-    --card-foreground: 210 40% 10%;
+    --card-foreground: 30 10% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 210 40% 10%;
+    --popover-foreground: 30 10% 10%;
 
-    --primary: 210 100% 50%;
+    --primary: 35 100% 50%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 210 40% 10%;
+    --secondary: 120 40% 50%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 210 40% 96%;
-    --muted-foreground: 210 40% 50%;
+    --muted: 30 10% 90%;
+    --muted-foreground: 30 10% 40%;
 
-    --accent: 210 100% 96%;
-    --accent-foreground: 210 40% 10%;
+    --accent: 30 100% 96%;
+    --accent-foreground: 30 10% 10%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 210 40% 90%;
-    --input: 210 40% 90%;
-    --ring: 210 100% 50%;
+    --border: 30 10% 80%;
+    --input: 30 10% 80%;
+    --ring: 35 100% 50%;
 
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: 210 40% 8%;
-    --foreground: 210 40% 98%;
+    --background: 30 20% 10%;
+    --foreground: 30 10% 95%;
 
-    --card: 210 40% 12%;
-    --card-foreground: 210 40% 98%;
+    --card: 30 20% 15%;
+    --card-foreground: 30 10% 95%;
 
-    --popover: 210 40% 12%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 30 20% 15%;
+    --popover-foreground: 30 10% 95%;
 
-    --primary: 210 100% 50%;
+    --primary: 35 100% 50%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 16%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 120 40% 50%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 210 40% 16%;
-    --muted-foreground: 210 40% 60%;
+    --muted: 30 20% 20%;
+    --muted-foreground: 30 10% 60%;
 
-    --accent: 210 100% 16%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 30 100% 16%;
+    --accent-foreground: 30 10% 95%;
 
     --destructive: 0 62% 30%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 210 40% 16%;
-    --input: 210 40% 16%;
-    --ring: 210 100% 50%;
+    --border: 30 20% 20%;
+    --input: 30 20% 20%;
+    --ring: 35 100% 50%;
   }
 }
 
@@ -186,7 +186,7 @@
   }
 
   .blog-content code {
-    @apply bg-secondary dark:bg-secondary/30 rounded px-1 py-0.5 font-mono text-sm;
+    @apply bg-secondary/30 rounded px-1 py-0.5 font-mono text-sm;
   }
 
   .blog-content pre {
@@ -211,7 +211,7 @@
 }
 
 html {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6 {

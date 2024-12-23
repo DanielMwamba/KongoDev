@@ -1,285 +1,164 @@
-import { Fragment, useState } from "react";
-import { Dialog, Menu, Transition } from "@headlessui/react";
+import React, { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { authActions } from "@/redux/slices/authSlice";
+import { Button } from "@/components/ui/button";
 import {
-  Bars3BottomLeftIcon,
-  FolderIcon,
-  HomeIcon,
-  XMarkIcon,
-  UserCircleIcon,
-} from "@heroicons/react/24/outline";
-import { Typography } from "@material-tailwind/react";
-import { Link , useLocation, useNavigate} from "react-router-dom";
-import { useSelector,useDispatch } from "react-redux";
-import { authActions } from "../../redux/slices/authSlice";
-
-
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../../components/ui/dropdown-menu";
+import { ScrollArea } from "../../components/ui/scroll-area";
+import { Avatar, AvatarFallback, AvatarImage } from "../../components/ui/avatar";
+import { Home, FolderOpen, UserCircle, Menu, X, LogOut } from 'lucide-react';
 
 const navigation = [
-  { name: "Dashboard", href: "/authorpanel/dashboard", icon: HomeIcon },
-  { name: "Posts", href: "/authorpanel/blogs", icon: FolderIcon },
-  { name: "Profile", href: "/authorpanel/profile", icon: UserCircleIcon },
+  { name: "Dashboard", href: "/authorpanel/dashboard", icon: Home },
+  { name: "Posts", href: "/authorpanel/blogs", icon: FolderOpen },
+  { name: "Profile", href: "/authorpanel/profile", icon: UserCircle },
 ];
 
-
-
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
-
-const getCurrentPathname = () => {
-  const location = useLocation();
-  return location.pathname;
-};
-
-const isCurrentPathname = (pathname, currentPathname) => {
-  return currentPathname.startsWith(pathname);
-};
-
-export default function PanelWrapper({ children }) {
-
+const PanelWrapper = ({ children }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector(state=>state.user)
-
+  const location = useLocation();
+  const user = useSelector((state) => state.user);
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  
-  const currentPathname = getCurrentPathname();
-  const updatedNavigation = navigation.map((item) => {
-    return {
-      ...item,
-      current: isCurrentPathname(item.href, currentPathname),
-    };
-  });
-  
-  function handleLogout(){
+
+  const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('refreshToken');
     dispatch(authActions.logout());
-    
-  }
-
-  const userNavigation = [
-    { name: "Votre Profile", href: "/authorpanel/profile" },
-    { name: "Se déconnecter", href: "/", onClick: handleLogout},
-  ];
+    navigate('/');
+  };
 
   return (
-    <>
-      <div className="h-full">
-        <Transition.Root show={sidebarOpen} as={Fragment}>
-          <Dialog
-            as="div"
-            className="relative z-40 md:hidden"
-            onClose={setSidebarOpen}
-          >
-            <Transition.Child
-              as={Fragment}
-              enter="transition-opacity ease-linear duration-300"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="transition-opacity ease-linear duration-300"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
-              <div className="fixed inset-0 bg-gray-600 bg-opacity-75" />
-            </Transition.Child>
+    <div className="flex h-screen bg-gray-100">
+      {/* Sidebar for mobile */}
+      <div className={`fixed inset-0 z-50 lg:hidden ${sidebarOpen ? "" : "hidden"}`}>
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-75" onClick={() => setSidebarOpen(false)} />
+        <div className="fixed inset-y-0 left-0 flex w-full max-w-xs flex-col bg-white shadow-xl">
+          <div className="flex items-center justify-between px-4 py-4">
+            <Link to="/" className="text-xl font-bold">
+            <span className="text-2xl font-bold text-foreground">
+                <span>{"< "}</span>Kongo
+                <span className="text-primary font-extrabold">Dev</span>{" "}
+                <span>{"/> "}</span>
+              </span>
+            </Link>
+            <Button variant="ghost" size="icon" onClick={() => setSidebarOpen(false)}>
+              <X className="h-6 w-6" />
+            </Button>
+          </div>
+          <ScrollArea className="flex-1 px-3 py-4">
+            <nav className="space-y-1">
+              {navigation.map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className={`flex items-center rounded-lg px-3 py-2 text-sm font-medium ${
+                    location.pathname.startsWith(item.href)
+                      ? "bg-gray-100 text-gray-900"
+                      : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                  }`}
+                >
+                  <item.icon className="mr-3 h-6 w-6" />
+                  {item.name}
+                </Link>
+              ))}
+            </nav>
+          </ScrollArea>
+        </div>
+      </div>
 
-            <div className="fixed inset-0 z-40 flex">
-              <Transition.Child
-                as={Fragment}
-                enter="transition ease-in-out duration-300 transform"
-                enterFrom="-translate-x-full"
-                enterTo="translate-x-0"
-                leave="transition ease-in-out duration-300 transform"
-                leaveFrom="translate-x-0"
-                leaveTo="-translate-x-full"
-              >
-                <Dialog.Panel className="relative flex w-full max-w-xs flex-1 flex-col bg-white pt-5 pb-4">
-                  <Transition.Child
-                    as={Fragment}
-                    enter="ease-in-out duration-300"
-                    enterFrom="opacity-0"
-                    enterTo="opacity-100"
-                    leave="ease-in-out duration-300"
-                    leaveFrom="opacity-100"
-                    leaveTo="opacity-0"
-                  >
-                    <div className="absolute top-0 right-0 -mr-12 pt-2">
-                      <button
-                        type="button"
-                        className="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-                        onClick={() => setSidebarOpen(false)}
-                      >
-                        <span className="sr-only">Close sidebar</span>
-                        <XMarkIcon
-                          className="h-6 w-6 text-white"
-                          aria-hidden="true"
-                        />
-                      </button>
-                    </div>
-                  </Transition.Child>
-                  <div className="flex flex-shrink-0 items-center px-4">
-                    <Typography
-                      as="a"
-                      className="text-black cursor-pointer font-medium"
-                      onClick={() => navigate("/")}
-                    >
-                      Kongo Dev
-                    </Typography>
-                  </div>
-                  <div className="mt-5 h-0 flex-1 overflow-y-auto">
-                    <nav className="space-y-1 px-2">
-                      {updatedNavigation.map((item) => (
-                        <Link
-                          key={item.name}
-                          to={item.href}
-                          className={classNames(
-                            item.current
-                              ? "bg-gray-100 text-gray-900"
-                              : "text-gray-600 hover:bg-gray-50 hover:text-gray-900",
-                            "group flex items-center px-2 py-2 text-base font-medium rounded-md"
-                          )}
-                        >
-                          <item.icon
-                            className={classNames(
-                              item.current
-                                ? "text-gray-500"
-                                : "text-gray-400 group-hover:text-gray-500",
-                              "mr-4 flex-shrink-0 h-6 w-6"
-                            )}
-                            aria-hidden="true"
-                          />
-                          {item.name}
-                        </Link>
-                      ))}
-                    </nav>
-                  </div>
-                </Dialog.Panel>
-              </Transition.Child>
-              <div className="w-14 flex-shrink-0" aria-hidden="true">
-                {/* Dummy element to force sidebar to shrink to fit close icon */}
-              </div>
+      {/* Sidebar for desktop */}
+      <div className="hidden lg:flex lg:flex-shrink-0">
+        <div className="flex w-64 flex-col">
+          <div className="flex flex-1 flex-col overflow-y-auto bg-white shadow-lg">
+            <div className="flex items-center justify-center h-16 px-4">
+              <Link to="/" className="text-xl font-bold">
+              <span className="text-2xl font-bold text-foreground">
+                <span>{"< "}</span>Kongo
+                <span className="text-primary font-extrabold">Dev</span>{" "}
+                <span>{"/> "}</span>
+              </span>
+              </Link>
             </div>
-          </Dialog>
-        </Transition.Root>
-
-        {/* Static sidebar for desktop */}
-        <div className="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
-          {/* Sidebar component, swap this element with another sidebar if you like */}
-          <div className="flex flex-grow flex-col overflow-y-auto border-r border-gray-200 bg-white pt-5">
-            <div className="flex flex-shrink-0 items-center px-4">
-              <Typography
-                as="a"
-                href="#"
-                className="cursor-pointer font-medium"
-                onClick={() => navigate("/")}
-              >
-                Kongo Dev
-              </Typography>
-            </div>
-            <div className="mt-5 flex flex-grow flex-col">
-              <nav className="flex-1 space-y-1 px-2 pb-4">
-                {updatedNavigation.map((item) => (
+            <ScrollArea className="flex-1 px-3 py-4">
+              <nav className="space-y-1">
+                {navigation.map((item) => (
                   <Link
                     key={item.name}
                     to={item.href}
-                    className={classNames(
-                      item.current
+                    className={`flex items-center rounded-lg px-3 py-2 text-sm font-medium ${
+                      location.pathname.startsWith(item.href)
                         ? "bg-gray-100 text-gray-900"
-                        : "text-gray-600 hover:bg-gray-50 hover:text-gray-900",
-                      "group flex items-center px-2 py-2 text-sm font-medium rounded-md"
-                    )}
+                        : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                    }`}
                   >
-                    <item.icon
-                      className={classNames(
-                        item.current
-                          ? "text-gray-500"
-                          : "text-gray-400 group-hover:text-gray-500",
-                        "mr-3 flex-shrink-0 h-6 w-6"
-                      )}
-                      aria-hidden="true"
-                    />
+                    <item.icon className="mr-3 h-6 w-6" />
                     {item.name}
                   </Link>
                 ))}
               </nav>
-            </div>
+            </ScrollArea>
           </div>
-        </div>
-        <div className="flex flex-1 flex-col md:pl-64">
-          <div className="sticky top-0 z-10 flex h-16 flex-shrink-0 bg-white shadow">
-            <button
-              type="button"
-              className="border-r border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
-              onClick={() => setSidebarOpen(true)}
-            >
-              <span className="sr-only">Open sidebar</span>
-              <Bars3BottomLeftIcon className="h-6 w-6" aria-hidden="true" />
-            </button>
-            <div className="flex flex-1 justify-between px-4">
-              <div className="flex flex-1">
-                <div className="flex items-center">
-                  <Typography
-                    as="a"
-                    href="#"
-                    className=" text-black cursor-pointer font-medium"
-                    onClick={() => navigate("/")}
-                  >
-                    Panneau Auteur
-                  </Typography>
-                </div>
-              </div>
-              <div className="ml-4 flex items-center md:ml-6">
-                {/* Profile dropdown */}
-                <Menu as="div" className="relative ml-3">
-                  <div>
-                    <Menu.Button className="flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                      <span className="sr-only">Open user menu</span>
-                      <img
-                        className="h-8 w-8 rounded-full"
-                        src={user?.profileImageURL}
-                        alt=""
-                      />
-                    </Menu.Button>
-                  </div>
-                  <Transition
-                    as={Fragment}
-                    enter="transition ease-out duration-100"
-                    enterFrom="transform opacity-0 scale-95"
-                    enterTo="transform opacity-100 scale-100"
-                    leave="transition ease-in duration-75"
-                    leaveFrom="transform opacity-100 scale-100"
-                    leaveTo="transform opacity-0 scale-95"
-                  >
-                    <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      {userNavigation.map((item) => (
-                        <Menu.Item key={item.name}>
-                          {({ active }) => (
-                            <Link
-                              to={item.href}
-                              className={classNames(
-                                active ? "bg-gray-100" : "",
-                                "block px-4 py-2 text-sm text-gray-700"
-                              )}
-                              onClick={item.onClick} // Call the onClick function
-                            >
-                              {item.name}
-                            </Link>
-                          )}
-                        </Menu.Item>
-                      ))}
-                    </Menu.Items>
-                  </Transition>
-                </Menu>
-              </div>
-            </div>
-          </div>
-
-          {children}
         </div>
       </div>
-    </>
+
+      {/* Main content */}
+      <div className="flex flex-1 flex-col overflow-hidden">
+        {/* Top navigation */}
+        <header className="bg-white shadow-sm lg:static lg:overflow-y-visible">
+          <div className="flex h-16 items-center justify-between px-4">
+            <div className="flex items-center">
+              <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setSidebarOpen(true)}>
+                <Menu className="h-6 w-6" />
+              </Button>
+              <h1 className="ml-3 text-2xl font-semibold mt-6 text-gray-900">Panneau Auteur</h1>
+            </div>
+            <div className="flex items-center">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                    <Avatar className="h-8 w-8">
+                      <AvatarImage src={user?.profileImageURL} alt={user?.name} />
+                      <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
+                    </Avatar>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56" align="end" forceMount>
+                  <DropdownMenuLabel className="font-normal">
+                    <div className="flex flex-col space-y-1">
+                      <p className="text-sm font-medium leading-none">{user?.name}</p>
+                      <p className="text-xs leading-none text-muted-foreground">{user?.email}</p>
+                    </div>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <Link to="/authorpanel/profile">Votre Profile</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={handleLogout}>
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Se déconnecter</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          </div>
+        </header>
+
+        {/* Main content area */}
+        <main className="flex-1 overflow-y-auto bg-gray-50 p-4">
+          {children}
+        </main>
+      </div>
+    </div>
   );
-}
+};
+
+export default PanelWrapper;
