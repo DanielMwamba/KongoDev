@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import Loader from "../components/loader";
 import * as api from "../services/api/api";
 import BlogHeader from "../components/BlogHeader.jsx";
-import BlogContent from "../components/BlogContent.jsx";
+import BlogContent from "@/components/BlogContent";
 import CommentSection from "../components/CommentSection";
 import AuthorSidebar from "../components/AuthorSidebar";
 import SharingSidebar from "../components/SharingSidebar";
