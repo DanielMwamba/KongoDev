@@ -3,6 +3,7 @@ import { Toaster } from "react-hot-toast";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "./redux/slices/authSlice";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 // Partials
 
@@ -156,6 +157,7 @@ export default function App() {
           </Route>
         </Routes>
       </BrowserRouter>
+      <SpeedInsights/>
     </>
   );
 }
