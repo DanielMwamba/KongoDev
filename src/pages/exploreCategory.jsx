@@ -59,8 +59,8 @@ export default function ExploreCategory() {
                     username={post.author.username}
                     date={post.date}
                     profileImage={post.author?.profileImageURL}
-                    commentCount={post.comments.length}
-                    reactions={post.likes.length}
+                    commentCount={post.comments?.length}
+                    reactions={post.likes?.length}
                     readTime={`${Math.ceil(
                       post.description?.split(" ").length / 300
                     )} min de lecture`}
