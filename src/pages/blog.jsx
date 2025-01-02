@@ -34,7 +34,7 @@ export default function Blog() {
       toast.error("Failed to load blog post. Please try again later.");
       setLoading(false);
     }
-  }, [slug, user.id]);
+  }, [slug, user?.id]);
 
   useEffect(() => {
     fetchData();
