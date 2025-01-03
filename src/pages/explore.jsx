@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import BlogCard from "@/components/BlogCard";
 import { Button } from "@/components/ui/button";
-import Loader from "@/components/Loader";
+import Loader from "../components/loader.jsx";
 import * as api from "../services/api/api";
 import { useInView } from "react-intersection-observer";
 import { ArrowDown, RefreshCcw } from 'lucide-react';
