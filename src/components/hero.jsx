@@ -52,7 +52,7 @@ const Hero = () => {
         >
           <Button
             size="lg"
-            className="text-lg rounded-full bg-primary hover:bg-primary/90 text-primary-foreground"
+            className="text-lg rounded-full w-72 bg-primary hover:bg-primary/90 text-primary-foreground"
             onClick={() => navigate("/register")}
           >
             Rejoignez la communauté <ArrowRight className="ml-2 h-5 w-5" />
@@ -60,7 +60,7 @@ const Hero = () => {
           <Button
             size="lg"
             variant="outline"
-            className="text-lg rounded-full border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground"
+            className="text-lg rounded-full border-secondary w-64 text-secondary hover:bg-secondary hover:text-secondary-foreground"
             onClick={() => navigate("/explore")}
           >
             Explorez les articles
