@@ -1,19 +1,45 @@
 import React from 'react'
+import { motion } from 'framer-motion'
+import { Loader2 } from 'lucide-react'
 
-export default function Loader() {
+
+export default function Loader({ fullScreen = false }) {
+  const containerClasses = fullScreen
+    ? "fixed inset-0 z-50"
+    : "relative w-full h-full min-h-[200px]"
+
   return (
-    <section className="fixed inset-0 flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-600 z-50">
-      <div className="relative">
-        <svg className="animate-spin h-16 w-16 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-        </svg>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="h-3 w-3 bg-white rounded-full animate-ping"></div>
+    <div className={`${containerClasses} flex items-center justify-center bg-gradient-to-r from-primary/20 to-secondary/20 backdrop-blur-sm`}>
+      <motion.div
+        className="flex flex-col items-center"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="relative">
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+          >
+            <Loader2 className="w-12 h-12 text-primary" />
+          </motion.div>
+          <motion.div
+            className="absolute inset-0 flex items-center justify-center"
+            animate={{ scale: [1, 1.2, 1] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <div className="h-2 w-2 bg-secondary rounded-full" />
+          </motion.div>
         </div>
-      </div>
-      <span className="sr-only">Chargement...</span>
-      <h2 className="text-white text-2xl font-bold ml-4 animate-pulse">Chargement...</h2>
-    </section>
+        <motion.h2
+          className="text-foreground text-xl font-bold mt-4"
+          animate={{ opacity: [0.5, 1, 0.5] }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+        >
+          Chargement...
+        </motion.h2>
+      </motion.div>
+      <span className="sr-only">Chargement en cours</span>
+    </div>
   )
 }
