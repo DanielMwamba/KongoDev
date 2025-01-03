@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { ArrowRight, Loader2 } from "lucide-react";
+import { ArrowRight} from "lucide-react";
+import Loader from "../components/loader";
 import Hero from "@/components/hero";
 import CategoryCard from "../components/categoryCard";
 import BlogCard from "../components/BlogCard";
@@ -92,7 +93,7 @@ export default function Home() {
           </h2>
           {loading ? (
             <div className="flex justify-center items-center h-64">
-              <Loader2 className="h-8 w-8 animate-spin text-primary" />
+              <Loader/>
             </div>
           ) : (
             <>
