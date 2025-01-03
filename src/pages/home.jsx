@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ArrowRight} from "lucide-react";
-import Loader from "../components/loader";
+import Loader from "../components/loader.jsx";
 import Hero from "@/components/hero";
 import CategoryCard from "../components/categoryCard";
 import BlogCard from "../components/BlogCard";
