@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import CategoryCard from "@/components/CategoryCard";
+import CategoryCard from "../components/categoryCard";
 import categories from "@/services/api/categories.json";
-import Loader from "@/components/Loader";
+import Loader from "../components/loader";
 
 export default function Categories() {
   const [loading, setLoading] = useState(true);
