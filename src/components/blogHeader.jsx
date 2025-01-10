@@ -24,7 +24,7 @@ const BlogHeader = ({ blogData, navigate }) => {
 
         <div className="flex items-center gap-4 mb-8">
           <Link
-            to={`/blog/author/${blogData?.author.userName}/`}
+            to={`/author/${blogData?.author.userName}/`}
             className="flex items-center gap-2 hover:underline"
           >
             <Avatar className="h-12 w-12">
