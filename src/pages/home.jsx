@@ -10,8 +10,8 @@ import categories from "@/services/api/categories.json";
 import * as api from "@/services/api/api";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-// import { toast } from "react-hot-toast";
-import { useToast } from "../hooks/use-toast";
+import { toast } from "react-hot-toast";
+// import { useToast } from "../hooks/use-toast";
 
 export default function Home() {
   const [posts, setPosts] = useState(null);
@@ -20,7 +20,7 @@ export default function Home() {
   const navigate = useNavigate();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
-  const { toast } = useToast();
+  // const { toast } = useToast();
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -51,12 +51,26 @@ export default function Home() {
     if (isLoggedIn) {
       navigate("/authorpanel/blogs/new");
     } else {
-      toast({
-        title: "Connexion requise",
-        description: "Vous devez être connecté pour écrire un article.",
-        action: (
-          <Button onClick={() => navigate("/login")}>Se connecter</Button>
-        ),
+      toast((t) => (
+        <span>
+          Vous devez être connecté pour écrire un article.
+          <Button 
+            size="sm" 
+            onClick={() => { 
+              toast.dismiss(t.id);
+              navigate("/login");
+            }}
+            className="ml-2"
+          >
+            Se connecter
+          </Button>
+        </span>
+      ), {
+        duration: 5000,
+        style: {
+          background: '#333',
+          color: '#fff',
+        },
       });
       navigate("/login");
     }
