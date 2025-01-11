@@ -44,14 +44,14 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <Button
-            size="lg"
+            
             className="text-lg px-8 py-3 bg-primary hover:bg-primary/90 text-primary-foreground transition-all duration-300 ease-in-out transform hover:scale-105"
             onClick={() => navigate("/register")}
           >
             Rejoindre la communauté <ArrowRight className="ml-2 h-5 w-5" />
           </Button>
           <Button
-            size="lg"
+            
             variant="outline"
             className="text-lg px-8 py-3 border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 ease-in-out transform hover:scale-105"
             onClick={() => navigate("/explore")}
