@@ -1,76 +1,112 @@
+import React from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { Github, Linkedin, Twitter } from 'lucide-react';
+import { Button } from "@/components/ui/button";
 
 const About = () => {
   return (
-    <div className="px-4 text-black py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
-      <div className="grid gap-10 lg:grid-cols-2">
-        <div className="lg:pr-10">
-          <h5 className="mb-4 text-4xl font-extrabold leading-none">
-            KONGO DEV
-          </h5>
-          <p className="mb-6 text-gray-900">
-            Kongo Dev, la plateforme qui vise à rassembler et valoriser les
-            talents des développeurs congolais. Avec Kongo Dev, nous souhaitons
-            créer un espace d'échange et de collaboration où chacun pourra
-            partager ses connaissances, ses projets et ses idées pour contribuer
-            ensemble à l'émergence d'un avenir numérique prometteur en
-            République Démocratique du Congo.
+    <div className=" mt-10 bg-background text-foreground min-h-screen py-16 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
+        >
+          <h1 className="text-4xl font-extrabold sm:text-5xl md:text-6xl mb-4">
+            À Propos de <span className="text-primary">DEVSphere</span>
+          </h1>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            Une plateforme pour partager des connaissances et connecter les développeurs
           </p>
-          <hr className="mb-5 border-gray-300" />
-          <div className="flex items-center space-x-4">
-            <a
-              href=""
-              target="_blank"
-              className="text-gray-600 transition-colors duration-300 hover:text-deep-purple-accent-400"
-            >
-              <svg viewBox="0 0 30 30" fill="currentColor" className="h-6">
-                <circle cx="15" cy="15" r="4" />
-                <path d="M19.999,3h-10C6.14,3,3,6.141,3,10.001v10C3,23.86,6.141,27,10.001,27h10C23.86,27,27,23.859,27,19.999v-10   C27,6.14,23.859,3,19.999,3z M15,21c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S18.309,21,15,21z M22,9c-0.552,0-1-0.448-1-1   c0-0.552,0.448-1,1-1s1,0.448,1,1C23,8.552,22.552,9,22,9z" />
-              </svg>
-            </a>
+        </motion.div>
 
-            <a
-              href=""
-              target="_blank"
-              className="text-gray-600 transition-colors duration-300 hover:text-deep-purple-accent-400"
-            >
-              <svg
-                className="h-6"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </a>
+        <div className="grid gap-16 lg:grid-cols-2 items-center">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <h2 className="text-3xl font-bold mb-6">Notre Mission</h2>
+            <p className="text-lg mb-6 text-muted-foreground">
+              DEVSphere vise à créer une communauté de développeurs passionnés. 
+              Notre plateforme offre un espace où chacun peut partager ses connaissances, 
+              explorer de nouvelles idées et collaborer sur des projets innovants.
+            </p>
+            <p className="text-lg mb-8 text-muted-foreground">
+              Que vous soyez débutant ou expert, DEVSphere vous permet de grandir 
+              professionnellement, d'élargir votre réseau et de contribuer à l'avancement 
+              de la technologie à l'échelle mondiale.
+            </p>
+            <div className="flex space-x-4">
+              <Button asChild>
+                <Link to="/register">Rejoignez-nous</Link>
+              </Button>
+              <Button variant="outline" asChild>
+                <Link to="/categories">Explorez les Articles</Link>
+              </Button>
+            </div>
+          </motion.div>
 
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="relative"
+          >
+            <div className="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden shadow-xl">
+              <img
+                src="https://sjc.microlink.io/6LUx-nm7692y4t48Vn31dvWfOgBQmETL0slG0dWL57QJbG6Yov0DCJ0sEt_-hSCNqIhir0mRLaX7XWF15dpW0Q.jpeg"
+                alt="Développeurs collaborant"
+                className="object-cover w-full h-full"
+              />
+            </div>
+            <div className="absolute -bottom-6 -right-6 bg-primary text-primary-foreground p-4 rounded-lg shadow-lg">
+              <p className="font-semibold">Rejoignez plus de</p>
+              <p className="text-3xl font-bold">100,000+</p>
+              <p>développeurs</p>
+            </div>
+          </motion.div>
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="mt-20 text-center"
+        >
+          <h2 className="text-3xl font-bold mb-8">Connectez-vous avec nous</h2>
+          <div className="flex justify-center space-x-6">
             <a
-              href=""
+              href="https://github.com/articlesphere"
               target="_blank"
-              className="text-gray-600 transition-colors duration-300 hover:text-deep-purple-accent-400"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-primary transition-colors"
             >
-              <svg
-                className="h-6"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path d="M20.47,2H3.53A1.45,1.45,0,0,0,2.06,3.43V20.57A1.45,1.45,0,0,0,3.53,22H20.47a1.45,1.45,0,0,0,1.47-1.43V3.43A1.45,1.45,0,0,0,20.47,2ZM8.09,18.74h-3v-9h3ZM6.59,8.48h0a1.56,1.56,0,1,1,0-3.12,1.57,1.57,0,1,1,0,3.12ZM18.91,18.74h-3V13.91c0-1.21-.43-2-1.52-2A1.65,1.65,0,0,0,12.85,13a2,2,0,0,0-.1.73v5h-3s0-8.18,0-9h3V11A3,3,0,0,1,15.46,9.5c2,0,3.45,1.29,3.45,4.06Z" />
-              </svg>
+              <Github className="h-8 w-8" />
+              <span className="sr-only">GitHub</span>
+            </a>
+            <a
+              href="https://linkedin.com/company/articlesphere"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-primary transition-colors"
+            >
+              <Linkedin className="h-8 w-8" />
+              <span className="sr-only">LinkedIn</span>
+            </a>
+            <a
+              href="https://twitter.com/articlesphere"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-primary transition-colors"
+            >
+              <Twitter className="h-8 w-8" />
+              <span className="sr-only">Twitter</span>
             </a>
           </div>
-        </div>
-        <div>
-          <img
-            className="object-cover w-full h-56 rounded shadow-lg sm:h-96"
-            src="cover.png"
-            alt=""
-          />
-        </div>
+        </motion.div>
       </div>
     </div>
   );
