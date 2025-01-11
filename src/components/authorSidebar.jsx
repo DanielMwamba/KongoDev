@@ -7,7 +7,7 @@ export default function AuthorSidebar({ author }) {
   if (!author) return null;
 
   return (
-    <div className="hidden lg:block lg:col-span-3">
+    <div className="hidden lg:block lg:col-span-3 w-72">
       <div className="sticky top-24 bg-white rounded-lg shadow-sm p-6">
         <div className="text-center mb-6">
           <Avatar className="h-20 w-20 mx-auto mb-4">
