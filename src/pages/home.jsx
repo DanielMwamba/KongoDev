@@ -95,7 +95,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className=" mt-10 min-h-screen bg-background">
       <Hero />
 
       <section className="py-16 md:py-24 bg-secondary/5">
@@ -204,8 +204,8 @@ export default function Home() {
             Partagez vos connaissances, apprenez des autres et contribuez à une
             communauté diversifiée de développeurs passionnés.
           </p>
-          <Button size="lg" onClick={handleStartWriting} className="group w-64">
-            Commencer à Écrire
+          <Button size="lg" onClick={handleStartWriting} className="group font-bold w-64">
+            Partager un sujet
             <Sparkles className="ml-2 h-4 w-4 transition-transform group-hover:rotate-12" />
           </Button>
         </div>
