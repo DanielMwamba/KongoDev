@@ -57,7 +57,7 @@ const About = () => {
           >
             <div className="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden shadow-xl">
               <img
-                src="https://sjc.microlink.io/6LUx-nm7692y4t48Vn31dvWfOgBQmETL0slG0dWL57QJbG6Yov0DCJ0sEt_-hSCNqIhir0mRLaX7XWF15dpW0Q.jpeg"
+                src="/devsphere.png"
                 alt="Développeurs collaborant"
                 className="object-cover w-full h-full"
               />
