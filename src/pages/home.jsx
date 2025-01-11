@@ -1,18 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { ArrowRight} from "lucide-react";
-import Loader from "../components/loader.jsx";
-import Hero from "@/components/hero";
-import CategoryCard from "../components/categoryCard";
-import BlogCard from "../components/BlogCard";
-import categories from "../services/api/categories.json";
-import * as api from "../services/api/api";
-import { Button } from "../components/ui/button";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { ArrowRight, Sparkles } from "lucide-react";
+import Loader from "@/components/Loader";
+import Hero from "@/components/Hero";
+import CategoryCard from "@/components/CategoryCard";
+import BlogCard from "@/components/BlogCard";
+import categories from "@/services/api/categories.json";
+import * as api from "@/services/api/api";
+import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+// import { toast } from "react-hot-toast";
+import { useToast } from "../hooks/use-toast";
 
 export default function Home() {
   const [posts, setPosts] = useState(null);
   const [visible, setVisible] = useState(6);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
+  const { toast } = useToast();
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -20,7 +28,13 @@ export default function Home() {
         const response = await api.getAllPosts();
         setPosts(response.posts);
       } catch (error) {
-        console.error("Failed to fetch posts:", error);
+        console.error("Erreur lors de la récupération des articles:", error);
+        toast({
+          title: "Erreur",
+          description:
+            "Impossible de charger les articles. Veuillez réessayer plus tard.",
+          variant: "destructive",
+        });
       } finally {
         setLoading(false);
       }
@@ -31,6 +45,21 @@ export default function Home() {
 
   const handleLoadMore = () => {
     setVisible((prevValue) => prevValue + 6);
+  };
+
+  const handleStartWriting = () => {
+    if (isLoggedIn) {
+      navigate("/authorpanel/blogs/new");
+    } else {
+      toast({
+        title: "Connexion requise",
+        description: "Vous devez être connecté pour écrire un article.",
+        action: (
+          <Button onClick={() => navigate("/login")}>Se connecter</Button>
+        ),
+      });
+      navigate("/login");
+    }
   };
 
   const containerVariants = {
@@ -57,9 +86,13 @@ export default function Home() {
 
       <section className="py-16 md:py-24 bg-secondary/5">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-foreground">
-            Explorer les Catégories
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-6 text-foreground">
+            Explorez nos Catégories
           </h2>
+          <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
+            Découvrez une variété de sujets passionnants dans le monde du
+            développement, adaptés aux intérêts de tous les développeurs.
+          </p>
           <motion.div
             className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6"
             variants={containerVariants}
@@ -70,16 +103,16 @@ export default function Home() {
               <motion.div key={category.id} variants={itemVariants}>
                 <CategoryCard
                   name={category.name}
-                  image={category.imageURL}
-                  link={`/categories/${category.name}`}
+                  icon={category.icon}
+                  link={`/categories/${category.name.toLowerCase()}`}
                 />
               </motion.div>
             ))}
             <motion.div variants={itemVariants}>
               <CategoryCard
                 name="Tout explorer"
-                image="https://plus.unsplash.com/premium_photo-1670426501357-23bbaaab1e3c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80"
-                link="/categories/"
+                icon="MoreHorizontal"
+                link="/categories"
               />
             </motion.div>
           </motion.div>
@@ -88,12 +121,17 @@ export default function Home() {
 
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-foreground">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-6 text-foreground">
             Articles Récents
           </h2>
+          <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
+            Découvrez les derniers articles publiés par notre communauté
+            mondiale de développeurs. Restez à jour avec les dernières tendances
+            et innovations technologiques.
+          </p>
           {loading ? (
             <div className="flex justify-center items-center h-64">
-              <Loader/>
+              <Loader />
             </div>
           ) : (
             <>
@@ -118,7 +156,7 @@ export default function Home() {
                       commentCount={post.comments.length}
                       reactions={post.likes.length}
                       readTime={`${Math.ceil(
-                        post.description?.split(" ").length / 300
+                        post.description.split(" ").length / 200
                       )} min de lecture`}
                     />
                   </motion.div>
@@ -139,6 +177,22 @@ export default function Home() {
               )}
             </>
           )}
+        </div>
+      </section>
+
+      <section className="py-16 md:py-24 bg-secondary/5">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">
+            Rejoignez notre Communauté de Développeurs passionnés
+          </h2>
+          <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+            Partagez vos connaissances, apprenez des autres et contribuez à une
+            communauté diversifiée de développeurs passionnés.
+          </p>
+          <Button size="lg" onClick={handleStartWriting} className="group w-64">
+            Commencer à Écrire
+            <Sparkles className="ml-2 h-4 w-4 transition-transform group-hover:rotate-12" />
+          </Button>
         </div>
       </section>
     </div>
