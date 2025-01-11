@@ -71,10 +71,15 @@ const BlogCard = ({
 
         <div className="mt-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Avatar className="w-10 h-10 border-2 border-primary">
-              <AvatarImage src={profileImage} alt={user} />
-              <AvatarFallback>{user.charAt(0)}</AvatarFallback>
-            </Avatar>
+            <Link
+              to={`/author/${username}/`}
+              className="text-sm font-medium hover:text-primary transition-colors duration-200"
+            >
+              <Avatar className="w-10 h-10 border-2 border-primary">
+                <AvatarImage src={profileImage} alt={user} />
+                <AvatarFallback>{user.charAt(0)}</AvatarFallback>
+              </Avatar>
+            </Link>
             <div className="flex flex-col">
               <Link
                 to={`/author/${username}/`}
