@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { ArrowRight, Sparkles } from "lucide-react";
 import Loader from "@/components/Loader";
 import Hero from "@/components/Hero";
-import CategoryCard from "@/components/CategoryCard";
+import CategoryCard from "../components/categoryCard";
 import BlogCard from "@/components/BlogCard";
 import categories from "@/services/api/categories.json";
 import * as api from "@/services/api/api";
@@ -118,7 +118,8 @@ export default function Home() {
                 <CategoryCard
                   name={category.name}
                   icon={category.icon}
-                  link={`/categories/${category.name.toLowerCase()}`}
+                  color={category.color}
+                  link={`/categories/${category.name}`}
                 />
               </motion.div>
             ))}

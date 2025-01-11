@@ -1,34 +1,45 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { ArrowRight } from 'lucide-react';
 
+const getColorClasses = (color) => {
+  const baseClasses = "transition-all duration-200 hover:shadow-md";
+  switch (color) {
+    case "yellow":
+      return `${baseClasses} bg-yellow-100 hover:bg-yellow-200 text-yellow-800`;
+    case "cyan":
+      return `${baseClasses} bg-cyan-100 hover:bg-cyan-200 text-cyan-800`;
+    case "blue":
+      return `${baseClasses} bg-blue-100 hover:bg-blue-200 text-blue-800`;
+    case "orange":
+      return `${baseClasses} bg-orange-100 hover:bg-orange-200 text-orange-800`;
+    case "red":
+      return `${baseClasses} bg-red-100 hover:bg-red-200 text-red-800`;
+    case "purple":
+      return `${baseClasses} bg-purple-100 hover:bg-purple-200 text-purple-800`;
+    case "pink":
+      return `${baseClasses} bg-pink-100 hover:bg-pink-200 text-pink-800`;
+    case "green":
+      return `${baseClasses} bg-green-100 hover:bg-green-200 text-green-800`;
+    case "slate":
+      return `${baseClasses} bg-slate-100 hover:bg-slate-200 text-slate-800`;
+    case "indigo":
+      return `${baseClasses} bg-indigo-100 hover:bg-indigo-200 text-indigo-800`;
+    default:
+      return `${baseClasses} bg-gray-100 hover:bg-gray-200 text-gray-800`;
+  }
+};
 
-const CategoryCard = ({ name, image, link, description }) => {
+const CategoryCard = ({ name, color, link, description }) => {
   return (
-    <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg">
-      <div className="aspect-video relative overflow-hidden">
-        <img 
-          src={image} 
-          alt={name} 
-          className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-        <h3 className="absolute bottom-4 left-4 text-2xl font-bold text-white">{name}</h3>
+    <Link 
+      to={link}
+      className={`block p-4 rounded-lg ${getColorClasses(color)} group`}
+    >
+      <div className="flex flex-col h-full">
+        <h3 className="text-lg font-semibold mb-2">{name}</h3>
+        <p className="text-sm opacity-75 line-clamp-2">{description}</p>
       </div>
-      <CardContent className="p-4">
-        <p className="text-muted-foreground line-clamp-2">{description}</p>
-      </CardContent>
-      <CardFooter className="p-4">
-        <Button asChild className="w-full group">
-          <Link to={link}>
-            Explorer
-            <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </Link>
-        </Button>
-      </CardFooter>
-    </Card>
+    </Link>
   );
 };
 

@@ -65,6 +65,7 @@ export default function Categories() {
                   name={category.name}
                   image={category.imageURL}
                   link={`/categories/${category.name}`}
+                  color={category.color}
                   description={category.description || "Explorez les dernières tendances et innovations dans cette catégorie."}
                 />
               </motion.div>

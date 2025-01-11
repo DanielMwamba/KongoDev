@@ -1,32 +1,62 @@
 [
-    {
-      "id": 1,
-      "name": "JavaScript",
-      "imageURL": "https://res.cloudinary.com/dqbduuqel/image/upload/v1713447548/ebwvwlyxgqcboxvx7dis.jpg"
-    },
-    {
-      "id": 2,
-      "name": "Python",
-      "imageURL": "https://res.cloudinary.com/dqbduuqel/image/upload/v1713447847/qk9bp7hqbqyodv9is9xq.jpg"
-    },
-    {
-      "id": 3,
-      "name": "Java",
-      "imageURL": "https://res.cloudinary.com/dqbduuqel/image/upload/v1713448081/zks7lzy9ak3lorpx5zry.jpg"
-    },
-    {
-      "id": 4,
-      "name": "C++",
-      "imageURL": "https://res.cloudinary.com/dqbduuqel/image/upload/v1713448081/zks7lzy9ak3lorpx5zry.jpg"
-    },
-    {
-      "id": 5,
-      "name": "C#",
-      "imageURL": "https://res.cloudinary.com/dqbduuqel/image/upload/v1713448081/zks7lzy9ak3lorpx5zry.jpg"
-    },
-    {
-      "id": 6,
-      "name": "PHP",
-      "imageURL": "https://res.cloudinary.com/dqbduuqel/image/upload/v1713448081/zks7lzy9ak3lorpx5zry.jpg"
-    } 
+  {
+    "id": 1,
+    "name": "JavaScript",
+    "color": "yellow",
+    "description": "JavaScript et son écosystème"
+  },
+  {
+    "id": 2,
+    "name": "React",
+    "color": "cyan",
+    "description": "React, Next.js et l'écosystème React"
+  },
+  {
+    "id": 3,
+    "name": "Python",
+    "color": "blue",
+    "description": "Python et son écosystème"
+  },
+  {
+    "id": 4,
+    "name": "Web Dev",
+    "color": "orange",
+    "description": "Développement web frontend et backend"
+  },
+  {
+    "id": 5,
+    "name": "DevOps",
+    "color": "red",
+    "description": "CI/CD, Cloud et Infrastructure"
+  },
+  {
+    "id": 6,
+    "name": "AI/ML",
+    "color": "purple",
+    "description": "Intelligence Artificielle et Machine Learning"
+  },
+  {
+    "id": 7,
+    "name": "Mobile",
+    "color": "pink",
+    "description": "Développement mobile iOS et Android"
+  },
+  {
+    "id": 8,
+    "name": "Database",
+    "color": "green",
+    "description": "Bases de données SQL et NoSQL"
+  },
+  {
+    "id": 9,
+    "name": "Security",
+    "color": "slate",
+    "description": "Sécurité et Cybersécurité"
+  },
+  {
+    "id": 10,
+    "name": "Career",
+    "color": "indigo",
+    "description": "Carrière et Développement professionnel"
+  }
 ]
