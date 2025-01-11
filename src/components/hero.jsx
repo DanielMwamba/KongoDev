@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowRight, Code, Users, Lightbulb, Globe } from 'lucide-react';
+import { ArrowRight, Code, Users, Lightbulb, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 
@@ -13,8 +13,18 @@ const Hero = () => {
       <div className="absolute inset-0 opacity-5">
         <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="1"/>
+            <pattern
+              id="grid"
+              width="40"
+              height="40"
+              patternUnits="userSpaceOnUse"
+            >
+              <path
+                d="M 40 0 L 0 0 0 40"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1"
+              />
             </pattern>
           </defs>
           <rect width="100%" height="100%" fill="url(#grid)" />
@@ -23,7 +33,7 @@ const Hero = () => {
 
       {/* Main content */}
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-24">
-        <motion.div 
+        <motion.div
           className="text-center"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -33,34 +43,33 @@ const Hero = () => {
             <span className="text-primary">DEV</span>Sphere
           </h1>
           <p className="mt-6 max-w-2xl mx-auto text-lg sm:text-xl md:text-2xl text-muted-foreground">
-            Unissez-vous, apprenez et innovez avec une communauté de développeurs passionnés.
+            Unissez-vous, apprenez et innovez avec une communauté de
+            développeurs passionnés.
           </p>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           className="mt-10 flex flex-wrap justify-center gap-4"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <Button
-            
-            className="text-lg px-8 py-3 bg-primary hover:bg-primary/90 text-primary-foreground transition-all duration-300 ease-in-out transform hover:scale-105"
+            className="sm:text-lg px-8 py-3 bg-primary hover:bg-primary/90 text-primary-foreground transition-all duration-300 ease-in-out transform hover:scale-105"
             onClick={() => navigate("/register")}
           >
             Rejoindre la communauté <ArrowRight className="ml-2 h-5 w-5" />
           </Button>
           <Button
-            
             variant="outline"
-            className="text-lg px-8 py-3 border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 ease-in-out transform hover:scale-105"
+            className="sm:text-lg px-8 py-3 border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 ease-in-out transform hover:scale-105"
             onClick={() => navigate("/explore")}
           >
             Explorer les articles
           </Button>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           className="mt-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -92,13 +101,13 @@ const Hero = () => {
       {/* Decorative element */}
       <div className="absolute bottom-10 right-10 opacity-20 hidden lg:block">
         <motion.div
-          animate={{ 
+          animate={{
             rotate: 360,
             scale: [1, 1.1, 1],
           }}
-          transition={{ 
-            duration: 20, 
-            repeat: Infinity, 
+          transition={{
+            duration: 20,
+            repeat: Infinity,
             repeatType: "loop",
             times: [0, 0.5, 1],
             ease: "easeInOut",
