@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { ArrowRight, Sparkles } from "lucide-react";
-import Loader from "@/components/Loader";
+import Loader from "@/components/loader";
 import Hero from "@/components/Hero";
 import CategoryCard from "../components/categoryCard";
 import BlogCard from "@/components/BlogCard";
