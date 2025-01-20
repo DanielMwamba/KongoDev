@@ -28,11 +28,11 @@ export default function Blog() {
       const response = await api.getPost(slug);
       setBlogData(response.posts);
       setComments(response.posts.comments || []);
-      setIsLiked(response.posts.likes.includes(user.id));
+      setIsLiked(response.posts.likes.includes(user?.id));
       setLoading(false);
     } catch (error) {
       toast.error("Failed to load blog post. Please try again later.");
-      console.log("voici l'erreur", error);
+      // console.log("voici l'erreur", error);
       setLoading(false);
     }
   }, [slug, user?.id]);
