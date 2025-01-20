@@ -28,7 +28,7 @@ import { userActions } from "@/redux/slices/userSlice";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  // const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -51,9 +51,9 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const toggleSearch = () => {
-    setIsSearchOpen(!isSearchOpen);
-  };
+  // const toggleSearch = () => {
+  //   setIsSearchOpen(!isSearchOpen);
+  // };
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -113,7 +113,7 @@ export default function Header() {
           </nav>
 
           <div className="flex items-center space-x-4">
-            <div
+            {/* <div
               className={`transition-all duration-300 ${
                 isSearchOpen ? "w-64" : "w-0"
               }`}
@@ -125,16 +125,16 @@ export default function Header() {
                   className="w-full"
                 />
               )}
-            </div>
+            </div> */}
 
-            <Button
+            {/* <Button
               variant="ghost"
               size="icon"
               onClick={toggleSearch}
               className="text-foreground hover:bg-accent"
             >
               <Search className="h-5 w-5" />
-            </Button>
+            </Button> */}
 
             {isLoggedIn ? (
               <DropdownMenu>
