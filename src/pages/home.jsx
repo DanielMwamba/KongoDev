@@ -7,7 +7,7 @@ import Hero from "@/components/hero";
 import CategoryCard from "../components/categoryCard";
 import BlogCard from "@/components/BlogCard";
 import categories from "@/services/api/categories.json";
-import * as api from "@/services/api/api";
+import * as api from "../services/api/api";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { toast } from "react-hot-toast";

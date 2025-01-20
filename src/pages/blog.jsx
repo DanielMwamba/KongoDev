@@ -32,6 +32,7 @@ export default function Blog() {
       setLoading(false);
     } catch (error) {
       toast.error("Failed to load blog post. Please try again later.");
+      console.log("voici l'erreur", error);
       setLoading(false);
     }
   }, [slug, user?.id]);
