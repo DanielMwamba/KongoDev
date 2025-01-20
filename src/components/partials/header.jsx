@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import {toast} from "react-hot-toast";
 import {
   Menu,
   X,
@@ -40,6 +41,7 @@ export default function Header() {
     localStorage.removeItem("refreshToken");
     dispatch(authActions.logout());
     dispatch(userActions.clearUser());
+    toast.success("Vous etes deconnecté avec succès!");
     navigate("/");
   };
 

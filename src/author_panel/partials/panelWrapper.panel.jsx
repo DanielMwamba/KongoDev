@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { authActions } from "@/redux/slices/authSlice";
 import { Button } from "@/components/ui/button";
+import {toast} from "react-hot-toast";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -37,6 +38,7 @@ const PanelWrapper = ({ children }) => {
     localStorage.removeItem("token");
     localStorage.removeItem("refreshToken");
     dispatch(authActions.logout());
+    toast.success("Vous etes deconnecté avec succès!");
     navigate("/");
   };
 
@@ -161,7 +163,7 @@ const PanelWrapper = ({ children }) => {
                   className="w-64 p-4 bg-card shadow-lg rounded-lg border border-border"
                 >
                   <DropdownMenuLabel className="font-normal">
-                    <div className="flex flex-col space-y-1">
+                    <div className="flex flex-col ">
                       <p className="text-sm font-medium leading-none">
                         {user?.name}
                       </p>
@@ -172,9 +174,9 @@ const PanelWrapper = ({ children }) => {
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>
-                    <Link to="/authorpanel/profile">Votre Profile</Link>
+                    <Link to="/authorpanel/profile">Mon Profile</Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={handleLogout}>
+                  <DropdownMenuItem onClick={handleLogout} className="mt-2 cursor-pointer">
                     <LogOut className="mr-2 h-4 w-4" />
                     <span>Se déconnecter</span>
                   </DropdownMenuItem>

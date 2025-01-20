@@ -42,7 +42,7 @@ export default function Login() {
       dispatch(userActions.setUser(userData))
 
       toast.success("Connexion réussie!")
-      navigate("/authorpanel/dashboard")
+      navigate("/")
     } catch (error) {
       toast.error(error.message || "Une erreur est survenue lors de la connexion")
     }
