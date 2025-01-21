@@ -1,4 +1,4 @@
-import React, { useState, createRef, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -27,27 +27,24 @@ import {
 
 import PanelWrapper from "../partials/panelWrapper.panel";
 import DefaultCoverImg from "../components/defaultCoverImg";
-import ImageCropDialog from "../components/imageCropDialog";
-import Loader from "../../components/loader";
+
 import categories from "../../services/api/categories.json";
 
-import convertImageToBase64 from "../../helpers/convertImage.helper";
-import compressImage from "../../helpers/compressedImage.helper";
+import CoverImage from "../components/coverImage";
 import { BlogSchema } from "../validations/Blog.validation";
 import * as api from "../../services/api/api";
 
+
+
 export default function AddBlog() {
   const navigate = useNavigate();
-  const editorRef = createRef();
-
+  const editorRef = useRef();
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  }, []);
+  const [selectedImage, setSelectedImage] = useState({
+    originalImage: null,
+    croppedImage: DefaultCoverImg(),
+  });
 
   const {
     register,
@@ -63,94 +60,35 @@ export default function AddBlog() {
 
   const summaryValue = watch("summary", "");
 
-  //COVER IMAGE START
-
-  const fileInputRef = useRef(null);
-
-  const handleFileButtonClick = () => {
-    fileInputRef.current.click();
-  };
-
-  const initData = {
-    originalImage: null,
-    croppedImage: DefaultCoverImg(),
-  };
-
-  const [selectedImage, setSelectedImage] = useState(initData);
-
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    event.target.value = null;
-    convertImageToBase64(file)
-      .then((base64Image) => {
-        setSelectedImage((prevValue) => {
-          return { ...prevValue, originalImage: base64Image };
-        });
-      })
-      .catch((error) => {
-        console.error("Error converting image to base64:", error);
-      });
-  };
-
-  function onCancel() {
-    setSelectedImage((prevValue) => {
-      return { ...prevValue, originalImage: null };
-    });
-  }
-
-  function genCroppedImg(croppedImageURL) {
-    compressImage(croppedImageURL, 500, 500, 100)
-      .then((compressedImage) => {
-        setSelectedImage({
-          originalImage: null,
-          croppedImage: compressedImage,
-        });
-        // Handle the compressed image here
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
-  //COVER IMAGE ENDS
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 1000);
+    return () => clearTimeout(timer); // Clean up timeout
+  }, []);
 
   const onSubmit = (data) => {
     setButtonDisabled(true);
+    const formattedDate = new Date().toISOString();
 
-    const currentDate = new Date();
-    const formattedDate = currentDate.toISOString();
-
-    data = {
+    const blogData = {
       ...data,
       imageURL: selectedImage.croppedImage,
       date: formattedDate,
     };
 
-    const response = api.addPost(data);
+    const response = api.addPost(blogData);
 
-    toast.promise(
-      response,
-      {
-        loading: "Veillez patientez",
-        success: (data) => data.msg,
-        error: (err) => err.msg,
-      },
-      {
-        success: {
-          duration: 2000,
-        },
-        error: {
-          duration: 1000,
-        },
-        buttonDisabled: false,
-      }
-    );
+    toast.promise(response, {
+      loading: "Veuillez patienter...",
+      success: "Article créé avec succès !",
+      error: "Une erreur s'est produite.",
+    });
 
     response
       .then(() => {
         setButtonDisabled(false);
         navigate("/authorpanel/blogs");
       })
-      .catch((err) => err);
+      .catch(() => setButtonDisabled(false));
   };
 
   return (
@@ -169,61 +107,14 @@ export default function AddBlog() {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-            <div className="space-y-2">
-              <Label htmlFor="cover-photo">Photo de couverture</Label>
-              <div className="relative aspect-video overflow-hidden rounded-lg border border-dashed border-gray-300">
-                <input
-                  type="file"
-                  ref={fileInputRef}
-                  onChange={handleFileChange}
-                  accept="image/*"
-                  className="hidden"
-                />
-                {selectedImage.originalImage && (
-                  <ImageCropDialog
-                    imageURL={selectedImage.originalImage}
-                    cropInit={selectedImage.crop}
-                    zoomInit={selectedImage.zoom}
-                    aspectInit={16 / 9}
-                    onCancel={onCancel}
-                    genCroppedImg={genCroppedImg}
-                  />
-                )}
-                <img
-                  className="border rounded-lg shadow-md shadow-blue-gray-100 w-full"
-                  src={selectedImage.croppedImage}
-                />
-                <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                  <Button
-                    type="button"
-                    onClick={handleFileButtonClick}
-                    variant="secondary"
-                    className="z-10"
-                  >
-                    <PencilIcon className="mr-2 h-4 w-4 font-extrabold text-white" />
-                    <span className="font-extrabold text-white">Ajouter une image</span>
-                  </Button>
-                </div>
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={handleFileChange}
-                />
-              </div>
-            </div>
-
+            <CoverImage
+              selectedImage={selectedImage}
+              setSelectedImage={setSelectedImage}
+            />
             <div className="space-y-2">
               <Label htmlFor="title">Titre</Label>
-              <Input
-                id="title"
-                {...register("title")}
-                className={errors.title ? "border-red-500" : ""}
-              />
-              {errors.title && (
-                <p className="text-sm text-red-500">{errors.title.message}</p>
-              )}
+              <Input id="title" {...register("title")} className={errors.title && "border-red-500"} />
+              {errors.title && <p className="text-sm text-red-500">{errors.title.message}</p>}
             </div>
 
             <div className="space-y-2">
@@ -231,20 +122,16 @@ export default function AddBlog() {
               <Textarea
                 id="summary"
                 {...register("summary")}
-                className={errors.summary ? "border-red-500" : ""}
                 rows={4}
+                className={errors.summary && "border-red-500"}
               />
               <div className="flex justify-between text-sm text-gray-500">
-                <span>Écrivez quelques phrases sur votre blog.</span>
-                <span
-                  className={summaryValue.length > 500 ? "text-red-500" : ""}
-                >
+                <span>Un petit résumé de votre article</span>
+                <span className={summaryValue.length > 500 ? "text-red-500" : ""}>
                   {summaryValue.length}/500
                 </span>
               </div>
-              {errors.summary && (
-                <p className="text-sm text-red-500">{errors.summary.message}</p>
-              )}
+              {errors.summary && <p className="text-sm text-red-500">{errors.summary.message}</p>}
             </div>
 
             <div className="space-y-2">
@@ -253,16 +140,11 @@ export default function AddBlog() {
                 name="category"
                 control={control}
                 render={({ field }) => (
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <SelectTrigger
-                      className={errors.category ? "border-red-500" : ""}
-                    >
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <SelectTrigger className={errors.category && "border-red-500"}>
                       <SelectValue placeholder="Choisir une catégorie" />
                     </SelectTrigger>
-                    <SelectContent className="w-full bg-white">
+                    <SelectContent>
                       {categories.map((category) => (
                         <SelectItem key={category.id} value={category.name}>
                           {category.name}
@@ -272,11 +154,7 @@ export default function AddBlog() {
                   </Select>
                 )}
               />
-              {errors.category && (
-                <p className="text-sm text-red-500">
-                  {errors.category.message}
-                </p>
-              )}
+              {errors.category && <p className="text-sm text-red-500">{errors.category.message}</p>}
             </div>
 
             <div className="space-y-2">
@@ -290,16 +168,12 @@ export default function AddBlog() {
                   plugins: "link lists media codesample quickbars",
                   toolbar:
                     "undo redo | styles | bold italic underline forecolor backcolor codesample | alignleft aligncenter alignright | bullist numlist | link media quickimage",
-                  placeholder: "Écrivez votre article de blog ici...",
+                  placeholder: "Écrivez votre article ici...",
                 }}
-                onEditorChange={(content) => {
-                  setValue("description", content);
-                }}
+                onEditorChange={(content) => setValue("description", content)}
               />
               {errors.description && (
-                <p className="text-sm text-red-500">
-                  {errors.description.message}
-                </p>
+                <p className="text-sm text-red-500">{errors.description.message}</p>
               )}
             </div>
           </form>
@@ -309,8 +183,10 @@ export default function AddBlog() {
             type="submit"
             onClick={handleSubmit(onSubmit)}
             disabled={buttonDisabled}
+            variant="default"
+            className="w-full md:w-auto"
           >
-            {buttonDisabled ? "Création en cours..." : "Créer un Post"}
+            Publier l'article
           </Button>
         </CardFooter>
       </Card>
