@@ -4,6 +4,7 @@ import { toast } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import Loader from "../components/loader";
 import * as api from "../services/api/api";
+import usePostData from "../hooks/post-data";
 import BlogHeader from "@/components/blogHeader";
 import BlogContent from "@/components/blogContent";
 import CommentSection from "@/components/commentSection";
@@ -17,29 +18,31 @@ export default function Blog() {
   const navigate = useNavigate();
   const isAuthenticated = useSelector((state) => state.auth.isLoggedIn);
   const user = useSelector((state) => state.user);
+  const { postData, setPostData, loading, isLiked, setIsLiked } = usePostData(
+    slug,
+    user?.id
+  );
 
-  const [loading, setLoading] = useState(true);
-  const [blogData, setBlogData] = useState(null);
   const [comments, setComments] = useState([]);
-  const [isLiked, setIsLiked] = useState(false);
+  // const [isLiked, setIsLiked] = useState(false);
 
-  const fetchData = useCallback(async () => {
-    try {
-      const response = await api.getPost(slug);
-      setBlogData(response.posts);
-      setComments(response.posts.comments || []);
-      setIsLiked(response.posts.likes.includes(user?.id));
-      setLoading(false);
-    } catch (error) {
-      toast.error("Failed to load blog post. Please try again later.");
-      // console.log("voici l'erreur", error);
-      setLoading(false);
-    }
-  }, [slug, user?.id]);
+  // const fetchData = useCallback(async () => {
+  //   try {
+  //     const response = await api.getPost(slug);
+  //     setpostData(response.posts);
+  //     setComments(response.posts.comments || []);
+  //     setIsLiked(response.posts.likes.includes(user?.id));
+  //     setLoading(false);
+  //   } catch (error) {
+  //     toast.error("Failed to load blog post. Please try again later.");
+  //     // console.log("voici l'erreur", error);
+  //     setLoading(false);
+  //   }
+  // }, [slug, user?.id]);
 
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+  // useEffect(() => {
+  //   fetchData();
+  // }, [fetchData]);
 
   const handleCommentSubmit = async (newComment) => {
     if (!isAuthenticated) {
@@ -64,9 +67,9 @@ export default function Blog() {
       return;
     }
     try {
-      await api.likePost(blogData.id);
+      await api.likePost(postData?.id);
       setIsLiked(!isLiked);
-      setBlogData((prev) => ({
+      setPostData((prev) => ({
         ...prev,
         likes: isLiked
           ? prev.likes.filter((id) => id !== user.id)
@@ -80,7 +83,7 @@ export default function Blog() {
 
   const handleShare = async (platform) => {
     const url = window.location.href;
-    const text = `Check out this article: ${blogData.title}`;
+    const text = `Check out this article: ${postData.title}`;
 
     switch (platform) {
       case "twitter":
@@ -114,8 +117,8 @@ export default function Blog() {
             transition={{ delay: 0.2 }}
           >
             <SharingSidebar
-              isLiked={isLiked}
-              likesCount={blogData?.likes?.length}
+              isLiked={postData?.isLiked}
+              likesCount={postData?.likes?.length}
               handleLike={handleLike}
               handleShare={handleShare}
             />
@@ -126,10 +129,10 @@ export default function Blog() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
           >
-            <BlogHeader blogData={blogData} navigate={navigate} />
+            <BlogHeader postData={postData} navigate={navigate} />
             <BlogContent
-              blogData={blogData}
-              isLiked={isLiked}
+              postData={postData}
+              isLiked={postData.isLiked}
               handleLike={handleLike}
               commentsCount={comments.length}
             />
@@ -145,13 +148,13 @@ export default function Blog() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.3 }}
           >
-            <AuthorSidebar author={blogData?.author} />
+            <AuthorSidebar author={postData?.author} />
           </motion.aside>
         </div>
       </div>
       <MobileBottomBar
         isLiked={isLiked}
-        likesCount={blogData?.likes?.length}
+        likesCount={postData?.likes?.length}
         handleLike={handleLike}
         handleShare={handleShare}
       />
