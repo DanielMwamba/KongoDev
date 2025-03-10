@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { useSelector } from "react-redux";
+import useAuth from "../hooks/use-auth";
 import Loader from "../components/loader";
 import * as api from "../services/api/api";
 import usePostData from "../hooks/post-data";
@@ -16,70 +17,13 @@ import { motion } from "framer-motion";
 export default function Blog() {
   const { slug } = useParams();
   const navigate = useNavigate();
-  const isAuthenticated = useSelector((state) => state.auth.isLoggedIn);
+  const { isAuthenticated } = useAuth();
   const user = useSelector((state) => state.user);
-  const { postData, setPostData, loading, isLiked, setIsLiked } = usePostData(
-    slug,
-    user?.id
-  );
 
-  const [comments, setComments] = useState([]);
-  // const [isLiked, setIsLiked] = useState(false);
+ 
+  const { postData, handleLike, comments, loading, isLiked, handleCommentSubmit } =
+    usePostData(slug, user?.id);
 
-  // const fetchData = useCallback(async () => {
-  //   try {
-  //     const response = await api.getPost(slug);
-  //     setpostData(response.posts);
-  //     setComments(response.posts.comments || []);
-  //     setIsLiked(response.posts.likes.includes(user?.id));
-  //     setLoading(false);
-  //   } catch (error) {
-  //     toast.error("Failed to load blog post. Please try again later.");
-  //     // console.log("voici l'erreur", error);
-  //     setLoading(false);
-  //   }
-  // }, [slug, user?.id]);
-
-  // useEffect(() => {
-  //   fetchData();
-  // }, [fetchData]);
-
-  const handleCommentSubmit = async (newComment) => {
-    if (!isAuthenticated) {
-      toast.error("Connectez vous pour ajouter un commentaire.");
-      return;
-    }
-    try {
-      const response = await api.addComment(slug, {
-        content: newComment,
-        date: new Date().toISOString(),
-      });
-      setComments([...comments, response.comment]);
-      toast.success("Commentaire ajouté avec succès!");
-    } catch (error) {
-      toast.error("Erreur lors de l'ajout du commentaire. Veuillez réessayer.");
-    }
-  };
-
-  const handleLike = async () => {
-    if (!isAuthenticated) {
-      toast.error("Connectez-vous pour aimer cet article.");
-      return;
-    }
-    try {
-      await api.likePost(postData?.id);
-      setIsLiked(!isLiked);
-      setPostData((prev) => ({
-        ...prev,
-        likes: isLiked
-          ? prev.likes.filter((id) => id !== user.id)
-          : [...prev.likes, user.id],
-      }));
-      toast.success(isLiked ? "Like retiré" : "Article aimé!");
-    } catch (error) {
-      toast.error("Erreur lors de l'action. Veuillez réessayer.");
-    }
-  };
 
   const handleShare = async (platform) => {
     const url = window.location.href;
