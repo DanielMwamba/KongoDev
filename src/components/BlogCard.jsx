@@ -151,6 +151,6 @@ const BlogCard = ({
       </CardFooter>
     </Card>
   );
-};
+}; 
 
 export default BlogCard;
